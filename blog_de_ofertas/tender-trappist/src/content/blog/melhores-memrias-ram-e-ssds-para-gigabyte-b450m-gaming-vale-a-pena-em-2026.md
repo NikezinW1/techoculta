@@ -2,7 +2,7 @@
 title: 'Análise Completa: A Placa-Mãe Gigabyte B450M Gaming Vale a Pena em 2026?'
 description: 'Descubra se a clássica placa-mãe B450M da Gigabyte ainda dá conta do recado, quais processadores AM4 ela suporta com segurança e o setup custo-benefício ideal.'
 pubDate: 'Aug 08 2026'
-heroImage: '../../assets/capa-b450m.png'
+heroImage: '../../assets/capa-b450m.jpg'
 tags: ['hardware', 'upgrade', 'b450m', 'gigabyte', 'review']
 ---
 
