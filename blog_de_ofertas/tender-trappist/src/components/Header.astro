@@ -22,8 +22,7 @@ import HeaderLink from './HeaderLink.astro';
 	header {
 		margin: 0;
 		padding: 0 1em;
-		background: rgba(15, 23, 42, 0.8);
-		backdrop-filter: blur(12px);
+		background: #000000; /* Fundo totalmente preto para esconder a borda preta da logo */
 		border-bottom: 1px solid rgba(0, 255, 163, 0.15);
 		position: sticky;
 		top: 0;
@@ -34,22 +33,24 @@ import HeaderLink from './HeaderLink.astro';
 		display: flex;
 		align-items: center;
 	}
+	h2 a {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 160px; /* Largura visível da logo */
+		height: 60px; /* Altura visível da logo */
+		overflow: hidden; /* Corta tudo o que passar (a borda preta) */
+		text-decoration: none;
+		color: var(--text-main);
+	}
 	.site-logo {
-		height: 80px;
-		width: 80px;
+		min-width: 300px; /* Tamanho real enorme para a imagem */
+		min-height: 300px;
 		object-fit: contain;
-		vertical-align: middle;
-		transform: scale(1.8); /* Dá um zoom na imagem para ignorar a borda preta enorme */
-		mix-blend-mode: screen; /* Faz o fundo preto da imagem ficar transparente! */
 		transition: transform 0.2s ease;
 	}
 	.site-logo:hover {
-		transform: scale(1.9);
-	}
-	h2 a,
-	h2 a.active {
-		text-decoration: none;
-		color: var(--text-main);
+		transform: scale(1.05);
 	}
 	nav {
 		display: flex;
