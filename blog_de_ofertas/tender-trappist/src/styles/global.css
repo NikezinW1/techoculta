@@ -61,18 +61,22 @@ p { margin-bottom: 1em; }
 .prose p { margin-bottom: 2em; }
 
 /* Destaque brutal para links de Afiliados dentro dos posts */
-.prose a {
+.prose strong a {
 	background-color: var(--accent);
 	color: var(--bg-dark);
-	padding: 0.4em 1em;
+	padding: 0.6em 1.2em;
 	border-radius: 8px;
 	font-weight: 800;
 	display: inline-block;
 	box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
 	text-transform: uppercase;
 	letter-spacing: 0.5px;
+	line-height: 1.4;
+	text-align: center;
+	margin: 0.25em 0;
+	vertical-align: middle;
 }
-.prose a:hover {
+.prose strong a:hover {
 	background-color: var(--accent-dark);
 	box-shadow: 0 0 25px rgba(0, 229, 255, 0.7);
 	transform: translateY(-2px);
