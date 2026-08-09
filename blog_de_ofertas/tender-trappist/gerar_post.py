@@ -90,6 +90,9 @@ def gerar_post():
     print("🚀 Sincronizando com o GitHub para deploy automático...")
     
     comando_add = f'git add "{caminho_arquivo}"'
+    if imagem_input:
+        comando_add += f' "src/assets/{imagem_input}"'
+        
     comando_commit = f'git commit -m "docs(blog): novo artigo - {titulo}"'
     comando_push = 'git push'
     
