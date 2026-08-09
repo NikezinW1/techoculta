@@ -24,7 +24,11 @@ const postsToShow = offerPosts.length > 0 ? offerPosts : allPosts.sort((a, b) =>
 		<BaseHead title={`Ofertas e Achados - ${SITE_TITLE}`} description="Curadoria das melhores ofertas de hardware, periféricos e eletrônicos." />
 		<style>
 			main {
-				width: 1080px;
+				width: 100%;
+				max-width: 1080px;
+				margin: 0 auto;
+				padding: 0 1rem;
+				box-sizing: border-box;
 			}
 			.page-title {
 				text-align: center;

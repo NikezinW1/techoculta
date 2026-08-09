@@ -72,4 +72,18 @@ import HeaderLink from './HeaderLink.astro';
 		border-bottom-color: var(--accent);
 		text-shadow: 0 0 8px rgba(0, 255, 163, 0.3);
 	}
+	@media (max-width: 720px) {
+		h2 a {
+			width: 120px;
+			height: 50px;
+		}
+		.site-logo {
+			min-width: 220px;
+			min-height: 220px;
+		}
+		nav a {
+			padding: 0.8em 0.5em;
+			font-size: 0.9em;
+		}
+	}
 </style>

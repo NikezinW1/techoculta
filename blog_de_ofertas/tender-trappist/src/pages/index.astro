@@ -22,7 +22,11 @@ const editorialPosts = allPosts
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
 			main {
-				width: 1080px;
+				width: 100%;
+				max-width: 1080px;
+				margin: 0 auto;
+				padding: 0 1rem;
+				box-sizing: border-box;
 			}
 			.hero {
 				text-align: center;
@@ -100,7 +104,11 @@ const editorialPosts = allPosts
 					grid-template-columns: 1fr;
 				}
 				.hero h1 {
-					font-size: 3em;
+					font-size: 2.5em;
+				}
+				.hero p {
+					font-size: 1em;
+					padding: 0 1rem;
 				}
 			}
 		</style>
