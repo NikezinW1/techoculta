@@ -19,6 +19,9 @@ Antes de partirmos para os componentes, vale a pena conferir uma análise práti
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 20px 0;">
   <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px;" src="https://www.youtube.com/embed/QfKTJfY5_PE?start=107" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
+<div style="font-size: 0.85rem; color: #888; text-align: center; margin-top: -10px; margin-bottom: 20px;">
+  Vídeo de análise e testes compartilhado do canal <strong>Rocha PCista</strong>.
+</div>
 
 ---
 
