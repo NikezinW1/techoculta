@@ -23,7 +23,7 @@ import HeaderLink from './HeaderLink.astro';
 		margin: 0;
 		padding: 0 1em;
 		background: #000000; /* Fundo totalmente preto para esconder a borda preta da logo */
-		border-bottom: 1px solid rgba(0, 255, 163, 0.15);
+		border-bottom: 1px solid rgba(0, 229, 255, 0.15);
 		position: sticky;
 		top: 0;
 		z-index: 100;
@@ -40,12 +40,14 @@ import HeaderLink from './HeaderLink.astro';
 		color: var(--text-main);
 	}
 	.site-logo {
-		height: 50px;
+		height: 70px;
 		width: auto;
+		transform: scale(1.8);
+		transform-origin: center;
 		transition: transform 0.2s ease;
 	}
 	.site-logo:hover {
-		transform: scale(1.05);
+		transform: scale(1.9);
 	}
 	nav {
 		display: flex;
@@ -65,11 +67,12 @@ import HeaderLink from './HeaderLink.astro';
 	nav a:hover, nav a.active {
 		color: var(--accent);
 		border-bottom-color: var(--accent);
-		text-shadow: 0 0 8px rgba(0, 255, 163, 0.3);
+		text-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
 	}
 	@media (max-width: 720px) {
 		.site-logo {
-			height: 40px;
+			height: 50px;
+			transform: scale(1.6);
 		}
 		nav a {
 			padding: 0.8em 0.5em;
