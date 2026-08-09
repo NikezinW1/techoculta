@@ -17,7 +17,7 @@ Neste artigo aprofundado, vamos detalhar os upgrades essenciais de memória e ar
 Antes de partirmos para os componentes, vale a pena conferir uma análise prática sobre o comportamento de memórias e SSDs nessa plataforma:
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 20px 0;">
-  <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px;" src="https://www.youtube.com/embed/QfKTJfY5_PE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px;" src="https://www.youtube.com/embed/QfKTJfY5_PE?start=107" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
 ---
@@ -53,10 +53,3 @@ Se o seu sistema operacional ainda está instalado em um HD mecânico antigo ou 
 | **Memória RAM** | 16GB (2x8) a 3200MHz CL16 | Eliminação de travamentos e ganho de FPS em jogos. |
 | **Armazenamento** | SSD NVMe M.2 1TB | Abertura instantânea de apps e carregamento rápido. |
 | **Alimentação** | Fonte de qualidade com PFC Ativo | Proteção contra oscilações de energia e estabilidade geral. |
-
----
-
-## Dica Bônus: Resolvendo o Erro de Memória Reservada
-
-É relativamente comum em placas B450 o Windows indicar que há, por exemplo, 16GB instalados, mas apenas "7.9GB utilizáveis". Isso ocorre devido a um conflito de mapeamento de hardware na BIOS. 
-* **Como resolver:** Entre na BIOS (pressionando `DEL` ao ligar o PC), navegue até a aba de **Peripherals** ou **Chipset**, verifique as configurações de vídeo integrado (caso use placa de vídeo dedicada, desative ou reduza a alocação de memória reservada para o vídeo on-board) e salve com `F10`.
