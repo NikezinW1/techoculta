@@ -7,16 +7,18 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
-const allPosts = await getCollection('blog');
-const editorialPosts = allPosts
-	.filter(post => !post.data.tags || !post.data.tags.includes('oferta'))
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+// Ordena todos os posts do blog por pubDate (do mais recente para o mais antigo)
+const allPosts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
 
-// Featured post (first with featured: true, or the latest)
-const featuredPost = editorialPosts.find(p => p.data.featured) || editorialPosts[0];
-const recentPosts = editorialPosts.filter(p => p.id !== featuredPost?.id).slice(0, 4);
+// O destaque é estritamente o artigo mais recente
+const featuredPost = allPosts[0];
 
-const categories = ["Hardware", "Áudio e Headsets", "Celulares", "Games", "Guias de Compra", "Comparativos"];
+// Artigos recentes: os próximos 8 artigos, excluindo estritamente o post em destaque
+const recentPosts = allPosts
+	.filter((post) => post.id !== featuredPost?.id)
+	.slice(0, 8);
 ---
 
 <!doctype html>
@@ -33,83 +35,30 @@ const categories = ["Hardware", "Áudio e Headsets", "Celulares", "Games", "Guia
 			}
 			.hero {
 				text-align: center;
-				padding: 4em 0;
-				margin-bottom: 2em;
+				padding: 3.5em 0 2.5em 0;
+				margin-bottom: 2.5em;
 				border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 			}
 			.hero h1 {
-				font-size: 4em;
+				font-size: 3.8em;
 				margin-bottom: 0.2em;
 				background: linear-gradient(to right, #F8FAFC, var(--accent));
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
 			}
 			.hero p {
-				font-size: 1.2em;
+				font-size: 1.15em;
 				color: var(--text-muted);
-				max-width: 600px;
-				margin: 0 auto 1em auto;
+				max-width: 650px;
+				margin: 0 auto;
+				line-height: 1.6;
 			}
 			.section-title {
 				margin-bottom: 1.5em;
-				font-size: 1.8em;
+				font-size: 1.6em;
 				color: var(--text-main);
 				border-left: 4px solid var(--accent);
 				padding-left: 15px;
-			}
-			ul {
-				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				background-color: var(--bg-card);
-				border-radius: 12px;
-				overflow: hidden;
-				border: 1px solid rgba(255, 255, 255, 0.05);
-				transition: all 0.3s ease;
-			}
-			ul li:hover {
-				transform: translateY(-5px);
-				border-color: var(--accent);
-				box-shadow: var(--box-shadow);
-			}
-			ul li * {
-				text-decoration: none;
-			}
-			ul li img {
-				width: 100%;
-				height: 200px;
-				object-fit: cover;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-			}
-			.card-content {
-				padding: 1.5rem;
-			}
-			.title {
-				margin: 0 0 0.5rem 0;
-				font-size: 1.2rem;
-				line-height: 1.3;
-				color: var(--text-main);
-			}
-			.date {
-				margin: 0 0 0.5rem 0;
-				color: var(--text-muted);
-				font-size: 0.85em;
-			}
-			.category-tag {
-				display: inline-block;
-				font-size: 0.75rem;
-				font-weight: bold;
-				text-transform: uppercase;
-				color: var(--bg-dark);
-				background-color: var(--accent);
-				padding: 0.2em 0.6em;
-				border-radius: 4px;
-				margin-bottom: 0.8em;
 			}
 			
 			/* Featured Article */
@@ -126,14 +75,16 @@ const categories = ["Hardware", "Áudio e Headsets", "Celulares", "Games", "Guia
 			}
 			.featured-article:hover {
 				box-shadow: var(--box-shadow);
+				transform: translateY(-3px);
 			}
 			.featured-article img {
 				width: 100%;
 				height: 100%;
+				min-height: 300px;
 				object-fit: cover;
 			}
 			.featured-content {
-				padding: 2.5rem 2.5rem 2.5rem 0;
+				padding: 2rem 2rem 2rem 0;
 				display: flex;
 				flex-direction: column;
 				justify-content: center;
@@ -142,17 +93,131 @@ const categories = ["Hardware", "Áudio e Headsets", "Celulares", "Games", "Guia
 				text-decoration: none;
 			}
 			.featured-content .title {
-				font-size: 2rem;
-				margin-bottom: 1rem;
+				font-size: 1.8rem;
+				margin: 0.5rem 0 1rem 0;
 				color: var(--text-main);
+				line-height: 1.3;
 			}
-			.featured-content p {
+			.featured-content p.description {
 				color: var(--text-muted);
 				line-height: 1.6;
+				margin-bottom: 1.5rem;
+				font-size: 0.95rem;
+			}
+
+			/* Grid de Recentes */
+			ul.posts-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+				gap: 1.5rem;
+				list-style-type: none;
+				margin: 0 0 3rem 0;
+				padding: 0;
+			}
+			ul.posts-grid li {
+				background-color: var(--bg-card);
+				border-radius: 12px;
+				overflow: hidden;
+				border: 1px solid rgba(255, 255, 255, 0.05);
+				transition: all 0.3s ease;
+				display: flex;
+				flex-direction: column;
+			}
+			ul.posts-grid li:hover {
+				transform: translateY(-5px);
+				border-color: var(--accent);
+				box-shadow: var(--box-shadow);
+			}
+			ul.posts-grid li a.card-link {
+				display: flex;
+				flex-direction: column;
+				height: 100%;
+				text-decoration: none;
+			}
+			ul.posts-grid li img {
+				width: 100%;
+				height: 180px;
+				object-fit: cover;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+			}
+			.card-content {
+				padding: 1.2rem;
+				flex-grow: 1;
+				display: flex;
+				flex-direction: column;
+			}
+			.category-tag {
+				display: inline-block;
+				font-size: 0.75rem;
+				font-weight: 700;
+				text-transform: uppercase;
+				color: var(--bg-dark);
+				background-color: var(--accent);
+				padding: 0.2em 0.6em;
+				border-radius: 4px;
+				align-self: flex-start;
+				margin-bottom: 0.6em;
+			}
+			.title {
+				margin: 0 0 0.8rem 0;
+				font-size: 1.1rem;
+				line-height: 1.3;
+				color: var(--text-main);
+				flex-grow: 1;
+			}
+			.date {
+				margin: 0 0 1rem 0;
+				color: var(--text-muted);
+				font-size: 0.8em;
+			}
+			.read-more-link {
+				color: var(--accent);
+				font-weight: 700;
+				font-size: 0.85em;
+				display: inline-flex;
+				align-items: center;
+				gap: 4px;
+			}
+
+			/* CTA Seção Blog */
+			.blog-cta-box {
+				text-align: center;
+				background-color: var(--bg-card);
+				border-radius: 12px;
+				padding: 3rem 1.5rem;
+				border: 1px solid rgba(255, 255, 255, 0.05);
+				margin-bottom: 4rem;
+			}
+			.blog-cta-box h3 {
+				font-size: 1.5rem;
+				color: var(--text-main);
+				margin-bottom: 0.5rem;
+			}
+			.blog-cta-box p {
+				color: var(--text-muted);
+				margin-bottom: 1.5rem;
+			}
+			.btn-cta {
+				display: inline-block;
+				background-color: var(--accent);
+				color: var(--bg-dark);
+				padding: 0.8rem 1.8rem;
+				border-radius: 8px;
+				font-weight: 800;
+				text-decoration: none;
+				text-transform: uppercase;
+				letter-spacing: 0.5px;
+				transition: all 0.2s ease;
+				box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+			}
+			.btn-cta:hover {
+				background-color: var(--accent-dark);
+				transform: translateY(-2px);
+				box-shadow: 0 0 25px rgba(0, 229, 255, 0.6);
 			}
 			
 			section {
-				margin-bottom: 4rem;
+				margin-bottom: 3.5rem;
 			}
 
 			@media (max-width: 768px) {
@@ -163,7 +228,8 @@ const categories = ["Hardware", "Áudio e Headsets", "Celulares", "Games", "Guia
 					padding: 1.5rem;
 				}
 				.featured-article img {
-					height: 250px;
+					height: 220px;
+					min-height: auto;
 				}
 				.hero h1 {
 					font-size: 2.5em;
@@ -176,7 +242,7 @@ const categories = ["Hardware", "Áudio e Headsets", "Celulares", "Games", "Guia
 		<main>
 			<section class="hero">
 				<h1>Nikezin Indica</h1>
-				<p>Curadoria pessoal de tecnologia. Análises honestas, reviews de periféricos e as melhores ofertas garimpadas por quem vive a tecnologia no dia a dia.</p>
+				<p>Curadoria de tecnologia, guias de compra e análises para ajudar você a escolher melhor seus próximos upgrades.</p>
 			</section>
 
 			{featuredPost && (
@@ -185,7 +251,7 @@ const categories = ["Hardware", "Áudio e Headsets", "Celulares", "Games", "Guia
 					<article class="featured-article">
 						<a href={`/blog/${featuredPost.id}/`}>
 							{featuredPost.data.heroImage && (
-								<Image width={800} height={400} src={featuredPost.data.heroImage} alt="" />
+								<Image width={800} height={400} src={featuredPost.data.heroImage} alt={featuredPost.data.title} />
 							)}
 						</a>
 						<div class="featured-content">
@@ -193,7 +259,8 @@ const categories = ["Hardware", "Áudio e Headsets", "Celulares", "Games", "Guia
 								{featuredPost.data.category && <span class="category-tag">{featuredPost.data.category}</span>}
 								<h3 class="title">{featuredPost.data.title}</h3>
 								<p class="date"><FormattedDate date={featuredPost.data.pubDate} /></p>
-								<p>{featuredPost.data.description}</p>
+								<p class="description">{featuredPost.data.description}</p>
+								<span class="read-more-link">Ler artigo →</span>
 							</a>
 						</div>
 					</article>
@@ -203,13 +270,13 @@ const categories = ["Hardware", "Áudio e Headsets", "Celulares", "Games", "Guia
 			{recentPosts.length > 0 && (
 				<section>
 					<h2 class="section-title">Artigos Recentes</h2>
-					<ul>
+					<ul class="posts-grid">
 						{
 							recentPosts.map((post) => (
 								<li>
-									<a href={`/blog/${post.id}/`}>
+									<a href={`/blog/${post.id}/`} class="card-link">
 										{post.data.heroImage && (
-											<Image width={400} height={200} src={post.data.heroImage} alt="" />
+											<Image width={400} height={200} src={post.data.heroImage} alt={post.data.title} />
 										)}
 										<div class="card-content">
 											{post.data.category && <span class="category-tag">{post.data.category}</span>}
@@ -217,6 +284,7 @@ const categories = ["Hardware", "Áudio e Headsets", "Celulares", "Games", "Guia
 											<p class="date">
 												<FormattedDate date={post.data.pubDate} />
 											</p>
+											<span class="read-more-link">Ler artigo →</span>
 										</div>
 									</a>
 								</li>
@@ -226,35 +294,11 @@ const categories = ["Hardware", "Áudio e Headsets", "Celulares", "Games", "Guia
 				</section>
 			)}
 
-			{categories.map(category => {
-				const categoryPosts = editorialPosts.filter(p => p.data.category === category && p.id !== featuredPost?.id).slice(0, 4);
-				if (categoryPosts.length === 0) return null;
-				
-				return (
-					<section>
-						<h2 class="section-title">{category}</h2>
-						<ul>
-							{
-								categoryPosts.map((post) => (
-									<li>
-										<a href={`/blog/${post.id}/`}>
-											{post.data.heroImage && (
-												<Image width={400} height={200} src={post.data.heroImage} alt="" />
-											)}
-											<div class="card-content">
-												<h4 class="title">{post.data.title}</h4>
-												<p class="date">
-													<FormattedDate date={post.data.pubDate} />
-												</p>
-											</div>
-										</a>
-									</li>
-								))
-							}
-						</ul>
-					</section>
-				);
-			})}
+			<section class="blog-cta-box">
+				<h3>Quer explorar todo o conteúdo?</h3>
+				<p>Acesse nossa biblioteca completa com reviews, comparativos e guias técnicos.</p>
+				<a href="/blog/" class="btn-cta">Ver todos os artigos →</a>
+			</section>
 		</main>
 		<Footer />
 	</body>
