@@ -1,0 +1,32 @@
+# ========================
+# OS & Editor
+# ========================
+.DS_Store
+.vscode/
+.idea/
+
+# ========================
+# Python (Flask)
+# ========================
+__pycache__/
+*.py[cod]
+*$py.class
+env/
+venv/
+.venv/
+
+# ========================
+# Node.js (Astro)
+# ========================
+node_modules/
+dist/
+.astro/
+npm-debug.log*
+
+# ========================
+# Segurança & Credenciais (CRÍTICO)
+# ========================
+.env
+.env.*
+!.env.example
+*.pem
