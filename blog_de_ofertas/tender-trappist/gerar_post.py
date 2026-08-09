@@ -61,7 +61,7 @@ def gerar_post():
     )
     
     # Montagem do Frontmatter
-    frontmatter = f"---\ntitle: \"{titulo}\"\ndescription: \"{descricao}\"\npubDate: \"{data_atual}\"\nheroImage: \"/blog-placeholder-about.jpg\""
+    frontmatter = f"---\ntitle: \"{titulo}\"\ndescription: \"{descricao}\"\npubDate: \"{data_atual}\"\nheroImage: \"../../assets/blog-placeholder-about.jpg\""
     
     # Se houver tags, adicionamos no formato de lista YAML
     if tags:
