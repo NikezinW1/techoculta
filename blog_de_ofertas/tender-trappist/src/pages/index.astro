@@ -7,9 +7,13 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+// Pega todos os posts
+const allPosts = await getCollection('blog');
+// Filtra para remover os que são estritamente ofertas (para focar em editorial)
+const editorialPosts = allPosts
+	.filter(post => !post.data.tags || !post.data.tags.includes('oferta'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 4); // Limita aos 4 mais recentes
 ---
 
 <!doctype html>
@@ -20,13 +24,35 @@ const posts = (await getCollection('blog')).sort(
 			main {
 				width: 1080px;
 			}
-			.page-title {
+			.hero {
 				text-align: center;
+				padding: 4em 0;
+				margin-bottom: 2em;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+			}
+			.hero h1 {
+				font-size: 4em;
+				margin-bottom: 0.2em;
+				background: linear-gradient(to right, #F8FAFC, var(--accent));
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+			}
+			.hero p {
+				font-size: 1.2em;
+				color: var(--text-muted);
+				max-width: 600px;
+				margin: 0 auto 1em auto;
+			}
+			.section-title {
 				margin-bottom: 1.5em;
+				font-size: 1.8em;
+				color: var(--text-main);
+				border-left: 4px solid var(--accent);
+				padding-left: 15px;
 			}
 			ul {
 				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+				grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 				gap: 2rem;
 				list-style-type: none;
 				margin: 0;
@@ -49,7 +75,7 @@ const posts = (await getCollection('blog')).sort(
 			}
 			ul li img {
 				width: 100%;
-				height: 200px;
+				height: 240px;
 				object-fit: cover;
 				border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 				border-radius: 0;
@@ -73,17 +99,25 @@ const posts = (await getCollection('blog')).sort(
 				ul {
 					grid-template-columns: 1fr;
 				}
+				.hero h1 {
+					font-size: 3em;
+				}
 			}
 		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1 class="page-title">Últimos Artigos e Análises</h1>
+			<section class="hero">
+				<h1>Tech Oculta</h1>
+				<p>O submundo da inovação, inteligência artificial e hardware. Análises profundas e ferramentas que vão transformar o seu fluxo de trabalho.</p>
+			</section>
+
 			<section>
+				<h2 class="section-title">Últimos Artigos Editoriais</h2>
 				<ul>
 					{
-						posts.map((post) => (
+						editorialPosts.map((post) => (
 							<li>
 								<a href={`/blog/${post.id}/`}>
 									{post.data.heroImage && (

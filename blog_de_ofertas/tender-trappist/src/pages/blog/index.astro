@@ -7,27 +7,39 @@ import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+// Pega todos os posts
+const allPosts = await getCollection('blog');
+// Filtra apenas os que possuem a tag 'oferta'
+const offerPosts = allPosts
+	.filter(post => post.data.tags && post.data.tags.includes('oferta'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Fallback preventivo: Se não houver nenhum post com a tag 'oferta', mostra todos
+const postsToShow = offerPosts.length > 0 ? offerPosts : allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
 <!doctype html>
 <html lang="pt-BR">
 	<head>
-		<BaseHead title={`Ofertas - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<BaseHead title={`Ofertas e Achados - ${SITE_TITLE}`} description="Curadoria das melhores ofertas de tecnologia e gadgets." />
 		<style>
 			main {
 				width: 1080px;
 			}
 			.page-title {
 				text-align: center;
-				margin-bottom: 1.5em;
+				margin-bottom: 0.5em;
+			}
+			.page-subtitle {
+				text-align: center;
+				color: var(--text-muted);
+				margin-bottom: 3em;
+				font-size: 1.1em;
 			}
 			ul {
 				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-				gap: 2rem;
+				grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+				gap: 1.5rem;
 				list-style-type: none;
 				margin: 0;
 				padding: 0;
@@ -38,36 +50,59 @@ const posts = (await getCollection('blog')).sort(
 				overflow: hidden;
 				border: 1px solid rgba(255, 255, 255, 0.05);
 				transition: all 0.3s ease;
+				display: flex;
+				flex-direction: column;
 			}
 			ul li:hover {
 				transform: translateY(-5px);
 				border-color: var(--accent);
 				box-shadow: var(--box-shadow);
 			}
-			ul li * {
+			ul li a.card-link {
+				display: flex;
+				flex-direction: column;
+				height: 100%;
 				text-decoration: none;
 			}
 			ul li img {
 				width: 100%;
-				height: 200px;
+				height: 180px;
 				object-fit: cover;
 				border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-				border-radius: 0;
 			}
 			.card-content {
-				padding: 1.5rem;
+				padding: 1.2rem;
+				flex-grow: 1;
+				display: flex;
+				flex-direction: column;
 			}
 			.title {
-				margin: 0 0 0.5rem 0;
-				font-size: 1.4rem;
+				margin: 0 0 1rem 0;
+				font-size: 1.1rem;
 				line-height: 1.3;
 				color: var(--text-main);
+				flex-grow: 1;
 			}
 			.date {
-				margin: 0;
+				margin: 0 0 0.5rem 0;
+				color: var(--text-muted);
+				font-size: 0.8em;
+			}
+			.cta-badge {
+				display: block;
+				text-align: center;
+				background-color: rgba(0, 255, 163, 0.1);
 				color: var(--accent);
+				padding: 0.5rem;
+				border-radius: 6px;
+				font-weight: 800;
+				text-transform: uppercase;
 				font-size: 0.9em;
-				font-weight: 600;
+				transition: background-color 0.2s ease;
+			}
+			ul li:hover .cta-badge {
+				background-color: var(--accent);
+				color: var(--bg-dark);
 			}
 			@media (max-width: 720px) {
 				ul {
@@ -79,13 +114,15 @@ const posts = (await getCollection('blog')).sort(
 	<body>
 		<Header />
 		<main>
-			<h1 class="page-title">Últimas Ofertas e Reviews</h1>
+			<h1 class="page-title">Curadoria de Ofertas</h1>
+			<p class="page-subtitle">Os melhores achados e descontos garimpados no mercado de tecnologia.</p>
+			
 			<section>
 				<ul>
 					{
-						posts.map((post) => (
+						postsToShow.map((post) => (
 							<li>
-								<a href={`/blog/${post.id}/`}>
+								<a href={`/blog/${post.id}/`} class="card-link">
 									{post.data.heroImage && (
 										<Image width={720} height={360} src={post.data.heroImage} alt="" />
 									)}
@@ -94,6 +131,7 @@ const posts = (await getCollection('blog')).sort(
 											<FormattedDate date={post.data.pubDate} />
 										</p>
 										<h4 class="title">{post.data.title}</h4>
+										<span class="cta-badge">Ver Oferta 👀</span>
 									</div>
 								</a>
 							</li>
