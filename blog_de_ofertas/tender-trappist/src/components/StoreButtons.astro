@@ -17,6 +17,7 @@ const { productName, amazonUrl, mercadoLivreUrl, magaluUrl, kabumUrl } = Astro.p
     {magaluUrl && <a href={magaluUrl} class="store-btn store-btn-magalu" target="_blank" rel="nofollow sponsored noopener">Magalu</a>}
     {kabumUrl && <a href={kabumUrl} class="store-btn store-btn-kabum" target="_blank" rel="nofollow sponsored noopener">KaBuM!</a>}
   </div>
+  <p class="store-buttons-disclaimer">Preço e disponibilidade podem mudar. Consulte a loja para conferir as condições atuais.</p>
 </div>
 
 <style>
@@ -26,6 +27,12 @@ const { productName, amazonUrl, mercadoLivreUrl, magaluUrl, kabumUrl } = Astro.p
     background-color: var(--bg-card);
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .store-buttons-disclaimer {
+    font-size: 0.8em;
+    color: var(--text-muted);
+    margin-top: 1.5em;
+    margin-bottom: 0;
   }
   .store-buttons-label {
     font-weight: 600;

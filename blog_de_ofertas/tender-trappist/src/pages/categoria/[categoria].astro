@@ -1,0 +1,182 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+import { SITE_TITLE } from '../../consts';
+
+export async function getStaticPaths() {
+	const allPosts = await getCollection('blog');
+	const categories = new Set();
+	
+	allPosts.forEach(post => {
+		if (post.data.category) {
+			categories.add(post.data.category);
+		}
+	});
+
+	const slugify = (text: string) => text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
+
+	return Array.from(categories).map((category) => {
+		const slug = slugify(category as string);
+		return {
+			params: { categoria: slug },
+			props: {
+				categoryName: category,
+				posts: allPosts.filter(p => p.data.category === category).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+			}
+		};
+	});
+}
+
+const { categoryName, posts } = Astro.props;
+const { categoria } = Astro.params;
+
+// JSON-LD Breadcrumb
+const breadcrumbSchema = {
+	"@context": "https://schema.org",
+	"@type": "BreadcrumbList",
+	"itemListElement": [
+		{
+			"@type": "ListItem",
+			"position": 1,
+			"name": "Início",
+			"item": Astro.site?.toString()
+		},
+		{
+			"@type": "ListItem",
+			"position": 2,
+			"name": categoryName,
+			"item": new URL(`/categoria/${categoria}/`, Astro.site).toString()
+		}
+	]
+};
+---
+
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<BaseHead title={`${categoryName} - ${SITE_TITLE}`} description={`Artigos, análises e guias de compra sobre ${categoryName}.`} />
+		<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+		<style>
+			main {
+				width: 100%;
+				max-width: 1080px;
+				margin: 0 auto;
+				padding: 0 1rem;
+				box-sizing: border-box;
+			}
+			.breadcrumbs {
+				font-size: 0.9em;
+				color: var(--text-muted);
+				margin: 1rem 0 2rem 0;
+			}
+			.breadcrumbs a {
+				color: var(--accent);
+				text-decoration: none;
+			}
+			.breadcrumbs a:hover {
+				text-decoration: underline;
+			}
+			.page-title {
+				font-size: 3em;
+				margin-bottom: 0.2em;
+				background: linear-gradient(to right, #F8FAFC, var(--accent));
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+			}
+			.page-subtitle {
+				color: var(--text-muted);
+				font-size: 1.2em;
+				margin-bottom: 3rem;
+			}
+			ul {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+				gap: 2rem;
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+			}
+			ul li {
+				background-color: var(--bg-card);
+				border-radius: 12px;
+				overflow: hidden;
+				border: 1px solid rgba(255, 255, 255, 0.05);
+				transition: all 0.3s ease;
+			}
+			ul li:hover {
+				transform: translateY(-5px);
+				border-color: var(--accent);
+				box-shadow: var(--box-shadow);
+			}
+			ul li * {
+				text-decoration: none;
+			}
+			ul li img {
+				width: 100%;
+				height: 200px;
+				object-fit: cover;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+			}
+			.card-content {
+				padding: 1.5rem;
+			}
+			.title {
+				margin: 0 0 0.5rem 0;
+				font-size: 1.2rem;
+				line-height: 1.3;
+				color: var(--text-main);
+			}
+			.date {
+				margin: 0;
+				color: var(--text-muted);
+				font-size: 0.85em;
+			}
+			@media (max-width: 720px) {
+				ul {
+					grid-template-columns: 1fr;
+				}
+				.page-title {
+					font-size: 2.5em;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<nav class="breadcrumbs" aria-label="Breadcrumb">
+				<a href="/">Início</a> &gt; <span>{categoryName}</span>
+			</nav>
+
+			<h1 class="page-title">{categoryName}</h1>
+			<p class="page-subtitle">Explorando as melhores opções em {categoryName}. Análises honestas e comparativos detalhados.</p>
+			
+			<section>
+				<ul>
+					{
+						posts.map((post) => (
+							<li>
+								<a href={`/blog/${post.id}/`}>
+									{post.data.heroImage && (
+										<Image width={400} height={200} src={post.data.heroImage} alt="" />
+									)}
+									<div class="card-content">
+										<h4 class="title">{post.data.title}</h4>
+										<p class="date">
+											<FormattedDate date={post.data.pubDate} />
+										</p>
+									</div>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

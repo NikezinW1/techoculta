@@ -7,13 +7,16 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
-// Pega todos os posts
 const allPosts = await getCollection('blog');
-// Filtra para remover os que são estritamente ofertas (para focar em editorial)
 const editorialPosts = allPosts
 	.filter(post => !post.data.tags || !post.data.tags.includes('oferta'))
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.slice(0, 4); // Limita aos 4 mais recentes
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Featured post (first with featured: true, or the latest)
+const featuredPost = editorialPosts.find(p => p.data.featured) || editorialPosts[0];
+const recentPosts = editorialPosts.filter(p => p.id !== featuredPost?.id).slice(0, 4);
+
+const categories = ["Hardware", "Áudio e Headsets", "Celulares", "Games", "Guias de Compra", "Comparativos"];
 ---
 
 <!doctype html>
@@ -56,7 +59,7 @@ const editorialPosts = allPosts
 			}
 			ul {
 				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+				grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 				gap: 2rem;
 				list-style-type: none;
 				margin: 0;
@@ -79,36 +82,91 @@ const editorialPosts = allPosts
 			}
 			ul li img {
 				width: 100%;
-				height: 240px;
+				height: 200px;
 				object-fit: cover;
 				border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-				border-radius: 0;
 			}
 			.card-content {
 				padding: 1.5rem;
 			}
 			.title {
 				margin: 0 0 0.5rem 0;
-				font-size: 1.4rem;
+				font-size: 1.2rem;
 				line-height: 1.3;
 				color: var(--text-main);
 			}
 			.date {
-				margin: 0;
-				color: var(--accent);
-				font-size: 0.9em;
-				font-weight: 600;
+				margin: 0 0 0.5rem 0;
+				color: var(--text-muted);
+				font-size: 0.85em;
 			}
-			@media (max-width: 720px) {
-				ul {
+			.category-tag {
+				display: inline-block;
+				font-size: 0.75rem;
+				font-weight: bold;
+				text-transform: uppercase;
+				color: var(--bg-dark);
+				background-color: var(--accent);
+				padding: 0.2em 0.6em;
+				border-radius: 4px;
+				margin-bottom: 0.8em;
+			}
+			
+			/* Featured Article */
+			.featured-article {
+				display: grid;
+				grid-template-columns: 3fr 2fr;
+				gap: 2rem;
+				background-color: var(--bg-card);
+				border-radius: 12px;
+				overflow: hidden;
+				border: 1px solid var(--accent);
+				margin-bottom: 4rem;
+				transition: all 0.3s ease;
+			}
+			.featured-article:hover {
+				box-shadow: var(--box-shadow);
+			}
+			.featured-article img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+			.featured-content {
+				padding: 2.5rem 2.5rem 2.5rem 0;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+			}
+			.featured-content a {
+				text-decoration: none;
+			}
+			.featured-content .title {
+				font-size: 2rem;
+				margin-bottom: 1rem;
+				color: var(--text-main);
+			}
+			.featured-content p {
+				color: var(--text-muted);
+				line-height: 1.6;
+			}
+			
+			section {
+				margin-bottom: 4rem;
+			}
+
+			@media (max-width: 768px) {
+				.featured-article {
 					grid-template-columns: 1fr;
+				}
+				.featured-content {
+					padding: 1.5rem;
+				}
+				.featured-article img {
+					height: 250px;
 				}
 				.hero h1 {
 					font-size: 2.5em;
-				}
-				.hero p {
-					font-size: 1em;
-					padding: 0 1rem;
 				}
 			}
 		</style>
@@ -121,28 +179,82 @@ const editorialPosts = allPosts
 				<p>Curadoria pessoal de tecnologia. Análises honestas, reviews de periféricos e as melhores ofertas garimpadas por quem vive a tecnologia no dia a dia.</p>
 			</section>
 
-			<section>
-				<h2 class="section-title">Reviews e Análises Recentes</h2>
-				<ul>
-					{
-						editorialPosts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<div class="card-content">
-										<p class="date">
-											<FormattedDate date={post.data.pubDate} />
-										</p>
-										<h4 class="title">{post.data.title}</h4>
-									</div>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
+			{featuredPost && (
+				<section>
+					<h2 class="section-title">Em Destaque</h2>
+					<article class="featured-article">
+						<a href={`/blog/${featuredPost.id}/`}>
+							{featuredPost.data.heroImage && (
+								<Image width={800} height={400} src={featuredPost.data.heroImage} alt="" />
+							)}
+						</a>
+						<div class="featured-content">
+							<a href={`/blog/${featuredPost.id}/`}>
+								{featuredPost.data.category && <span class="category-tag">{featuredPost.data.category}</span>}
+								<h3 class="title">{featuredPost.data.title}</h3>
+								<p class="date"><FormattedDate date={featuredPost.data.pubDate} /></p>
+								<p>{featuredPost.data.description}</p>
+							</a>
+						</div>
+					</article>
+				</section>
+			)}
+
+			{recentPosts.length > 0 && (
+				<section>
+					<h2 class="section-title">Artigos Recentes</h2>
+					<ul>
+						{
+							recentPosts.map((post) => (
+								<li>
+									<a href={`/blog/${post.id}/`}>
+										{post.data.heroImage && (
+											<Image width={400} height={200} src={post.data.heroImage} alt="" />
+										)}
+										<div class="card-content">
+											{post.data.category && <span class="category-tag">{post.data.category}</span>}
+											<h4 class="title">{post.data.title}</h4>
+											<p class="date">
+												<FormattedDate date={post.data.pubDate} />
+											</p>
+										</div>
+									</a>
+								</li>
+							))
+						}
+					</ul>
+				</section>
+			)}
+
+			{categories.map(category => {
+				const categoryPosts = editorialPosts.filter(p => p.data.category === category && p.id !== featuredPost?.id).slice(0, 4);
+				if (categoryPosts.length === 0) return null;
+				
+				return (
+					<section>
+						<h2 class="section-title">{category}</h2>
+						<ul>
+							{
+								categoryPosts.map((post) => (
+									<li>
+										<a href={`/blog/${post.id}/`}>
+											{post.data.heroImage && (
+												<Image width={400} height={200} src={post.data.heroImage} alt="" />
+											)}
+											<div class="card-content">
+												<h4 class="title">{post.data.title}</h4>
+												<p class="date">
+													<FormattedDate date={post.data.pubDate} />
+												</p>
+											</div>
+										</a>
+									</li>
+								))
+							}
+						</ul>
+					</section>
+				);
+			})}
 		</main>
 		<Footer />
 	</body>

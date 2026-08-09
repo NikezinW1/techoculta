@@ -14,6 +14,20 @@ const blog = defineCollection({
 			pubDate: z.coerce.date(),
 			updatedDate: z.coerce.date().optional(),
 			heroImage: z.optional(image()),
+			category: z.string().optional(),
+			tags: z.array(z.string()).optional(),
+			author: z.string().default('Nikezin Indica'),
+			featured: z.boolean().default(false),
+			pros: z.array(z.string()).optional(),
+			cons: z.array(z.string()).optional(),
+			review: z.object({
+				custoBeneficio: z.number().optional(),
+				desempenho: z.number().optional(),
+				construcao: z.number().optional(),
+				recursos: z.number().optional(),
+				notaFinal: z.number()
+			}).optional(),
+			relatedPosts: z.array(z.string()).optional(),
 		}),
 });
 

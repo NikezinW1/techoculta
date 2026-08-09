@@ -1,0 +1,40 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<BaseHead title={`Sobre Nós - ${SITE_TITLE}`} description="Conheça a história e o propósito do Nikezin Indica." />
+		<style>
+			main {
+				width: 100%;
+				max-width: 800px;
+				margin: 0 auto;
+				padding: 2rem 1rem;
+				box-sizing: border-box;
+				color: var(--text-main);
+			}
+			h1 {
+				margin-bottom: 1em;
+				color: var(--accent);
+			}
+			p {
+				line-height: 1.6;
+				margin-bottom: 1.5em;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Sobre o Nikezin Indica</h1>
+			<p>[PLACEHOLDER] O Nikezin Indica nasceu com a missão de ajudar você a escolher os melhores produtos de tecnologia sem complicação. Nós garimpamos as melhores ofertas e produzimos conteúdos honestos focados no custo-benefício.</p>
+			<p>[PLACEHOLDER] Nossa equipe respira tecnologia e hardware, garantindo recomendações baseadas no mercado brasileiro e no bolso do consumidor local.</p>
+		</main>
+		<Footer />
+	</body>
+</html>

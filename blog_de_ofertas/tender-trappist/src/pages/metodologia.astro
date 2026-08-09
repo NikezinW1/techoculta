@@ -1,0 +1,72 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<BaseHead title={`Nossa Metodologia - ${SITE_TITLE}`} description="Descubra como o Nikezin Indica analisa e recomenda produtos de tecnologia." />
+		<style>
+			main {
+				width: 100%;
+				max-width: 800px;
+				margin: 0 auto;
+				padding: 2rem 1rem;
+				box-sizing: border-box;
+				color: var(--text-main);
+			}
+			h1 {
+				margin-bottom: 1em;
+				color: var(--accent);
+			}
+			h2 {
+				margin-top: 2em;
+				margin-bottom: 0.5em;
+				color: var(--text-main);
+			}
+			p {
+				line-height: 1.6;
+				margin-bottom: 1.5em;
+			}
+			ul {
+				margin-bottom: 2em;
+				padding-left: 1.5em;
+			}
+			li {
+				margin-bottom: 0.5em;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Nossa Metodologia de Avaliação</h1>
+			<p>A transparência é o pilar fundamental do <strong>Nikezin Indica</strong>. Queremos que você saiba exatamente como chegamos às conclusões apresentadas em nossos artigos, reviews e guias de compra.</p>
+			
+			<h2>Como avaliamos os produtos</h2>
+			<p>Não afirmamos testar fisicamente em laboratório todos os produtos mencionados. Nossas análises e recomendações são baseadas em um rigoroso processo de pesquisa que envolve:</p>
+			<ul>
+				<li><strong>Análise de Especificações:</strong> Cruzamento de dados técnicos (frequências, capacidades, arquitetura) com o que o produto promete entregar.</li>
+				<li><strong>Comparação com Concorrentes:</strong> Avaliamos o produto sempre considerando as alternativas da mesma faixa de preço no mercado brasileiro.</li>
+				<li><strong>Contexto de Preço (Custo-Benefício):</strong> Um produto excelente pode receber uma nota baixa se o preço for irreal, e um produto mediano pode ser a melhor recomendação se estiver muito barato.</li>
+				<li><strong>Informações Públicas e Consenso da Comunidade:</strong> Agregamos informações de fóruns, benchmarks confiáveis e feedbacks de usuários de longo prazo.</li>
+			</ul>
+
+			<h2>Nossos Critérios de Nota</h2>
+			<p>Quando aplicamos nosso sistema de avaliação a um produto (com notas de 0 a 10), utilizamos os seguintes pesos:</p>
+			<ul>
+				<li><strong>Custo-Benefício:</strong> O quanto o produto entrega pelo valor cobrado no varejo brasileiro no momento da publicação.</li>
+				<li><strong>Desempenho:</strong> A performance real entregue em jogos, uso profissional ou no dia a dia.</li>
+				<li><strong>Construção:</strong> Qualidade dos materiais, durabilidade e design térmico.</li>
+				<li><strong>Recursos:</strong> Funcionalidades extras (softwares, conexões, tecnologias exclusivas).</li>
+			</ul>
+
+			<h2>Independência</h2>
+			<p>Nenhuma marca paga para ter um review positivo no Nikezin Indica. Podemos utilizar links de afiliados que nos geram comissão caso você compre algo através deles, mas essa comissão <strong>não influencia nossa opinião editorial</strong>.</p>
+		</main>
+		<Footer />
+	</body>
+</html>

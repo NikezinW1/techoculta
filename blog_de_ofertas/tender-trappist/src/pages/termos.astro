@@ -1,0 +1,45 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<BaseHead title={`Termos de Uso - ${SITE_TITLE}`} description="Termos de uso do site Nikezin Indica." />
+		<style>
+			main {
+				width: 100%;
+				max-width: 800px;
+				margin: 0 auto;
+				padding: 2rem 1rem;
+				box-sizing: border-box;
+				color: var(--text-main);
+			}
+			h1 {
+				margin-bottom: 1em;
+				color: var(--accent);
+			}
+			h2 {
+				margin-top: 2em;
+				margin-bottom: 0.5em;
+			}
+			p {
+				line-height: 1.6;
+				margin-bottom: 1.5em;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Termos de Uso</h1>
+			<p>[PLACEHOLDER] Ao acessar ao site Nikezin Indica, você concorda em cumprir estes termos de serviço, todas as leis e regulamentos aplicáveis e concorda que é responsável pelo cumprimento de todas as leis locais aplicáveis.</p>
+			<h2>Isenção de Responsabilidade</h2>
+			<p>[PLACEHOLDER] Os conteúdos do Nikezin Indica são fornecidos "como estão". Não oferecemos garantias, expressas ou implícitas, sobre produtos de terceiros recomendados no site.</p>
+		</main>
+		<Footer />
+	</body>
+</html>

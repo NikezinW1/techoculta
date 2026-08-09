@@ -1,0 +1,41 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<BaseHead title={`Contato - ${SITE_TITLE}`} description="Fale conosco para parcerias ou dúvidas." />
+		<style>
+			main {
+				width: 100%;
+				max-width: 800px;
+				margin: 0 auto;
+				padding: 2rem 1rem;
+				box-sizing: border-box;
+				color: var(--text-main);
+			}
+			h1 {
+				margin-bottom: 1em;
+				color: var(--accent);
+			}
+			p {
+				line-height: 1.6;
+				margin-bottom: 1.5em;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Contato</h1>
+			<p>[PLACEHOLDER] Tem alguma dúvida, sugestão de pauta ou quer conversar sobre parcerias? Entre em contato conosco.</p>
+			<p>[PLACEHOLDER] E-mail: contato@exemplo.com.br</p>
+			<p>[PLACEHOLDER] Siga-nos nas redes sociais para mais novidades.</p>
+		</main>
+		<Footer />
+	</body>
+</html>

@@ -1,19 +1,102 @@
 ---
 import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & { id: string };
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const props = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, category, author, pros, cons, review, relatedPosts } = props;
+
+// Helper to slugify
+const slugify = (text: string) => text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
+
+const categorySlug = category ? slugify(category) : '';
+
+// JSON-LD Breadcrumb
+const breadcrumbSchema = {
+	"@context": "https://schema.org",
+	"@type": "BreadcrumbList",
+	"itemListElement": [
+		{
+			"@type": "ListItem",
+			"position": 1,
+			"name": "Início",
+			"item": Astro.site?.toString()
+		}
+	]
+};
+
+if (category) {
+	breadcrumbSchema.itemListElement.push({
+		"@type": "ListItem",
+		"position": 2,
+		"name": category,
+		"item": new URL(`/categoria/${categorySlug}/`, Astro.site).toString()
+	});
+	breadcrumbSchema.itemListElement.push({
+		"@type": "ListItem",
+		"position": 3,
+		"name": title,
+		"item": new URL(Astro.url.pathname, Astro.site).toString()
+	});
+} else {
+	breadcrumbSchema.itemListElement.push({
+		"@type": "ListItem",
+		"position": 2,
+		"name": title,
+		"item": new URL(Astro.url.pathname, Astro.site).toString()
+	});
+}
+
+// JSON-LD Article
+const articleSchema = {
+	"@context": "https://schema.org",
+	"@type": "Article",
+	"headline": title,
+	"image": heroImage ? new URL(heroImage.src, Astro.site).toString() : undefined,
+	"datePublished": pubDate.toISOString(),
+	"dateModified": updatedDate ? updatedDate.toISOString() : pubDate.toISOString(),
+	"author": [{
+		"@type": "Person",
+		"name": author,
+		"url": Astro.site?.toString()
+	}]
+};
+
+// Fetch related posts
+const allPosts = await getCollection('blog');
+let suggestedPosts = [];
+
+if (relatedPosts && relatedPosts.length > 0) {
+	// 1. Manually related posts
+	suggestedPosts = allPosts.filter(p => relatedPosts.includes(p.id));
+}
+
+if (suggestedPosts.length < 3 && category) {
+	// 2. Posts from the same category
+	const categoryMatches = allPosts.filter(p => p.data.category === category && p.id !== props.id && !suggestedPosts.find(sp => sp.id === p.id));
+	suggestedPosts = [...suggestedPosts, ...categoryMatches];
+}
+
+if (suggestedPosts.length < 3) {
+	// 3. Recent posts as fallback
+	const recents = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()).filter(p => p.id !== props.id && !suggestedPosts.find(sp => sp.id === p.id));
+	suggestedPosts = [...suggestedPosts, ...recents];
+}
+
+suggestedPosts = suggestedPosts.slice(0, 3);
 ---
 
 <html lang="pt-BR">
 	<head>
 		<BaseHead title={title} description={description} image={heroImage} />
+		<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+		<script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 		<style>
 			main {
 				width: calc(100% - 2em);
@@ -22,6 +105,8 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			}
 			.hero-image {
 				width: 100%;
+				max-width: 900px;
+				margin: 0 auto;
 			}
 			.hero-image img {
 				display: block;
@@ -36,6 +121,18 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				padding: 2em 1em;
 				color: var(--text-main);
 			}
+			.breadcrumbs {
+				font-size: 0.9em;
+				color: var(--text-muted);
+				margin-bottom: 2rem;
+			}
+			.breadcrumbs a {
+				color: var(--accent);
+				text-decoration: none;
+			}
+			.breadcrumbs a:hover {
+				text-decoration: underline;
+			}
 			.title {
 				margin-bottom: 2em;
 				padding: 1em 0;
@@ -44,15 +141,175 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			}
 			.title h1 {
 				margin: 0 0 0.2em 0;
+				color: var(--text-main);
 			}
-			.date {
+			.article-meta {
 				margin-bottom: 1em;
+				color: var(--text-muted);
+				font-size: 0.95em;
+				display: flex;
+				justify-content: center;
+				gap: 15px;
+				flex-wrap: wrap;
+			}
+			.article-meta span {
+				display: flex;
+				align-items: center;
+			}
+			.article-meta strong {
 				color: var(--accent);
-				font-weight: 600;
+				margin-left: 5px;
 			}
 			.last-updated-on {
 				font-style: italic;
 				color: var(--text-muted);
+				text-align: center;
+				font-size: 0.85em;
+				margin-top: -1em;
+				margin-bottom: 2em;
+			}
+			
+			/* Prós e Contras */
+			.pros-cons-container {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 1.5rem;
+				margin: 2rem 0;
+			}
+			.pros-box, .cons-box {
+				background-color: var(--bg-card);
+				border-radius: 12px;
+				padding: 1.5rem;
+				border: 1px solid rgba(255, 255, 255, 0.05);
+			}
+			.pros-box h3 {
+				color: #10B981; /* Verde */
+				margin-top: 0;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+			.cons-box h3 {
+				color: #EF4444; /* Vermelho */
+				margin-top: 0;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+			.pros-box ul, .cons-box ul {
+				padding-left: 1.2rem;
+				margin-bottom: 0;
+			}
+
+			/* Review Box */
+			.review-box {
+				background: linear-gradient(145deg, var(--bg-card), var(--bg-dark));
+				border-radius: 12px;
+				padding: 2rem;
+				margin: 3rem 0;
+				border: 1px solid var(--accent);
+				box-shadow: 0 4px 20px rgba(0, 255, 163, 0.1);
+			}
+			.review-box h3 {
+				margin-top: 0;
+				color: var(--accent);
+				text-align: center;
+				font-size: 1.8em;
+				margin-bottom: 1.5rem;
+			}
+			.review-scores {
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: 1rem;
+				margin-bottom: 2rem;
+			}
+			.score-item {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding-bottom: 0.5rem;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+			}
+			.score-label {
+				font-weight: 600;
+			}
+			.score-value {
+				background-color: rgba(0, 255, 163, 0.15);
+				color: var(--accent);
+				padding: 0.2em 0.8em;
+				border-radius: 20px;
+				font-weight: bold;
+			}
+			.final-score {
+				text-align: center;
+				font-size: 1.5em;
+				font-weight: bold;
+				color: var(--bg-dark);
+				background-color: var(--accent);
+				padding: 1rem;
+				border-radius: 8px;
+			}
+
+			/* Afiliados Transparencia */
+			.affiliate-disclosure {
+				background-color: rgba(255, 255, 255, 0.03);
+				border-left: 4px solid var(--accent);
+				padding: 1rem 1.5rem;
+				margin: 3rem 0;
+				font-size: 0.9em;
+				color: var(--text-muted);
+				border-radius: 0 8px 8px 0;
+			}
+
+			/* Artigos Relacionados */
+			.related-posts {
+				margin-top: 4rem;
+				padding-top: 2rem;
+				border-top: 1px solid rgba(255, 255, 255, 0.1);
+			}
+			.related-posts h3 {
+				margin-bottom: 1.5rem;
+				color: var(--accent);
+			}
+			.related-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+				gap: 1.5rem;
+			}
+			.related-card {
+				background-color: var(--bg-card);
+				border-radius: 8px;
+				overflow: hidden;
+				text-decoration: none;
+				border: 1px solid rgba(255, 255, 255, 0.05);
+				transition: transform 0.2s;
+			}
+			.related-card:hover {
+				transform: translateY(-5px);
+				border-color: var(--accent);
+			}
+			.related-card img {
+				width: 100%;
+				height: 140px;
+				object-fit: cover;
+			}
+			.related-card-content {
+				padding: 1rem;
+			}
+			.related-card h4 {
+				margin: 0;
+				font-size: 1.1em;
+				color: var(--text-main);
+				line-height: 1.3;
+			}
+
+			@media (max-width: 768px) {
+				.pros-cons-container {
+					grid-template-columns: 1fr;
+				}
+				.title h1 {
+					font-size: 2.2em;
+				}
 			}
 		</style>
 	</head>
@@ -61,25 +318,119 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<Header />
 		<main>
 			<article>
+				<div class="prose" style="padding-bottom: 0; padding-top: 1em;">
+					<nav class="breadcrumbs" aria-label="Breadcrumb">
+						<a href="/">Início</a> 
+						{category && (
+							<> &gt; <a href={`/categoria/${categorySlug}/`}>{category}</a> </>
+						)}
+						&gt; <span>{title}</span>
+					</nav>
+				</div>
+
 				<div class="hero-image">
-					{heroImage && <Image src={heroImage} alt="" />}
+					{heroImage && <Image width={900} height={450} src={heroImage} alt="" />}
 				</div>
 				<div class="prose">
 					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Atualizado em <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
 						<h1>{title}</h1>
+						<div class="article-meta">
+							<span>Por <strong>{author}</strong></span>
+							<span>Publicado em <strong><FormattedDate date={pubDate} /></strong></span>
+							{category && <span>Em <strong><a href={`/categoria/${categorySlug}/`}>{category}</a></strong></span>}
+						</div>
+						{
+							updatedDate && (
+								<div class="last-updated-on">
+									Atualizado em <FormattedDate date={updatedDate} />
+								</div>
+							)
+						}
 						<hr />
 					</div>
+
+					{/* Conteúdo Principal */}
 					<slot />
+
+					{/* Prós e Contras */}
+					{(pros || cons) && (
+						<div class="pros-cons-container">
+							{pros && pros.length > 0 && (
+								<div class="pros-box">
+									<h3>✓ Pontos Positivos</h3>
+									<ul>
+										{pros.map(item => <li>{item}</li>)}
+									</ul>
+								</div>
+							)}
+							{cons && cons.length > 0 && (
+								<div class="cons-box">
+									<h3>✗ Pontos Negativos</h3>
+									<ul>
+										{cons.map(item => <li>{item}</li>)}
+									</ul>
+								</div>
+							)}
+						</div>
+					)}
+
+					{/* Avaliação (Review) */}
+					{review && (
+						<div class="review-box">
+							<h3>Veredito: {title}</h3>
+							<div class="review-scores">
+								{review.custoBeneficio && (
+									<div class="score-item">
+										<span class="score-label">Custo-Benefício</span>
+										<span class="score-value">{review.custoBeneficio}/10</span>
+									</div>
+								)}
+								{review.desempenho && (
+									<div class="score-item">
+										<span class="score-label">Desempenho</span>
+										<span class="score-value">{review.desempenho}/10</span>
+									</div>
+								)}
+								{review.construcao && (
+									<div class="score-item">
+										<span class="score-label">Construção / Qualidade</span>
+										<span class="score-value">{review.construcao}/10</span>
+									</div>
+								)}
+								{review.recursos && (
+									<div class="score-item">
+										<span class="score-label">Recursos / Funcionalidades</span>
+										<span class="score-value">{review.recursos}/10</span>
+									</div>
+								)}
+							</div>
+							<div class="final-score">
+								Nota Final: {review.notaFinal} / 10
+							</div>
+						</div>
+					)}
+
+					{/* Afiliados Transparencia */}
+					<div class="affiliate-disclosure">
+						<strong>Transparência:</strong> Alguns links deste artigo podem ser links de afiliados. Se você realizar uma compra através deles, o Nikezin Indica poderá receber uma comissão, sem custo adicional para você. Isso ajuda a manter o projeto vivo.
+					</div>
+
+					{/* Artigos Relacionados */}
+					{suggestedPosts.length > 0 && (
+						<div class="related-posts">
+							<h3>Você também pode se interessar:</h3>
+							<div class="related-grid">
+								{suggestedPosts.map(post => (
+									<a href={`/blog/${post.id}/`} class="related-card">
+										{post.data.heroImage && <Image width={240} height={140} src={post.data.heroImage} alt="" />}
+										<div class="related-card-content">
+											<h4>{post.data.title}</h4>
+										</div>
+									</a>
+								))}
+							</div>
+						</div>
+					)}
 				</div>
 			</article>
 		</main>
