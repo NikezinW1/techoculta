@@ -12,21 +12,44 @@ const allPosts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
+// Conjunto de controle global para rastrear rigorosamente quais IDs já foram exibidos na Home
+const displayedIds = new Set<string>();
+
 // 1. Destaque Único: o artigo mais recente por pubDate
 const featuredPost = allPosts[0];
+if (featuredPost) {
+	displayedIds.add(featuredPost.id);
+}
 
-// 2. Artigos Recentes: os próximos 4 artigos, excluindo estritamente o destaque
+// 2. Artigos Recentes: os próximos 4 artigos mais recentes que ainda NÃO foram exibidos
 const recentPosts = allPosts
-	.filter((post) => post.id !== featuredPost?.id)
+	.filter((post) => !displayedIds.has(post.id))
 	.slice(0, 4);
 
-// 3. Guias de Compra: conteúdos comerciais classificados (tag 'oferta'), excluindo o destaque
+recentPosts.forEach((post) => displayedIds.add(post.id));
+
+// 3. Seções por Categoria (Montagem dinâmica sem repetir artigos já exibidos)
+const categoriesList = ["Hardware", "Áudio e Headsets", "Celulares"];
+
+const categorySections = categoriesList.map((category) => {
+	const posts = allPosts
+		.filter((p) => p.data.category === category && !displayedIds.has(p.id))
+		.slice(0, 4);
+
+	posts.forEach((p) => displayedIds.add(p.id));
+
+	return {
+		category,
+		posts,
+	};
+}).filter((section) => section.posts.length > 0);
+
+// 4. Guias de Compra: conteúdos comerciais com tag 'oferta' que ainda NÃO foram exibidos
 const buyerGuides = allPosts
-	.filter((post) => post.data.tags && post.data.tags.includes('oferta') && post.id !== featuredPost?.id)
+	.filter((post) => post.data.tags && post.data.tags.includes('oferta') && !displayedIds.has(post.id))
 	.slice(0, 3);
 
-// 4. Lista de Categorias principais para seções temáticas
-const categoriesList = ["Hardware", "Áudio e Headsets", "Celulares"];
+buyerGuides.forEach((post) => displayedIds.add(post.id));
 ---
 
 <!doctype html>
@@ -352,37 +375,29 @@ const categoriesList = ["Hardware", "Áudio e Headsets", "Celulares"];
 			)}
 
 			{/* 4. SEÇÕES POR CATEGORIA */}
-			{categoriesList.map((category) => {
-				const categoryPosts = allPosts
-					.filter((p) => p.data.category === category && p.id !== featuredPost?.id)
-					.slice(0, 3);
-				
-				if (categoryPosts.length === 0) return null;
-
-				return (
-					<section>
-						<h2 class="section-title">{category}</h2>
-						<ul class="posts-grid">
-							{categoryPosts.map((post) => (
-								<li>
-									<a href={`/blog/${post.id}/`} class="card-link">
-										{post.data.heroImage && (
-											<Image width={400} height={200} src={post.data.heroImage} alt={post.data.title} />
-										)}
-										<div class="card-content">
-											<h4 class="title">{post.data.title}</h4>
-											<p class="date">
-												<FormattedDate date={post.data.pubDate} />
-											</p>
-											<span class="read-more-link">Ler artigo →</span>
-										</div>
-									</a>
-								</li>
-							))}
-						</ul>
-					</section>
-				);
-			})}
+			{categorySections.map((section) => (
+				<section>
+					<h2 class="section-title">{section.category}</h2>
+					<ul class="posts-grid">
+						{section.posts.map((post) => (
+							<li>
+								<a href={`/blog/${post.id}/`} class="card-link">
+									{post.data.heroImage && (
+										<Image width={400} height={200} src={post.data.heroImage} alt={post.data.title} />
+									)}
+									<div class="card-content">
+										<h4 class="title">{post.data.title}</h4>
+										<p class="date">
+											<FormattedDate date={post.data.pubDate} />
+										</p>
+										<span class="read-more-link">Ler artigo →</span>
+									</div>
+								</a>
+							</li>
+						))}
+					</ul>
+				</section>
+			))}
 
 			{/* 5. GUIAS DE COMPRA */}
 			{buyerGuides.length > 0 && (
