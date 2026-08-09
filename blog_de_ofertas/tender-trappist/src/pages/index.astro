@@ -12,31 +12,21 @@ const allPosts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-// Conjunto de controle global para rastrear rigorosamente quais IDs já foram exibidos na Home
-const displayedIds = new Set<string>();
-
 // 1. Destaque Único: o artigo mais recente por pubDate
 const featuredPost = allPosts[0];
-if (featuredPost) {
-	displayedIds.add(featuredPost.id);
-}
 
-// 2. Artigos Recentes: os próximos 4 artigos mais recentes que ainda NÃO foram exibidos
+// 2. Artigos Recentes: os 4 artigos mais recentes (excluindo o destaque)
 const recentPosts = allPosts
-	.filter((post) => !displayedIds.has(post.id))
+	.filter((post) => post.id !== featuredPost?.id)
 	.slice(0, 4);
 
-recentPosts.forEach((post) => displayedIds.add(post.id));
-
-// 3. Seções por Categoria (Montagem dinâmica sem repetir artigos já exibidos)
+// 3. Seções por Categoria (Garante que todo Cluster tenha sua seção própria exibida na Home)
 const categoriesList = ["Hardware", "Celulares", "Eletrodomésticos", "Áudio e Headsets"];
 
 const categorySections = categoriesList.map((category) => {
 	const posts = allPosts
-		.filter((p) => p.data.category === category && !displayedIds.has(p.id))
+		.filter((p) => p.data.category === category && p.id !== featuredPost?.id)
 		.slice(0, 4);
-
-	posts.forEach((p) => displayedIds.add(p.id));
 
 	return {
 		category,
@@ -44,12 +34,10 @@ const categorySections = categoriesList.map((category) => {
 	};
 }).filter((section) => section.posts.length > 0);
 
-// 4. Guias de Compra: conteúdos comerciais com tag 'oferta' que ainda NÃO foram exibidos
+// 4. Guias de Compra: conteúdos comerciais com tag 'oferta' (excluindo o destaque)
 const buyerGuides = allPosts
-	.filter((post) => post.data.tags && post.data.tags.includes('oferta') && !displayedIds.has(post.id))
-	.slice(0, 3);
-
-buyerGuides.forEach((post) => displayedIds.add(post.id));
+	.filter((post) => post.data.tags && post.data.tags.includes('oferta') && post.id !== featuredPost?.id)
+	.slice(0, 4);
 ---
 
 <!doctype html>
@@ -374,7 +362,7 @@ buyerGuides.forEach((post) => displayedIds.add(post.id));
 				</section>
 			)}
 
-			{/* 4. SEÇÕES POR CATEGORIA */}
+			{/* 4. SEÇÕES POR CATEGORIA (Exibe obrigatoriamente a seção de cada Cluster na Home) */}
 			{categorySections.map((section) => (
 				<section>
 					<h2 class="section-title">{section.category}</h2>
