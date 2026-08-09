@@ -12,13 +12,21 @@ const allPosts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-// O destaque é estritamente o artigo mais recente
+// 1. Destaque Único: o artigo mais recente por pubDate
 const featuredPost = allPosts[0];
 
-// Artigos recentes: os próximos 8 artigos, excluindo estritamente o post em destaque
+// 2. Artigos Recentes: os próximos 4 artigos, excluindo estritamente o destaque
 const recentPosts = allPosts
 	.filter((post) => post.id !== featuredPost?.id)
-	.slice(0, 8);
+	.slice(0, 4);
+
+// 3. Guias de Compra: conteúdos comerciais classificados (tag 'oferta'), excluindo o destaque
+const buyerGuides = allPosts
+	.filter((post) => post.data.tags && post.data.tags.includes('oferta') && post.id !== featuredPost?.id)
+	.slice(0, 3);
+
+// 4. Lista de Categorias principais para seções temáticas
+const categoriesList = ["Hardware", "Áudio e Headsets", "Celulares"];
 ---
 
 <!doctype html>
@@ -105,7 +113,7 @@ const recentPosts = allPosts
 				font-size: 0.95rem;
 			}
 
-			/* Grid de Recentes */
+			/* Grid de Posts */
 			ul.posts-grid {
 				display: grid;
 				grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -179,6 +187,48 @@ const recentPosts = allPosts
 				gap: 4px;
 			}
 
+			/* Banner Chamada de Ofertas */
+			.offers-banner {
+				background: linear-gradient(135deg, rgba(0, 229, 255, 0.1) 0%, rgba(15, 23, 42, 0.8) 100%);
+				border: 1px solid var(--accent);
+				border-radius: 12px;
+				padding: 2.5rem 2rem;
+				margin-bottom: 4rem;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 1.5rem;
+			}
+			.offers-banner-content h3 {
+				font-size: 1.4rem;
+				color: var(--text-main);
+				margin-bottom: 0.4rem;
+			}
+			.offers-banner-content p {
+				color: var(--text-muted);
+				margin: 0;
+				font-size: 0.95rem;
+			}
+			.btn-offers {
+				display: inline-block;
+				background-color: var(--accent);
+				color: var(--bg-dark);
+				padding: 0.75rem 1.5rem;
+				border-radius: 8px;
+				font-weight: 800;
+				text-decoration: none;
+				text-transform: uppercase;
+				letter-spacing: 0.5px;
+				white-space: nowrap;
+				transition: all 0.2s ease;
+				box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+			}
+			.btn-offers:hover {
+				background-color: var(--accent-dark);
+				transform: translateY(-2px);
+				box-shadow: 0 0 25px rgba(0, 229, 255, 0.6);
+			}
+
 			/* CTA Seção Blog */
 			.blog-cta-box {
 				text-align: center;
@@ -199,8 +249,9 @@ const recentPosts = allPosts
 			}
 			.btn-cta {
 				display: inline-block;
-				background-color: var(--accent);
-				color: var(--bg-dark);
+				background-color: transparent;
+				color: var(--accent);
+				border: 1px solid var(--accent);
 				padding: 0.8rem 1.8rem;
 				border-radius: 8px;
 				font-weight: 800;
@@ -208,12 +259,11 @@ const recentPosts = allPosts
 				text-transform: uppercase;
 				letter-spacing: 0.5px;
 				transition: all 0.2s ease;
-				box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
 			}
 			.btn-cta:hover {
-				background-color: var(--accent-dark);
+				background-color: rgba(0, 229, 255, 0.1);
 				transform: translateY(-2px);
-				box-shadow: 0 0 25px rgba(0, 229, 255, 0.6);
+				box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
 			}
 			
 			section {
@@ -234,17 +284,23 @@ const recentPosts = allPosts
 				.hero h1 {
 					font-size: 2.5em;
 				}
+				.offers-banner {
+					flex-direction: column;
+					text-align: center;
+				}
 			}
 		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
+			{/* 1. HERO */}
 			<section class="hero">
 				<h1>Nikezin Indica</h1>
 				<p>Curadoria de tecnologia, guias de compra e análises para ajudar você a escolher melhor seus próximos upgrades.</p>
 			</section>
 
+			{/* 2. ARTIGO EM DESTAQUE */}
 			{featuredPost && (
 				<section>
 					<h2 class="section-title">Em Destaque</h2>
@@ -267,6 +323,7 @@ const recentPosts = allPosts
 				</section>
 			)}
 
+			{/* 3. ARTIGOS RECENTES */}
 			{recentPosts.length > 0 && (
 				<section>
 					<h2 class="section-title">Artigos Recentes</h2>
@@ -294,6 +351,75 @@ const recentPosts = allPosts
 				</section>
 			)}
 
+			{/* 4. SEÇÕES POR CATEGORIA */}
+			{categoriesList.map((category) => {
+				const categoryPosts = allPosts
+					.filter((p) => p.data.category === category && p.id !== featuredPost?.id)
+					.slice(0, 3);
+				
+				if (categoryPosts.length === 0) return null;
+
+				return (
+					<section>
+						<h2 class="section-title">{category}</h2>
+						<ul class="posts-grid">
+							{categoryPosts.map((post) => (
+								<li>
+									<a href={`/blog/${post.id}/`} class="card-link">
+										{post.data.heroImage && (
+											<Image width={400} height={200} src={post.data.heroImage} alt={post.data.title} />
+										)}
+										<div class="card-content">
+											<h4 class="title">{post.data.title}</h4>
+											<p class="date">
+												<FormattedDate date={post.data.pubDate} />
+											</p>
+											<span class="read-more-link">Ler artigo →</span>
+										</div>
+									</a>
+								</li>
+							))}
+						</ul>
+					</section>
+				);
+			})}
+
+			{/* 5. GUIAS DE COMPRA */}
+			{buyerGuides.length > 0 && (
+				<section>
+					<h2 class="section-title">Guias de Compra</h2>
+					<ul class="posts-grid">
+						{buyerGuides.map((post) => (
+							<li>
+								<a href={`/blog/${post.id}/`} class="card-link">
+									{post.data.heroImage && (
+										<Image width={400} height={200} src={post.data.heroImage} alt={post.data.title} />
+									)}
+									<div class="card-content">
+										{post.data.category && <span class="category-tag">{post.data.category}</span>}
+										<h4 class="title">{post.data.title}</h4>
+										<p class="date">
+											<FormattedDate date={post.data.pubDate} />
+										</p>
+										<span class="read-more-link">Ler artigo →</span>
+									</div>
+								</a>
+							</li>
+						))}
+					</ul>
+				</section>
+			)}
+
+			{/* 6. CHAMADA DE OFERTAS */}
+			<section class="offers-banner">
+				<div class="offers-banner-content">
+					<h3>Encontrou um produto que quer comprar?</h3>
+					<p>Confira nossas ofertas e oportunidades selecionadas pelo Nikezin Indica.</p>
+				</div>
+				<a href="/ofertas/" class="btn-offers">Ver ofertas →</a>
+			</section>
+
+			{/* 7. FINAL DA HOME */}
 			<section class="blog-cta-box">
 				<h3>Quer explorar todo o conteúdo?</h3>
 				<p>Acesse nossa biblioteca completa com reviews, comparativos e guias técnicos.</p>
