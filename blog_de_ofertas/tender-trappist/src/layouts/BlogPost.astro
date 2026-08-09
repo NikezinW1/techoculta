@@ -11,7 +11,7 @@ type Props = CollectionEntry<'blog'>['data'];
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 ---
 
-<html lang="en">
+<html lang="pt-BR">
 	<head>
 		<BaseHead title={title} description={description} />
 		<style>
@@ -30,27 +30,29 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				box-shadow: var(--box-shadow);
 			}
 			.prose {
-				width: 720px;
+				width: 800px;
 				max-width: calc(100% - 2em);
 				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
+				padding: 2em 1em;
+				color: var(--text-main);
 			}
 			.title {
-				margin-bottom: 1em;
+				margin-bottom: 2em;
 				padding: 1em 0;
 				text-align: center;
-				line-height: 1;
+				line-height: 1.2;
 			}
 			.title h1 {
-				margin: 0 0 0.5em 0;
+				margin: 0 0 0.2em 0;
 			}
 			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
+				margin-bottom: 1em;
+				color: var(--accent);
+				font-weight: 600;
 			}
 			.last-updated-on {
 				font-style: italic;
+				color: var(--text-muted);
 			}
 		</style>
 	</head>
@@ -69,7 +71,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 							{
 								updatedDate && (
 									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
+										Atualizado em <FormattedDate date={updatedDate} />
 									</div>
 								)
 							}
