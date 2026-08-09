@@ -7,21 +7,16 @@ import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
-// Pega todos os posts
-const allPosts = await getCollection('blog');
-// Filtra apenas os que possuem a tag 'oferta'
-const offerPosts = allPosts
-	.filter(post => post.data.tags && post.data.tags.includes('oferta'))
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-
-// Fallback preventivo: Se não houver nenhum post com a tag 'oferta', mostra todos
-const postsToShow = offerPosts.length > 0 ? offerPosts : allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+// Pega todos os posts do blog ordenados por data
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
 ---
 
 <!doctype html>
 <html lang="pt-BR">
 	<head>
-		<BaseHead title={`Ofertas e Achados - ${SITE_TITLE}`} description="Curadoria das melhores ofertas de hardware, periféricos e eletrônicos." />
+		<BaseHead title={`Blog & Análises - ${SITE_TITLE}`} description="Todos os artigos, análises, comparativos e guias de hardware do Nikezin Indica." />
 		<style>
 			main {
 				width: 100%;
@@ -33,6 +28,7 @@ const postsToShow = offerPosts.length > 0 ? offerPosts : allPosts.sort((a, b) =>
 			.page-title {
 				text-align: center;
 				margin-bottom: 0.5em;
+				color: var(--text-main);
 			}
 			.page-subtitle {
 				text-align: center;
@@ -95,13 +91,13 @@ const postsToShow = offerPosts.length > 0 ? offerPosts : allPosts.sort((a, b) =>
 			.cta-badge {
 				display: block;
 				text-align: center;
-				background-color: rgba(0, 255, 163, 0.1);
+				background-color: rgba(0, 229, 255, 0.1);
 				color: var(--accent);
 				padding: 0.5rem;
 				border-radius: 6px;
 				font-weight: 800;
 				text-transform: uppercase;
-				font-size: 0.9em;
+				font-size: 0.85em;
 				transition: background-color 0.2s ease;
 			}
 			ul li:hover .cta-badge {
@@ -118,13 +114,13 @@ const postsToShow = offerPosts.length > 0 ? offerPosts : allPosts.sort((a, b) =>
 	<body>
 		<Header />
 		<main>
-			<h1 class="page-title">Ofertas de Hardware e Eletrônicos</h1>
-			<p class="page-subtitle">As peças com o menor preço do mercado, testadas e validadas por nós.</p>
+			<h1 class="page-title">Blog & Análises</h1>
+			<p class="page-subtitle">Guia completo de hardware, periféricos, celulares e recomendações do Nikezin Indica.</p>
 			
 			<section>
 				<ul>
 					{
-						postsToShow.map((post) => (
+						posts.map((post) => (
 							<li>
 								<a href={`/blog/${post.id}/`} class="card-link">
 									{post.data.heroImage && (
@@ -135,7 +131,7 @@ const postsToShow = offerPosts.length > 0 ? offerPosts : allPosts.sort((a, b) =>
 											<FormattedDate date={post.data.pubDate} />
 										</p>
 										<h4 class="title">{post.data.title}</h4>
-										<span class="cta-badge">Ver Oferta 👀</span>
+										<span class="cta-badge">Ler Artigo 📖</span>
 									</div>
 								</a>
 							</li>
