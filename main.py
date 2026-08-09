@@ -42,7 +42,10 @@ def buscar_oferta_automatica():
     # Feed de Promoções do Fórum Hardmob
     url_feed = "https://www.hardmob.com.br/external.php?type=RSS2&forumids=407"
     try:
-        feed = feedparser.parse(url_feed)
+        # Burlar o bloqueio de anti-bot do Hardmob (Cloudflare) usando um User-Agent real
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36'}
+        resposta = requests.get(url_feed, headers=headers)
+        feed = feedparser.parse(resposta.content)
     except Exception as e:
         print(f"Erro ao ler feed RSS: {e}")
         return None
