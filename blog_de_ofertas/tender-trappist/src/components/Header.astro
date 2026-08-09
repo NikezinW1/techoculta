@@ -35,13 +35,16 @@ import HeaderLink from './HeaderLink.astro';
 		align-items: center;
 	}
 	.site-logo {
-		height: 70px;
-		width: auto;
+		height: 80px;
+		width: 80px;
+		object-fit: contain;
 		vertical-align: middle;
+		transform: scale(1.8); /* Dá um zoom na imagem para ignorar a borda preta enorme */
+		mix-blend-mode: screen; /* Faz o fundo preto da imagem ficar transparente! */
 		transition: transform 0.2s ease;
 	}
 	.site-logo:hover {
-		transform: scale(1.05);
+		transform: scale(1.9);
 	}
 	h2 a,
 	h2 a.active {
