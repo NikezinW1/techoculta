@@ -41,6 +41,8 @@ def gerar_post():
         
     descricao = input("👉 Descrição curta (SEO): ").strip()
     tags_input = input("👉 Tags (separadas por vírgula): ").strip()
+    imagem_input = input("👉 Nome da imagem de capa (ex: capa-b450m.jpg) [Pressione Enter para usar o padrão]: ").strip()
+    
     
     # 2. Processamento automático
     slug = formatar_slug(titulo)
@@ -55,8 +57,11 @@ def gerar_post():
     
     # 4. Formatação e Injeção
     
+    # Definição da Imagem
+    caminho_imagem = f"../../assets/{imagem_input}" if imagem_input else "../../assets/blog-placeholder-about.jpg"
+    
     # Montagem do Frontmatter
-    frontmatter = f"---\ntitle: \"{titulo}\"\ndescription: \"{descricao}\"\npubDate: \"{data_atual}\"\nheroImage: \"../../assets/blog-placeholder-about.jpg\""
+    frontmatter = f"---\ntitle: '{titulo}'\ndescription: '{descricao}'\npubDate: '{data_atual}'\nheroImage: '{caminho_imagem}'"
     
     # Se houver tags, adicionamos no formato de lista YAML
     if tags:
