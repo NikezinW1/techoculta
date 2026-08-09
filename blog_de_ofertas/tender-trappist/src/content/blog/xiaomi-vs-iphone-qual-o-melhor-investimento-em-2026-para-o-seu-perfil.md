@@ -2,7 +2,7 @@
 title: 'Xiaomi vs. iPhone: Qual o melhor investimento em 2026 para o seu perfil?'
 description: 'Um comparativo completo e definitivo entre o ecossistema iOS e Android (Xiaomi). Descubra qual entrega mais valor em bateria, câmeras, desempenho e revenda.'
 pubDate: 'Aug 09 2026'
-heroImage: '/blog-placeholder-about.jpg'
+heroImage: "../../assets/capa-xiaomi-iphone.jpg"
 tags: ['smartphone', 'apple', 'xiaomi', 'comparativo', 'review']
 ---
 
