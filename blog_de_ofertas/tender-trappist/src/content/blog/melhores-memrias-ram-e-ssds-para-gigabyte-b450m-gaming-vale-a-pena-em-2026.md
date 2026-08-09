@@ -25,9 +25,4 @@ A B450M conta com slot M.2 nativo que suporta velocidades NVMe. Deixar o sistema
 
 * **Recomendação:** SSD Kingston NV2 1TB NVMe PCIe 4.0 (compatível com retrocompatibilidade PCIe 3.0 da placa). Oferece velocidades de leitura de até 3500 MB/s.
 * **Onde encontrar:** 🛒 **[Ver Preço na Amazon](https://www.amazon.com.br/dp/EXEMPLO?tag=techoculta-20)**
-
----FIM
-
-
----
-*A Tech Oculta participa do Programa de Associados da Amazon. Podemos receber comissões por compras qualificadas efetuadas através dos links deste site.*
+

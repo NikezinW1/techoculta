@@ -54,11 +54,6 @@ def gerar_post():
     conteudo = coletar_conteudo()
     
     # 4. Formatação e Injeção
-    aviso_legal = (
-        "\n\n---\n"
-        "*A Tech Oculta participa do Programa de Associados da Amazon. "
-        "Podemos receber comissões por compras qualificadas efetuadas através dos links deste site.*"
-    )
     
     # Montagem do Frontmatter
     frontmatter = f"---\ntitle: \"{titulo}\"\ndescription: \"{descricao}\"\npubDate: \"{data_atual}\"\nheroImage: \"../../assets/blog-placeholder-about.jpg\""
@@ -71,7 +66,7 @@ def gerar_post():
     frontmatter += "\n---\n"
 
     # Junta as partes
-    conteudo_completo = frontmatter + conteudo + aviso_legal
+    conteudo_completo = frontmatter + conteudo
     
     # Salvando no diretório nativo do Astro
     pasta_destino = os.path.join("src", "content", "blog")
