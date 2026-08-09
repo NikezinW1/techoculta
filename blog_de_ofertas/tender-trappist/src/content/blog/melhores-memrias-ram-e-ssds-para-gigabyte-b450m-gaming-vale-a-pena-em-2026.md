@@ -2,7 +2,7 @@
 title: "Melhores Memórias RAM e SSDs para Gigabyte B450M Gaming: Vale a Pena em 2026?"
 description: "Descubra os melhores componentes de hardware custo-benefício compatíveis com a linha B450M, o sweet spot de frequência DDR4 e como resolver o problema de memória reservada."
 pubDate: "Aug 08 2026"
-heroImage: "../../assets/capa-b450m.jpg"
+heroImage: "../../assets/capa-b450m.png"
 tags:
   - 'hardware'
   - 'upgrade'
