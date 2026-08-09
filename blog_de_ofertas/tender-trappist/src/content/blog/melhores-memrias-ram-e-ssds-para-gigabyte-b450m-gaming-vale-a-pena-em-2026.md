@@ -44,8 +44,8 @@ Se você já tem (ou vai comprar) a B450M Gaming, precisa pareá-la com componen
 
 ### 1. Memória RAM: O "Sweet Spot" dos Ryzens
 Para evitar instabilidades no controlador de memória da placa, o limite seguro e extremamente rápido recomendado é o de 3200MHz em *Dual Channel* (dois pentes).
-* 🛒 **[Ver preço atualizado do Kit Kingston Fury Beast 16GB (2x8GB) 3200MHz CL16 na Amazon](https://www.amazon.com.br/dp/EXEMPLO?tag=techoculta-20)**
+* 🛒 **[Ver preço atualizado do Kit Kingston Fury Beast 16GB (2x8GB) 3200MHz CL16 na Amazon](https://link.amazon/B0d6FWtxK)**
 
 ### 2. Armazenamento: Velocidade Máxima no Slot M.2
 Abandone os HDs antigos e tire proveito total do slot M.2 integrado da sua B450M.
-* 🛒 **[Ver preço atualizado do SSD Kingston NV2 1TB NVMe na Amazon](https://www.amazon.com.br/dp/EXEMPLO?tag=techoculta-20)**
+* 🛒 **[Ver preço atualizado do SSD Kingston NV2 1TB NVMe na Amazon](https://link.amazon/B02xTk1PV)**
