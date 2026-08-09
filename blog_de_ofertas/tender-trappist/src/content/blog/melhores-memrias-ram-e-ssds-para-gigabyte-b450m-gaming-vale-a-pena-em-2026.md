@@ -16,7 +16,9 @@ Neste artigo aprofundado, vamos detalhar os upgrades essenciais de memória e ar
 
 Antes de partirmos para os componentes, vale a pena conferir uma análise prática sobre o comportamento de memórias e SSDs nessa plataforma:
 
-> *[Aqui você pode inserir o bloco embed do YouTube com um review ou dica de montagem para a B450M]*
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 20px 0;">
+  <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px;" src="https://www.youtube.com/embed/9B0181zY9vA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 ---
 
