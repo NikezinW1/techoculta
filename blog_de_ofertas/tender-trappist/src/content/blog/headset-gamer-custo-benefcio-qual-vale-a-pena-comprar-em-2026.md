@@ -30,7 +30,7 @@ Para quem está montando o primeiro setup ou não quer gastar muito, esse é um 
 - Por ser cabo fixo P2 (sem USB/software), não tem equalização digital nem surround virtual.
 - Almofadas confortáveis, mas não no nível de memory foam premium.
 
-🛒 **[Ver preço atualizado do JBL Quantum 100M2 na Amazon](https://www.amazon.com.br/dp/EXEMPLO?tag=SEU_TAG_AQUI)**
+🛒 **[Ver preço atualizado do JBL Quantum 100M2 na Amazon](https://link.amazon/B07DyRiPq)**
 
 ---
 
@@ -44,7 +44,7 @@ Recomendação consistente de especialistas em hardware há três gerações —
 - **Almofadas em memory foam com couro sintético respirável:** Conforto de verdade em sessões longas, sem esquentar o ouvido.
 - **Microfone destacável:** Facilidade pra guardar/transportar e usar só quando precisar.
 
-🛒 **[Ver preço atualizado do HyperX Cloud III na Amazon](https://www.amazon.com.br/dp/EXEMPLO?tag=SEU_TAG_AQUI)**
+🛒 **[Ver preço atualizado do HyperX Cloud III na Amazon](https://link.amazon/B0aLNCITS)**
 
 ---
 
@@ -58,7 +58,7 @@ Pra quem não quer abrir mão de qualidade e cansou de fio atravessando a mesa �
 - **DTS Headphone:X v2.0:** Som surround virtual que realmente ajuda a localizar direção em jogos competitivos, não é só efeito de marketing.
 - **Bluetooth + dongle 2.4GHz simultâneos:** Dá pra ficar conectado no PC via dongle (baixa latência) e no celular via Bluetooth ao mesmo tempo, sem precisar trocar.
 
-🛒 **[Ver preço atualizado do SteelSeries Arctis Nova 7 na Amazon](https://www.amazon.com.br/dp/EXEMPLO?tag=SEU_TAG_AQUI)**
+🛒 **[Ver preço atualizado do SteelSeries Arctis Nova 7 na Amazon](https://link.amazon/B0ggmZiYF)**
 
 ---
 
