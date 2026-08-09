@@ -8,7 +8,7 @@ tags: ['hardware', 'upgrade', 'b450m', 'gigabyte', 'review']
 
 Se existe uma placa-mãe que pode ser considerada um "tanque de guerra" no mercado de custo-benefício, é a **Gigabyte B450M Gaming**. Ao longo dos anos, ela se consolidou como uma das portas de entrada mais populares e acessíveis para a plataforma AM4 da AMD. 
 
-Mas a grande dúvida que fica é: em pleno 2026, ainda vale a pena investir nesta placa? Ela suporta os processadores mais modernos? Neste artigo da **Tech Oculta**, vamos analisar a fundo a construção, os limites e o perfil ideal de usuário para essa placa-mãe clássica.
+Mas a grande dúvida que fica é: em pleno 2026, ainda vale a pena investir nesta placa? Ela suporta os processadores mais modernos? Neste artigo do **Nikezin Indica**, vamos analisar a fundo a construção, os limites e o perfil ideal de usuário para essa placa-mãe clássica.
 
 ---
 
@@ -36,22 +36,11 @@ Como toda placa voltada para o baixo custo, a B450M Gaming faz algumas concessõ
 
 ---
 
-## 💻 Análise em Vídeo: Teste de Bancada e VRM
 
-Para comprovar como a placa se comporta na prática – especialmente empurrando processadores exigentes como o 5700X3D –, assista a este teste de bancada aprofundado no YouTube (o vídeo já iniciará direto na parte dos testes do VRM):
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 20px 0;">
-  <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px;" src="https://www.youtube.com/embed/QfKTJfY5_PE?start=263" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
-<div style="font-size: 0.85rem; color: #888; text-align: center; margin-top: -10px; margin-bottom: 20px;">
-  Vídeo de análise e testes compartilhado do canal <strong>Rocha PCista</strong>.
-</div>
-
----
 
 ## 🎁 Bônus Exclusivo: O Setup Custo-Benefício Perfeito
 
-Se você já tem (ou vai comprar) a B450M Gaming, precisa pareá-la com componentes que extraiam o máximo desempenho sem gargalos. Aqui estão as recomendações definitivas da Tech Oculta para fechar o seu kit com chave de ouro:
+Se você já tem (ou vai comprar) a B450M Gaming, precisa pareá-la com componentes que extraiam o máximo desempenho sem gargalos. Aqui estão as recomendações definitivas do Nikezin Indica para fechar o seu kit com chave de ouro:
 
 ### 1. Memória RAM: O "Sweet Spot" dos Ryzens
 Para evitar instabilidades no controlador de memória da placa, o limite seguro e extremamente rápido recomendado é o de 3200MHz em *Dual Channel* (dois pentes).

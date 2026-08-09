@@ -12,18 +12,7 @@ Neste artigo aprofundado, vamos analisar os pilares que definem a compra de cada
 
 ---
 
-## 📱 Análise em Vídeo: O que os especialistas dizem?
 
-Antes de entrarmos nos detalhes técnicos, vale a pena conferir uma análise visual detalhada sobre o comportamento desses aparelhos no dia a dia:
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 20px 0;">
-  <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px;" src="https://www.youtube.com/embed/gAJilLT_amk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
-<div style="font-size: 0.85rem; color: #888; text-align: center; margin-top: -10px; margin-bottom: 20px;">
-  Vídeo de análise e testes compartilhado do canal <strong>TudoCelular</strong>.
-</div>
-
----
 
 ## 1. Xiaomi: O Rei do Custo-Benefício e Liberdade
 
