@@ -1,0 +1,100 @@
+---
+interface Props {
+  productName: string;
+  amazonUrl?: string;
+  mercadoLivreUrl?: string;
+  magaluUrl?: string;
+  kabumUrl?: string;
+}
+const { productName, amazonUrl, mercadoLivreUrl, magaluUrl, kabumUrl } = Astro.props;
+---
+
+<div class="store-buttons">
+  <p class="store-buttons-label">🛒 Ver preço atualizado do {productName}:</p>
+  <div class="store-buttons-row">
+    {amazonUrl && <a href={amazonUrl} class="store-btn store-btn-amazon" target="_blank" rel="nofollow sponsored noopener">Amazon</a>}
+    {mercadoLivreUrl && <a href={mercadoLivreUrl} class="store-btn store-btn-ml" target="_blank" rel="nofollow sponsored noopener">Mercado Livre</a>}
+    {magaluUrl && <a href={magaluUrl} class="store-btn store-btn-magalu" target="_blank" rel="nofollow sponsored noopener">Magalu</a>}
+    {kabumUrl && <a href={kabumUrl} class="store-btn store-btn-kabum" target="_blank" rel="nofollow sponsored noopener">KaBuM!</a>}
+  </div>
+</div>
+
+<style>
+  .store-buttons {
+    margin: 2em 0;
+    padding: 1.5em;
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .store-buttons-label {
+    font-weight: 600;
+    margin-bottom: 1em;
+    color: var(--text-main);
+  }
+  .store-buttons-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .store-btn {
+    background-color: var(--accent);
+    color: var(--bg-dark) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 8px;
+    padding: 0.6em 1.2em;
+    font-weight: 800;
+    line-height: 1.4;
+    display: inline-block;
+    text-decoration: none !important;
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+    transition: all 0.2s;
+  }
+  .store-btn:hover {
+    background-color: var(--accent-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px rgba(0, 229, 255, 0.7);
+  }
+  
+  /* Cores específicas por loja (opcional, mas fica legal) */
+  .store-btn-amazon {
+    background-color: #ff9900;
+    box-shadow: 0 0 15px rgba(255, 153, 0, 0.4);
+  }
+  .store-btn-amazon:hover {
+    background-color: #e68a00;
+    box-shadow: 0 0 25px rgba(255, 153, 0, 0.7);
+  }
+  
+  .store-btn-ml {
+    background-color: #ffe600;
+    box-shadow: 0 0 15px rgba(255, 230, 0, 0.4);
+  }
+  .store-btn-ml:hover {
+    background-color: #e6cf00;
+    box-shadow: 0 0 25px rgba(255, 230, 0, 0.7);
+  }
+  
+  .store-btn-magalu {
+    background-color: #0086ff;
+    box-shadow: 0 0 15px rgba(0, 134, 255, 0.4);
+    color: white !important;
+  }
+  .store-btn-magalu:hover {
+    background-color: #0073e6;
+    box-shadow: 0 0 25px rgba(0, 134, 255, 0.7);
+  }
+  
+  .store-btn-kabum {
+    background-color: #ff6500;
+    box-shadow: 0 0 15px rgba(255, 101, 0, 0.4);
+    color: white !important;
+  }
+  .store-btn-kabum:hover {
+    background-color: #e65c00;
+    box-shadow: 0 0 25px rgba(255, 101, 0, 0.7);
+  }
+</style>
