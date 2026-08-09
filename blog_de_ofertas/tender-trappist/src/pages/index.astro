@@ -29,7 +29,7 @@ const recentPosts = allPosts
 recentPosts.forEach((post) => displayedIds.add(post.id));
 
 // 3. Seções por Categoria (Montagem dinâmica sem repetir artigos já exibidos)
-const categoriesList = ["Hardware", "Áudio e Headsets", "Celulares"];
+const categoriesList = ["Hardware", "Celulares", "Eletrodomésticos", "Áudio e Headsets"];
 
 const categorySections = categoriesList.map((category) => {
 	const posts = allPosts
