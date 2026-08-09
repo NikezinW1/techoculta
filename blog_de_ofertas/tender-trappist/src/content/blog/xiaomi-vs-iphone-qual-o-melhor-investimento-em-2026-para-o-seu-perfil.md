@@ -29,7 +29,7 @@ Lançado em setembro de 2025, o iPhone 17 Pro Max é o modelo mais avançado já
 - **Bateria de 5.088mAh:** Autonomia de até 37h de reprodução de vídeo, com carregamento MagSafe de 25W e reverse wireless charging.
 - **Longevidade de Software:** A Apple atualiza seus aparelhos por muitos anos, garantindo segurança e fluidez prolongada — e o valor de revenda de um iPhone usado desvaloriza muito menos que qualquer concorrente Android.
 
-🛒 **[Ver preço atualizado do iPhone 17 Pro Max na Amazon](https://www.amazon.com.br/dp/EXEMPLO?tag=SEU_TAG_AQUI)**
+🛒 **[Ver preço atualizado do iPhone 17 Pro Max na Amazon](https://link.amazon/A09YUDr22)**
 
 ---
 
@@ -44,7 +44,7 @@ Lançado oficialmente no Brasil em outubro de 2025, com preço equivalente ao de
 - **Carregamento Ultrarrápido:** 100W com fio, recarregando o aparelho em uma fração do tempo que um iPhone leva.
 - **Certificação IP68 e HyperOS 3:** Resistência à água e poeira, com o sistema mais recente da Xiaomi já de fábrica.
 
-🛒 **[Ver preço atualizado do Xiaomi 15T Pro na Amazon](https://www.amazon.com.br/dp/EXEMPLO?tag=SEU_TAG_AQUI)**
+🛒 **[Ver preço atualizado do Xiaomi 15T Pro na Amazon](https://link.amazon/B0hsnVqxm)**
 
 ---
 
