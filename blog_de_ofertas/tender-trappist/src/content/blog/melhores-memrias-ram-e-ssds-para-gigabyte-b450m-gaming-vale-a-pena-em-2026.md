@@ -36,7 +36,17 @@ Como toda placa voltada para o baixo custo, a B450M Gaming faz algumas concessõ
 
 ---
 
+## ⚠️ Atenção Antes de Comprar: O Problema da BIOS Antiga
 
+Um detalhe que pega muita gente de surpresa: unidades da Gigabyte B450M Gaming que saem de fábrica com uma versão antiga de BIOS não reconhecem processadores Ryzen da série 5000 direto da caixa. Isso significa que, ao instalar um Ryzen 5 5600 ou Ryzen 7 5700X3D numa placa com BIOS desatualizada, o PC pode simplesmente não dar boot.
+
+Antes de comprar (ou montar o PC), verifique:
+
+- Se a loja informa a versão de BIOS já instalada na placa (algumas revendas atualizam antes de enviar).
+- Se a sua placa tem suporte a Q-Flash ou BIOS FlashBack: esses recursos permitem atualizar a BIOS usando apenas um pendrive, sem precisar de um processador mais antigo instalado primeiro.
+- Se não tiver esse recurso: você vai precisar de um Ryzen de geração anterior (1ª, 2ª ou 3ª geração) só para fazer a atualização inicial da BIOS antes de instalar o processador definitivo — um custo/trabalho extra que vale planejar com antecedência.
+
+---
 
 ## 🎁 Bônus Exclusivo: O Setup Custo-Benefício Perfeito
 
