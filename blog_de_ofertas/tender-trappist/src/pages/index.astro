@@ -1,8 +1,15 @@
 ---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
 ---
 
 <!doctype html>
@@ -10,78 +17,89 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
-			.hero {
+			main {
+				width: 1080px;
+			}
+			.page-title {
 				text-align: center;
-				padding: 4em 0;
+				margin-bottom: 1.5em;
 			}
-			.hero h1 {
-				font-size: 4em;
-				margin-bottom: 0.2em;
-				background: linear-gradient(to right, #F8FAFC, var(--accent));
-				-webkit-background-clip: text;
-				-webkit-text-fill-color: transparent;
+			ul {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+				gap: 2rem;
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
 			}
-			.hero p {
-				font-size: 1.2em;
-				color: var(--text-muted);
-				max-width: 600px;
-				margin: 0 auto 3em auto;
-			}
-			.cta-btn {
-				display: inline-block;
-				background-color: var(--accent);
-				color: var(--bg-dark) !important;
-				padding: 1em 2em;
-				border-radius: 8px;
-				font-weight: 800;
-				font-size: 1.1em;
-				text-transform: uppercase;
-				letter-spacing: 1px;
-				text-decoration: none;
-				box-shadow: 0 0 20px rgba(0, 255, 163, 0.4);
+			ul li {
+				background-color: var(--bg-card);
+				border-radius: 12px;
+				overflow: hidden;
+				border: 1px solid rgba(255, 255, 255, 0.05);
 				transition: all 0.3s ease;
 			}
-			.cta-btn:hover {
-				transform: translateY(-3px);
-				box-shadow: 0 0 30px rgba(0, 255, 163, 0.6);
-				background-color: var(--accent-dark);
+			ul li:hover {
+				transform: translateY(-5px);
+				border-color: var(--accent);
+				box-shadow: var(--box-shadow);
 			}
-			.features {
-				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-				gap: 2em;
-				margin-top: 4em;
+			ul li * {
+				text-decoration: none;
 			}
-			.feature-card {
-				background-color: var(--bg-card);
-				padding: 2.5em;
-				border-radius: 12px;
-				border: 1px solid rgba(255, 255, 255, 0.05);
+			ul li img {
+				width: 100%;
+				height: 200px;
+				object-fit: cover;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+				border-radius: 0;
 			}
-			.feature-card h3 {
+			.card-content {
+				padding: 1.5rem;
+			}
+			.title {
+				margin: 0 0 0.5rem 0;
+				font-size: 1.4rem;
+				line-height: 1.3;
+				color: var(--text-main);
+			}
+			.date {
+				margin: 0;
 				color: var(--accent);
-				margin-bottom: 1em;
+				font-size: 0.9em;
+				font-weight: 600;
+			}
+			@media (max-width: 720px) {
+				ul {
+					grid-template-columns: 1fr;
+				}
 			}
 		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<section class="hero">
-				<h1>Tech Oculta</h1>
-				<p>O submundo do hardware e da tecnologia. Análises sinceras, reviews detalhados e as melhores ofertas garimpadas para o seu setup.</p>
-				<a href="/blog" class="cta-btn">Explorar Ofertas 🔥</a>
-			</section>
-
-			<section class="features">
-				<div class="feature-card">
-					<h3>💡 Reviews de Hardware</h3>
-					<p>Testamos placas de vídeo, processadores e periféricos para descobrir o verdadeiro custo-benefício que as marcas tentam esconder.</p>
-				</div>
-				<div class="feature-card">
-					<h3>💰 Ofertas Verificadas</h3>
-					<p>Monitoramos o mercado diariamente para trazer links diretos de ofertas na Amazon que realmente valem a pena para o seu bolso.</p>
-				</div>
+			<h1 class="page-title">Últimos Artigos e Análises</h1>
+			<section>
+				<ul>
+					{
+						posts.map((post) => (
+							<li>
+								<a href={`/blog/${post.id}/`}>
+									{post.data.heroImage && (
+										<Image width={720} height={360} src={post.data.heroImage} alt="" />
+									)}
+									<div class="card-content">
+										<p class="date">
+											<FormattedDate date={post.data.pubDate} />
+										</p>
+										<h4 class="title">{post.data.title}</h4>
+									</div>
+								</a>
+							</li>
+						))
+					}
+				</ul>
 			</section>
 		</main>
 		<Footer />
