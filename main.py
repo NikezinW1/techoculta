@@ -39,8 +39,8 @@ def extrair_asin_amazon(url):
 
 def buscar_oferta_automatica():
     """Lê o feed RSS, filtra pelo nicho e converte o link."""
-    # Exemplo usando o feed de informática do Promobit
-    url_feed = "https://www.promobit.com.br/rss/informatica"
+    # Feed de Promoções do Fórum Hardmob
+    url_feed = "https://www.hardmob.com.br/external.php?type=RSS2&forumids=407"
     try:
         feed = feedparser.parse(url_feed)
     except Exception as e:
