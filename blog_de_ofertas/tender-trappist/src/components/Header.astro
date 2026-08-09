@@ -5,7 +5,12 @@ import HeaderLink from './HeaderLink.astro';
 
 <header>
 	<nav>
-		<h2><a href="/">{SITE_TITLE}</a></h2>
+		<h2>
+			<a href="/">
+				<img src="/logo.png" alt="Tech Oculta" class="site-logo" />
+				<!-- Caso a imagem falhe, o alt text vai aparecer -->
+			</a>
+		</h2>
 		<div class="internal-links">
 			<HeaderLink href="/">Início</HeaderLink>
 			<HeaderLink href="/blog">Ofertas</HeaderLink>
@@ -26,19 +31,22 @@ import HeaderLink from './HeaderLink.astro';
 	}
 	h2 {
 		margin: 0;
-		font-size: 1.4em;
-		font-weight: 800;
-		text-transform: uppercase;
-		letter-spacing: 1.5px;
+		display: flex;
+		align-items: center;
+	}
+	.site-logo {
+		height: 45px;
+		width: auto;
+		vertical-align: middle;
+		transition: transform 0.2s ease;
+	}
+	.site-logo:hover {
+		transform: scale(1.05);
 	}
 	h2 a,
 	h2 a.active {
 		text-decoration: none;
 		color: var(--text-main);
-	}
-	h2 a span {
-		color: var(--accent);
-		text-shadow: 0 0 10px rgba(0, 255, 163, 0.4);
 	}
 	nav {
 		display: flex;
