@@ -46,8 +46,8 @@ Isso não significa comprar por impulso. Significa que, se o upgrade já estava 
 
 ### Recomendações de kit para não errar na compra:
 
-- 🛒 **[Ver preço atualizado do Kit Kingston Fury Beast 16GB (2x8GB) 3200MHz na Amazon](https://www.amazon.com.br/dp/EXEMPLO?tag=SEU_TAG_AQUI)**
-- 🛒 **[Ver preço atualizado do SSD Kingston NV2 1TB NVMe na Amazon](https://www.amazon.com.br/dp/EXEMPLO?tag=SEU_TAG_AQUI)**
+- 🛒 **[Ver preço atualizado do Kit Kingston Fury Beast 16GB (2x8GB) 3200MHz na Amazon](https://link.amazon/B09zluPok)**
+- 🛒 **[Ver preço atualizado do SSD Kingston NV2 1TB NVMe na Amazon](https://link.amazon/B04e9jcM8)**
 
 Se você já tem (ou está pensando em montar) um setup com a B450M Gaming, [confira nossa análise completa da placa](/blog/melhores-memrias-ram-e-ssds-para-gigabyte-b450m-gaming-vale-a-pena-em-2026/) pra saber exatamente qual configuração de memória e armazenamento extrai o máximo dela sem gargalos.
 
