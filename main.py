@@ -1,16 +1,16 @@
 import os
-import requests
+import re
 import hmac
-from flask import Flask, jsonify, request
-from urllib.parse import urlparse, urlencode, parse_qsl
+import requests
+import feedparser
+from flask import Flask, jsonify
 
 app = Flask(__name__)
 
-# Configurações via variáveis de ambiente
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 CHAT_ID = os.environ.get("CHAT_ID")
 SECRET_KEY = os.environ.get("SECRET_KEY", "")
-AMAZON_TAG = os.environ.get("AMAZON_TAG", "") # Agora puxamos a sua tag do Render!
+AMAZON_TAG = os.environ.get("AMAZON_TAG")
 
 def enviar_mensagem_telegram(texto):
     if not TELEGRAM_TOKEN or not CHAT_ID:
@@ -24,69 +24,84 @@ def enviar_mensagem_telegram(texto):
         "disable_web_page_preview": False
     }
     
-    response = requests.post(url, json=payload)
-    response.raise_for_status()
-    return response.json()
-
-def embutir_tag_amazon(url, tag):
-    """Função inteligente que injeta a sua tag de afiliado no link"""
-    if not tag or "amazon" not in url.lower():
-        return url # Se não tiver tag ou não for da Amazon, retorna normal
-        
-    parsed = urlparse(url)
-    query_params = dict(parse_qsl(parsed.query))
-    query_params['tag'] = tag # Sobrescreve ou adiciona a sua tag
-    
-    new_query = urlencode(query_params)
-    return parsed._replace(query=new_query).geturl()
-
-@app.route('/', methods=['GET'])
-def index():
-    return "Serviço do Bot do Telegram Ativo e Rodando!", 200
-
-@app.route('/keep-alive', methods=['GET'])
-def keep_alive():
-    return jsonify({"status": "ok"}), 200
-
-# Evoluímos a rota para aceitar POST também, assim você pode integrá-la com n8n/Make no futuro!
-@app.route('/disparar-oferta/<key>', methods=['GET', 'POST'])
-def disparar_oferta(key):
-    # BLINDAGEM: hmac.compare_digest previne "Timing Attacks"
-    if not SECRET_KEY or not hmac.compare_digest(key, SECRET_KEY):
-        return jsonify({"erro": "Acesso não autorizado."}), 403
-        
-    # Pega os dados enviados por POST. Se for um GET comum (teste de navegador), usa os dados de placeholder
-    dados = request.get_json(silent=True) or {}
-    
-    produto = dados.get("produto", "Notebook Gamer de Última Geração (TESTE)")
-    preco_antigo = dados.get("preco_antigo", "R$ 7.999,00")
-    preco_novo = dados.get("preco_novo", "R$ 4.599,00")
-    link_original = dados.get("link", "https://www.amazon.com.br/dp/B00EXEMPLO")
-    
-    # Injeta automaticamente a sua AMAZON_TAG que está no painel do Render
-    link_com_tag = embutir_tag_amazon(link_original, AMAZON_TAG)
-        
-    mensagem_html = (
-        "🔥 <b>OFERTA IMPERDÍVEL!</b> 🔥\n\n"
-        f"💻 <i>{produto}</i>\n"
-        f"💰 <b>De:</b> <s>{preco_antigo}</s>\n"
-        f"✅ <b>Por:</b> {preco_novo} à vista\n\n"
-        f"🔗 <a href='{link_com_tag}'>Clique aqui para comprar</a>\n\n"
-        "⏳ <i>Oferta válida por tempo limitado!</i>"
-    )
-    
     try:
-        resultado = enviar_mensagem_telegram(mensagem_html)
-        return jsonify({
-            "sucesso": True, 
-            "mensagem": "Oferta disparada com sucesso!",
-            "link_afiliado_gerado": link_com_tag
-        }), 200
-        
+        response = requests.post(url, json=payload)
+        response.raise_for_status()
+        return response.json()
     except Exception as e:
-        print(f"Erro ao enviar oferta: {e}") 
-        return jsonify({"erro": "Erro interno no servidor."}), 500
+        print(f"Erro ao enviar oferta: {e}")
+        return {"ok": False, "description": str(e)}
+
+def extrair_asin_amazon(url):
+    """Procura o ASIN de 10 dígitos na URL da Amazon."""
+    match = re.search(r'/([A-Z0-9]{10})(?:[/?]|$)', url)
+    return match.group(1) if match else None
+
+def buscar_oferta_automatica():
+    """Lê o feed RSS, filtra pelo nicho e converte o link."""
+    # Exemplo usando o feed de informática do Promobit
+    url_feed = "https://www.promobit.com.br/rss/informatica"
+    try:
+        feed = feedparser.parse(url_feed)
+    except Exception as e:
+        print(f"Erro ao ler feed RSS: {e}")
+        return None
+    
+    # Palavras-chave para filtrar apenas o que nos interessa
+    palavras_alvo = ["b450m", "ddr4", "ssd", "monitor", "ryzen", "notebook", "gamer", "nvme"]
+    
+    for oferta in getattr(feed, 'entries', []):
+        titulo = getattr(oferta, 'title', '').lower()
+        
+        # Verifica se o título tem alguma palavra do nosso nicho
+        if any(palavra in titulo for palavra in palavras_alvo):
+            link_original = getattr(oferta, 'link', '')
+            
+            # Se for oferta da Amazon, injeta nossa Tag
+            if "amazon" in link_original.lower() and AMAZON_TAG:
+                asin = extrair_asin_amazon(link_original)
+                if asin:
+                    link_final = f"https://www.amazon.com.br/dp/{asin}?tag={AMAZON_TAG}"
+                else:
+                    link_final = link_original
+            else:
+                link_final = link_original
+            
+            mensagem = (
+                "🚨 <b>NOVA OFERTA TECH OCULTA</b> 🚨\n\n"
+                f"💻 {oferta.title}\n\n"
+                f"🛒 <a href='{link_final}'>Acessar Oferta</a>\n\n"
+                "⏳ <i>Os preços podem mudar a qualquer momento!</i>"
+            )
+            return mensagem
+            
+    return None
+
+@app.route('/')
+def home():
+    return "Serviço do Bot ativo."
+
+@app.route('/keep-alive')
+def keep_alive():
+    return jsonify({"status": "ok", "message": "Estou acordado!"})
+
+@app.route('/disparar-oferta/<token>')
+def disparar_oferta(token):
+    # BLINDAGEM DE SEGURANÇA: Restaurada a proteção contra Timing Attacks usando hmac
+    if not SECRET_KEY or not hmac.compare_digest(token, SECRET_KEY):
+        return jsonify({"erro": "Não autorizado"}), 403
+        
+    mensagem = buscar_oferta_automatica()
+    
+    if mensagem:
+        resultado = enviar_mensagem_telegram(mensagem)
+        if resultado.get("ok"):
+            return jsonify({"status": "sucesso", "mensagem": "Oferta automática postada!"})
+        else:
+            return jsonify({"status": "erro_telegram", "detalhes": resultado}), 400
+    else:
+        return jsonify({"status": "aviso", "mensagem": "Nenhuma oferta nova encontrada nos filtros."})
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    porta = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=porta)
