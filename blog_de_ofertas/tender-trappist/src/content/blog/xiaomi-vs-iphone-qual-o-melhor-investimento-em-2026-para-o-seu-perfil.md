@@ -2,7 +2,7 @@
 title: 'Xiaomi vs. iPhone: Qual o melhor investimento em 2026 para o seu perfil?'
 description: 'Comparativo atualizado entre o iPhone 17 Pro Max e o Xiaomi 15T Pro — os topos de linha mais recentes de cada marca realmente disponíveis com garantia no Brasil. Veja qual entrega mais valor em bateria, câmeras e desempenho.'
 pubDate: 'Aug 09 2026'
-heroImage: '../../assets/capa-xiaomi-iphone.jpg'
+heroImage: '../../assets/capa-iphone-vs-xiaomi.jpg'
 tags:
   - 'iphone'
   - 'xiaomi'
