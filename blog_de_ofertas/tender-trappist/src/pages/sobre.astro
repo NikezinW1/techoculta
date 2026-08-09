@@ -1,40 +1,104 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_TITLE } from '../consts';
+import InstitutionalPage from '../layouts/InstitutionalPage.astro';
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+
+const allPosts = await getCollection('blog');
+// Sort by pubDate and get 3 posts
+const suggestedPosts = allPosts
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
 ---
 
-<!doctype html>
-<html lang="pt-BR">
-	<head>
-		<BaseHead title={`Sobre Nós - ${SITE_TITLE}`} description="Conheça a história e o propósito do Nikezin Indica." />
-		<style>
-			main {
-				width: 100%;
-				max-width: 800px;
-				margin: 0 auto;
-				padding: 2rem 1rem;
-				box-sizing: border-box;
-				color: var(--text-main);
-			}
-			h1 {
-				margin-bottom: 1em;
-				color: var(--accent);
-			}
-			p {
-				line-height: 1.6;
-				margin-bottom: 1.5em;
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>Sobre o Nikezin Indica</h1>
-			<p>[PLACEHOLDER] O Nikezin Indica nasceu com a missão de ajudar você a escolher os melhores produtos de tecnologia sem complicação. Nós garimpamos as melhores ofertas e produzimos conteúdos honestos focados no custo-benefício.</p>
-			<p>[PLACEHOLDER] Nossa equipe respira tecnologia e hardware, garantindo recomendações baseadas no mercado brasileiro e no bolso do consumidor local.</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<InstitutionalPage 
+	title="Sobre o Nikezin Indica" 
+	description="Tecnologia sem enrolação, com curadoria, análises e recomendações para ajudar você a comprar melhor."
+	isAboutPage={true}
+>
+	<p>Bem-vindo ao <strong>Nikezin Indica</strong>. Este não é apenas mais um portal de tecnologia; é um espaço de curadoria pessoal onde a minha experiência dita as regras.</p>
+	
+	<h2>O que é o Nikezin Indica?</h2>
+	<p>Eu vivo tecnologia no dia a dia, testando, configurando e consumindo eletrônicos em geral. A missão do <strong>Nikezin Indica</strong> é trazer transparência e honestidade para quem quer fazer um upgrade no setup, automatizar a casa ou simplesmente comprar um gadget novo.</p>
+	<p>Aqui você não encontrará discursos vazios de marketing, mas sim recomendações reais de produtos baseadas no verdadeiro custo-benefício.</p>
+
+	<h2>Nossa proposta</h2>
+	<p>Se você quer fugir de furadas e ir direto ao que interessa, o Nikezin Indica é o seu radar para o mundo dos eletrônicos. Vou te mostrar onde investir seu dinheiro para ter a melhor experiência possível sem pagar a mais por isso.</p>
+	
+	<h2>Como escolhemos os produtos</h2>
+	<p>Além dos reviews, faço um trabalho de garimpo constante em diversas lojas online para encontrar as melhores ofertas e descontos do mercado. Tudo o que aparece na nossa vitrine de ofertas passou pelo meu filtro pessoal de qualidade e preço justo.</p>
+
+	<h2>Transparência e afiliados</h2>
+	<p>Para manter este projeto no ar, o Nikezin Indica participa de programas de afiliados. Isso significa que, se você clicar em um dos nossos links e fizer uma compra, podemos receber uma pequena comissão. <strong>Isso não tem nenhum custo adicional para você</strong>.</p>
+	<p>Nossa curadoria editorial é independente dessa monetização. Só recomendamos produtos que genuinamente consideramos boas compras dentro da sua faixa de preço.</p>
+
+	<h2>Nosso compromisso com o leitor</h2>
+	<p>Respeito pelo seu tempo e pelo seu dinheiro. As informações técnicas que fornecemos são baseadas nas especificações oficiais dos fabricantes e nas realidades do mercado brasileiro.</p>
+
+	<div class="related-posts">
+		<h3>Conheça nossos conteúdos</h3>
+		<div class="related-grid">
+			{suggestedPosts.map(post => (
+				<a href={`/blog/${post.id}/`} class="related-card">
+					{post.data.heroImage && <Image width={240} height={140} src={post.data.heroImage} alt="" />}
+					<div class="related-card-content">
+						<h4>{post.data.title}</h4>
+					</div>
+				</a>
+			))}
+		</div>
+	</div>
+</InstitutionalPage>
+
+<style>
+	h2 {
+		color: var(--accent);
+		margin-top: 2.5rem;
+		margin-bottom: 1rem;
+	}
+	p {
+		margin-bottom: 1.5rem;
+	}
+	
+	/* Artigos Relacionados */
+	.related-posts {
+		margin-top: 4rem;
+		padding-top: 2rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+	}
+	.related-posts h3 {
+		margin-bottom: 1.5rem;
+		color: var(--text-main);
+	}
+	.related-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+		gap: 1.5rem;
+	}
+	.related-card {
+		background-color: var(--bg-card);
+		border-radius: 8px;
+		overflow: hidden;
+		text-decoration: none;
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		transition: transform 0.2s;
+		display: block;
+	}
+	.related-card:hover {
+		transform: translateY(-5px);
+		border-color: var(--accent);
+	}
+	.related-card img {
+		width: 100%;
+		height: 140px;
+		object-fit: cover;
+	}
+	.related-card-content {
+		padding: 1rem;
+	}
+	.related-card h4 {
+		margin: 0;
+		font-size: 1.1em;
+		color: var(--text-main);
+		line-height: 1.3;
+	}
+</style>

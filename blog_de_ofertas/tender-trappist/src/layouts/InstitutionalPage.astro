@@ -1,0 +1,110 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+
+export interface Props {
+	title: string;
+	description: string;
+	isAboutPage?: boolean;
+}
+
+const { title, description, isAboutPage = false } = Astro.props;
+
+const breadcrumbSchema = {
+	"@context": "https://schema.org",
+	"@type": "BreadcrumbList",
+	"itemListElement": [
+		{
+			"@type": "ListItem",
+			"position": 1,
+			"name": "Início",
+			"item": Astro.site?.toString()
+		},
+		{
+			"@type": "ListItem",
+			"position": 2,
+			"name": title,
+			"item": new URL(Astro.url.pathname, Astro.site).toString()
+		}
+	]
+};
+
+const aboutSchema = isAboutPage ? {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": title,
+  "url": new URL(Astro.url.pathname, Astro.site).toString(),
+  "description": description,
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": SITE_TITLE,
+    "url": Astro.site?.toString()
+  }
+} : null;
+---
+
+<html lang="pt-BR">
+	<head>
+		<BaseHead title={`${title} | ${SITE_TITLE}`} description={description} />
+		<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+		{aboutSchema && <script type="application/ld+json" set:html={JSON.stringify(aboutSchema)} />}
+		<style>
+			main {
+				width: calc(100% - 2em);
+				max-width: 800px;
+				margin: 0 auto;
+				padding: 2em 0;
+			}
+			.prose {
+				color: var(--text-main);
+				line-height: 1.6;
+			}
+			.breadcrumbs {
+				font-size: 0.9em;
+				color: var(--text-muted);
+				margin-bottom: 2rem;
+			}
+			.breadcrumbs a {
+				color: var(--accent);
+				text-decoration: none;
+			}
+			.breadcrumbs a:hover {
+				text-decoration: underline;
+			}
+			.title {
+				margin-bottom: 2em;
+				text-align: center;
+			}
+			.title h1 {
+				margin: 0;
+				color: var(--accent);
+			}
+			.content-slot {
+				margin-top: 2em;
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+		<main>
+			<article>
+				<nav class="breadcrumbs" aria-label="Breadcrumb">
+					<a href="/">Início</a> &gt; <span>{title}</span>
+				</nav>
+				
+				<div class="prose">
+					<div class="title">
+						<h1>{title}</h1>
+					</div>
+					<div class="content-slot">
+						<slot />
+					</div>
+				</div>
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>
