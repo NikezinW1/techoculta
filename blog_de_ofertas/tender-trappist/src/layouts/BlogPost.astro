@@ -410,10 +410,12 @@ suggestedPosts = suggestedPosts.slice(0, 3);
 						</div>
 					)}
 
-					{/* Afiliados Transparencia */}
-					<div class="affiliate-disclosure">
-						<strong>Transparência:</strong> Alguns links deste artigo podem ser links de afiliados. Se você realizar uma compra através deles, o Nikezin Indica poderá receber uma comissão, sem custo adicional para você. Isso ajuda a manter o projeto vivo.
-					</div>
+					{/* Afiliados Transparencia - Exibido apenas em artigos comerciais com links de afiliados */}
+					{props.tags && props.tags.includes('oferta') && (
+						<div class="affiliate-disclosure">
+							<strong>Transparência:</strong> Alguns links deste artigo podem ser links de afiliados. Se você realizar uma compra através deles, o Nikezin Indica poderá receber uma comissão, sem custo adicional para você. Isso ajuda a manter o projeto vivo.
+						</div>
+					)}
 
 					{/* Artigos Relacionados */}
 					{suggestedPosts.length > 0 && (
