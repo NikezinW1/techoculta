@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
 
 :root {
-	--accent: #00FFA3; /* Verde Neon */
-	--accent-dark: #00CC82;
+	--accent: #00E5FF; /* Ciano Elétrico */
+	--accent-dark: #00B3CC;
 	--bg-dark: #0F172A; /* Slate 900 */
 	--bg-card: #1E293B; /* Slate 800 */
 	--text-main: #F8FAFC; /* Slate 50 */
 	--text-muted: #94A3B8; /* Slate 400 */
 	--black: 15, 23, 42;
 	--gray: 148, 163, 184;
-	--box-shadow: 0 8px 30px rgba(0, 255, 163, 0.15);
+	--box-shadow: 0 8px 30px rgba(0, 229, 255, 0.15);
 	--font-atkinson: 'Inter', sans-serif;
 }
 
@@ -68,13 +68,13 @@ p { margin-bottom: 1em; }
 	border-radius: 8px;
 	font-weight: 800;
 	display: inline-block;
-	box-shadow: 0 0 15px rgba(0, 255, 163, 0.4);
+	box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
 	text-transform: uppercase;
 	letter-spacing: 0.5px;
 }
 .prose a:hover {
 	background-color: var(--accent-dark);
-	box-shadow: 0 0 25px rgba(0, 255, 163, 0.7);
+	box-shadow: 0 0 25px rgba(0, 229, 255, 0.7);
 	transform: translateY(-2px);
 }
 

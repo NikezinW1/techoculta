@@ -7,7 +7,7 @@ import HeaderLink from './HeaderLink.astro';
 	<nav>
 		<h2>
 			<a href="/">
-				<img src="/logo.png" alt="Tech Oculta" class="site-logo" />
+				<img src="/logo.png" alt="Nikezin Indica" class="site-logo" />
 				<!-- Caso a imagem falhe, o alt text vai aparecer -->
 			</a>
 		</h2>
@@ -35,18 +35,13 @@ import HeaderLink from './HeaderLink.astro';
 	}
 	h2 a {
 		display: flex;
-		justify-content: center;
 		align-items: center;
-		width: 160px; /* Largura visível da logo */
-		height: 60px; /* Altura visível da logo */
-		overflow: hidden; /* Corta tudo o que passar (a borda preta) */
 		text-decoration: none;
 		color: var(--text-main);
 	}
 	.site-logo {
-		min-width: 300px; /* Tamanho real enorme para a imagem */
-		min-height: 300px;
-		object-fit: contain;
+		height: 50px;
+		width: auto;
 		transition: transform 0.2s ease;
 	}
 	.site-logo:hover {
@@ -73,13 +68,8 @@ import HeaderLink from './HeaderLink.astro';
 		text-shadow: 0 0 8px rgba(0, 255, 163, 0.3);
 	}
 	@media (max-width: 720px) {
-		h2 a {
-			width: 120px;
-			height: 50px;
-		}
 		.site-logo {
-			min-width: 220px;
-			min-height: 220px;
+			height: 40px;
 		}
 		nav a {
 			padding: 0.8em 0.5em;
