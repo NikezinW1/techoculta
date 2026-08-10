@@ -1,4 +1,187 @@
+import os
+
+BLOG_DIR = r"e:\ofertas_telegram\blog_de_ofertas\tender-trappist\src\content\blog"
+
+batch2 = {
+    # 1. Lava e Seca
+    "melhores-lava-e-seca-2026.mdx": """---
+title: 'Melhores Lava e Seca em 2026: 4 Opções Econômicas e Com Inverter'
+description: 'Guia definitivo das melhores lavadoras e secadoras de roupa (Lava e Seca) em 2026. Analisamos tecnologia Inverter, lavagem a seco, Wi-Fi e economia de água da Samsung, LG e Midea.'
+pubDate: '2026-08-05'
+heroImage: '../../assets/capa-melhores-lava-e-seca-2026.png'
+category: 'Eletrodomésticos'
+tags: ['eletrodomesticos', 'lava e seca', 'lavadora de roupas', 'inverter', 'oferta']
 ---
+
+import StoreButtons from '../../components/StoreButtons.astro';
+
+Uma lavadora e secadora de roupas (**Lava e Seca**) é um investimento transformador para a rotina doméstica. Elas economizam espaço físico em lavanderias compactas e garantem roupas limpas, cheirosas e secas prontas para guardar mesmo em dias frios e chuvosos.
+
+<div class="tech-criteria-box">
+  <h3>🔬 Critérios Técnicos e Referências de Mercado</h3>
+  <p>Analisamos a eficiência energética Procel (consumo por ciclo de lavagem), motorização com acionamento direto ou Inverter (redução de ruído e desgaste), programas de lavagem a vapor e relatórios de assistência técnica autorizada.</p>
+</div>
+
+## Tabela Comparativa de Lava e Seca (2026)
+
+| Modelo | Capacidade (Lavagem/Secagem) | Motorização | Recursos de Destaque | Perfil Recomendado |
+| :--- | :--- | :--- | :--- | :--- |
+| **Samsung WD11T** | 11kg / 7kg | Digital Inverter | EcoBubble + AI Control | Famílias médias e economia de água |
+| **LG VC4 11kg Vivace** | 11kg / 7kg | AI DD Direct Drive | Inteligência Artificial + Steam | Preservação de tecidos delicados |
+| **Midea HealthGuard 11kg** | 11kg / 7kg | Inverter Quattro | HealthGuard + Botão Lunar | Melhor custo-benefício por kg |
+| **Samsung WD13T** | 13kg / 7kg | Digital Inverter | Air Wash + Lavagem 15 min | Famílias grandes e lavagem de edredons |
+
+---
+
+## 1. Samsung WD11T 11kg Inverter — A Campeã de Vendas com Inteligência AI EcoBubble
+
+A **Samsung WD11T** lidera o mercado graças à exclusiva tecnologia **EcoBubble**, que transforma o sabão em bolhas antes de entrar no tambor, penetrando 40 vezes mais rápido nos tecidos e lavando com máxima eficiência em água fria.
+
+### Destaques Técnicos:
+- **Capacidade:** 11kg Lavagem / 7kg Secagem.
+- **Tecnologia:** EcoBubble + Painel AI Control que aprende seus hábitos de lavagem.
+- **Motor:** Digital Inverter com 20 anos de garantia no motor.
+
+<div class="product-pros-cons">
+  <div class="product-pros">
+    <h4>✅ Pontos Fortes (Prós)</h4>
+    <ul>
+      <li>Tecnologia EcoBubble que lava com extrema eficiência mesmo em água fria</li>
+      <li>Motor Digital Inverter ultra silencioso com 20 anos de garantia de fábrica</li>
+      <li>Painel intuitivo AI Control que sugere ciclos com base no histórico de uso</li>
+    </ul>
+  </div>
+  <div class="product-cons">
+    <h4>⚠️ Limitações (Contras)</h4>
+    <ul>
+      <li>Ciclos de secagem completa demandam maior tempo em carga total</li>
+    </ul>
+  </div>
+</div>
+
+<StoreButtons
+  productName="Samsung WD11T 11kg"
+  amazonUrl="https://link.amazon/B0dVrlYGk"
+  mercadoLivreUrl="https://meli.la/14zT9PA"
+  magaluUrl="https://magazineluiza.onelink.me/589508454/ylsevknx"
+/>
+
+---
+
+## 2. LG VC4 11kg Smart Vivace — Inteligência Artificial DD que Protege os Tecidos
+
+A **LG VC4 Vivace** traz a tecnologia **AI DD (Artificial Intelligence Direct Drive)**, que lê o peso e detecta a textura dos tecidos dentro do tambor para escolher automaticamente o padrão de lavagem que mais preserva as roupas.
+
+### Destaques Técnicos:
+- **Tecnologia:** AI DD com 18% mais proteção aos tecidos.
+- **Vapor:** Steam+ que elimina 99.9% dos alérgenos e bactérias.
+- **Conectividade:** ThinQ Wi-Fi para controle de ciclo via smartphone ou comandos de voz.
+
+<div class="product-pros-cons">
+  <div class="product-pros">
+    <h4>✅ Pontos Fortes (Prós)</h4>
+    <ul>
+      <li>Motor Direct Drive acoplado diretamente ao tambor sem correias mecânicas</li>
+      <li>Sensor de inteligência artificial que reduz o desgaste de roupas delicadas</li>
+      <li>Função Steam+ que desinfeta e reduz amassados a vapor</li>
+    </ul>
+  </div>
+  <div class="product-cons">
+    <h4>⚠️ Limitações (Contras)</h4>
+    <ul>
+      <li>Exige nivelamento preciso dos pés na instalação para evitar vibração na secagem</li>
+    </ul>
+  </div>
+</div>
+
+<StoreButtons
+  productName="LG VC4 11kg Vivace"
+  amazonUrl="https://link.amazon/B02F9Ga4P"
+  mercadoLivreUrl="https://meli.la/2hTnxta"
+  magaluUrl="https://magazineluiza.onelink.me/589508454/8jz5op58"
+/>
+
+---
+
+## 3. Midea HealthGuard 11kg — Auto-Higienização e Custo-Benefício
+
+A **Midea HealthGuard 11kg** destaca-se como a opção com o custo-benefício mais agressivo da categoria, trazendo conectividade Wi-Fi, motor Inverter Quattro eficiente e a tecnologia HealthGuard de esterilização.
+
+### Destaques Técnicos:
+- **Recursos:** HealthGuard com vapor de alta temperatura e auto-limpeza do tambor.
+- **Painel:** Botão Lunar com display digital integrado.
+- **Conectividade:** Aplicativo MSmartHome.
+
+<div class="product-pros-cons">
+  <div class="product-pros">
+    <h4>✅ Pontos Fortes (Prós)</h4>
+    <ul>
+      <li>Excelente preço de aquisição em relação aos recursos oferecidos</li>
+      <li>Programa HealthGuard de limpeza automática do tambor a alta temperatura</li>
+      <li>Conectividade Wi-Fi completa pelo aplicativo MSmartHome</li>
+    </ul>
+  </div>
+  <div class="product-cons">
+    <h4>⚠️ Limitações (Contras)</h4>
+    <ul>
+      <li>Variedade de programas customizados ligeiramente menor no painel físico</li>
+    </ul>
+  </div>
+</div>
+
+<StoreButtons
+  productName="Midea HealthGuard 11kg"
+  amazonUrl="https://link.amazon/B06g2py4J"
+  mercadoLivreUrl="https://meli.la/17kkWr5"
+  magaluUrl="https://magazineluiza.onelink.me/589508454/2uqxtrk4"
+/>
+
+---
+
+## 4. Samsung WD13T 13kg EcoBubble — Maior Capacidade para Edredons e Famílias Grandes
+
+Para quem tem família numerosa ou precisa lavar edredons king size e cobertores pesados em casa, a **Samsung WD13T** oferece 13kg de capacidade de lavagem no mesmo tamanho externo compacto.
+
+### Destaques Técnicos:
+- **Capacidade:** 13kg Lavagem / 7kg Secagem.
+- **Ciclo Rápido:** Lavagem e secagem em menos de 1 hora.
+- **Air Wash:** Lavagem a seco que elimina odores sem usar água ou detergente.
+
+<div class="product-pros-cons">
+  <div class="product-pros">
+    <h4>✅ Pontos Fortes (Prós)</h4>
+    <ul>
+      <li>Tambor amplo de 13kg ideal para lavar edredons de casal e peças pesadas</li>
+      <li>Tecnologia Air Wash de lavagem a seco a ar quente sem sabão</li>
+      <li>Ciclo rápido Speed Spray para pequenas cargas em tempo recorde</li>
+    </ul>
+  </div>
+  <div class="product-cons">
+    <h4>⚠️ Limitações (Contras)</h4>
+    <ul>
+      <li>Valor de investimento inicial mais alto</li>
+    </ul>
+  </div>
+</div>
+
+<StoreButtons
+  productName="Samsung WD13T 13kg"
+  amazonUrl="https://link.amazon/B0bEb8HOw"
+  mercadoLivreUrl="https://meli.la/1EFEhZJ"
+  magaluUrl="https://magazineluiza.onelink.me/589508454/fm4lvkgn"
+/>
+
+---
+
+## Conclusão: Qual Lava e Seca Comprar?
+
+- Se quer a **tecnologia EcoBubble e aprendizado por IA pelo melhor preço**, vá de **Samsung WD11T**.
+- Se valoriza a **preservação máxima dos tecidos com AI DD**, a **LG VC4 Vivace** é excelente.
+- Se precisa de **espaço para edredons pesados**, a **Samsung WD13T (13kg)** é a escolha ideal.
+""",
+
+    # 2. Controles
+    "melhores-controles-para-pc-e-console-2026.mdx": """---
 title: 'Melhores Controles para PC e Console em 2026: 4 Opções com Hall Effect e Zero Drift'
 description: 'Guia completo dos melhores joysticks e gamepads para PC, Switch e consoles em 2026. Analisamos analógicos Hall Effect magnéticos (anti-drift), gatilhos hall, polling rate e ergonomia.'
 pubDate: '2026-08-04'
@@ -173,3 +356,11 @@ A GameSir se tornou especialista em trazer recursos premium para faixas de preç
 - Se busca **praticidade com doca de carregamento e Hall Effect**, vá de **8BitDo Ultimate**.
 - Se quer **alta performance competitiva (1000Hz / tensão ajustável)**, escolha o **Flydigi Vader 4 Pro**.
 - Se valoriza a **máxima imersão com gatilhos adaptáveis**, o **Sony DualSense** é fantástico.
+""",
+}
+
+for filename, content in batch2.items():
+    filepath = os.path.join(BLOG_DIR, filename)
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(content)
+    print(f"Updated {filename} successfully.")

@@ -1,4 +1,10 @@
----
+import os
+
+BLOG_DIR = r"e:\ofertas_telegram\blog_de_ofertas\tender-trappist\src\content\blog"
+
+# Article 2: melhores-celulares-custo-beneficio-2026.mdx
+art_celulares_cb = os.path.join(BLOG_DIR, "melhores-celulares-custo-beneficio-2026.mdx")
+content_celulares_cb = """---
 title: 'Melhores Celulares Custo-Benefício em 2026: 5 Opções de Entrada e Intermediários'
 description: 'Guia completo dos melhores celulares custo-benefício para comprar em 2026. Analisamos tela AMOLED, processador, câmeras e bateria da Samsung, Poco, Motorola e Xiaomi.'
 pubDate: '2026-08-04'
@@ -213,3 +219,9 @@ Para quem passa o dia inteiro fora de casa e odeia a dependência de carregadore
 - Se busca **construção premium e proteção contra água**, vá de **Galaxy A55 5G**.
 - Se o foco for **jogos e desempenho bruto**, escolha o **Poco X6 Pro 5G**.
 - Se quer **bateria monstra para 2 dias**, o **Galaxy M54 5G** é o campeão.
+"""
+
+with open(art_celulares_cb, 'w', encoding='utf-8') as f:
+    f.write(content_celulares_cb)
+
+print("Enriched celulares-custo-beneficio-2026.mdx successfully.")
