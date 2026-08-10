@@ -2,7 +2,7 @@
 import InstitutionalPage from '../layouts/InstitutionalPage.astro';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
-import { AUTHOR_NAME, AUTHOR_BIO, CONTACT_EMAIL } from '../consts';
+import { AUTHOR_NAME, CONTACT_EMAIL } from '../consts';
 
 const allPosts = await getCollection('blog');
 // Sort by pubDate and get 3 posts
@@ -13,21 +13,14 @@ const suggestedPosts = allPosts
 
 <InstitutionalPage 
 	title="Sobre o Nikezin Indica" 
-	description="Curadoria de tecnologia e guias de compra por Nicolas Caires. Análises imparciais para ajudar você a fazer as melhores escolhas."
+	description="Curadoria de tecnologia, análises técnicas e guias de compra independentes para ajudar você a fazer as melhores escolhas."
 	isAboutPage={true}
 >
-	<p>Bem-vindo ao <strong>Nikezin Indica</strong>. Este portal nasceu da paixão pela ciência da computação, hardware e pela busca incansável das melhores ofertas e produtos tecnológicos no mercado brasileiro.</p>
-	
-	<div class="author-profile-card">
-		<h2>Conheça o Autor</h2>
-		<p class="author-bio-text">
-			<strong>{AUTHOR_NAME}</strong>, 21 anos, estudante do último período de Ciência da Computação e entusiasta de hardware e tecnologia, dedicado a guias de compra e análises técnicas imparciais.
-		</p>
-	</div>
+	<p>Bem-vindo ao <strong>Nikezin Indica</strong>. Este portal foi desenvolvido para ser o seu espaço de curadoria independente sobre hardware, periféricos, celulares e eletrodomésticos no mercado brasileiro.</p>
 
 	<h2>O que é o Nikezin Indica?</h2>
-	<p>O <strong>Nikezin Indica</strong> é um espaço de curadoria independente criado por <strong>{AUTHOR_NAME}</strong>. Nosso objetivo é simplificar especificações técnicas complexas (frequências de memória RAM, padrões Wi-Fi 6/7, tipos de painéis OLED vs QLED, sensores de câmera, etc.) e transformá-las em recomendações práticas do mundo real.</p>
-	<p>Aqui você não encontrará jargões vazios de marketing, mas sim orientações honestas sobre o que realmente vale a pena comprar para o seu perfil e orçamento.</p>
+	<p>O <strong>Nikezin Indica</strong> tem como missão simplificar especificações técnicas complexas (frequências de memória RAM, padrões de Wi-Fi 6/7, tecnologias de painel OLED vs QLED, sensores fotográficos e sistemas de refrigeração) e transformá-las em recomendações diretas, práticas e imparciais para o mundo real.</p>
+	<p>Aqui você não encontrará jargões vazios de marketing, mas sim orientações objetivas sobre o que realmente entrega o melhor custo-benefício para o seu perfil e orçamento.</p>
 
 	<h2>Nossa Proposta e Metodologia</h2>
 	<p>Analisamos minuciosamente fichas técnicas, arquiteturas de hardware, testes empíricos de desempenho e o histórico de preços dos principais e-commerces do Brasil (Amazon, Mercado Livre, Magazine Luiza e KaBuM!). Nosso compromisso é evitar que você gaste dinheiro em produtos obsoletos ou superfaturados.</p>
@@ -37,7 +30,14 @@ const suggestedPosts = allPosts
 	<p>Sua confiança é a prioridade do projeto: a escolha de produtos e a elaboração das análises são feitas com total independência editorial de marcas ou anunciantes.</p>
 
 	<h2>Contato Direto</h2>
-	<p>Quer tirar dúvidas, sugerir um tema para análise ou propor parcerias corporativas? Envie uma mensagem para <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+	<p>Quer tirar dúvidas técnicas, sugerir um tema para análise ou conversar sobre parcerias? Envie uma mensagem para <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+
+	<section class="editorial-section">
+		<h2>Quem Faz o Nikezin Indica</h2>
+		<p class="editorial-bio">
+			O portal é mantido por <strong>{AUTHOR_NAME}</strong>, 21 anos, estudante do último período de Ciência da Computação e entusiasta de hardware e tecnologia, dedicado a guias de compra e análises técnicas imparciais.
+		</p>
+	</section>
 
 	<div class="related-posts">
 		<h3>Conheça nossos guias mais recentes</h3>
@@ -64,20 +64,20 @@ const suggestedPosts = allPosts
 		margin-bottom: 1.5rem;
 		line-height: 1.7;
 	}
-	.author-profile-card {
-		background: linear-gradient(145deg, var(--bg-card), rgba(0, 229, 255, 0.05));
-		border: 1px solid var(--accent);
-		border-radius: 12px;
-		padding: 1.8rem;
-		margin: 2rem 0;
+	.editorial-section {
+		margin-top: 3rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.08);
 	}
-	.author-profile-card h2 {
+	.editorial-section h2 {
 		margin-top: 0;
-		color: var(--accent);
-	}
-	.author-bio-text {
-		font-size: 1.1em;
+		font-size: 1.3em;
 		color: var(--text-main);
+	}
+	.editorial-bio {
+		font-size: 1em;
+		color: var(--text-muted);
+		line-height: 1.7;
 		margin-bottom: 0;
 	}
 	
