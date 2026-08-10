@@ -2,33 +2,40 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { SITE_TITLE } from '../consts';
+import { SITE_TITLE, CONTACT_EMAIL } from '../consts';
 ---
 
 <!doctype html>
 <html lang="pt-BR">
 	<head>
-		<BaseHead title={`Política de Privacidade - ${SITE_TITLE}`} description="Como o Nikezin Indica cuida dos seus dados." />
+		<BaseHead title={`Política de Privacidade - ${SITE_TITLE}`} description="Saiba como o Nikezin Indica trata a privacidade dos visitantes, cookies e links de afiliados." />
 		<style>
 			main {
 				width: 100%;
 				max-width: 800px;
 				margin: 0 auto;
-				padding: 2rem 1rem;
+				padding: 2.5rem 1rem;
 				box-sizing: border-box;
 				color: var(--text-main);
 			}
 			h1 {
-				margin-bottom: 1em;
+				margin-bottom: 0.5em;
 				color: var(--accent);
 			}
 			h2 {
 				margin-top: 2em;
-				margin-bottom: 0.5em;
+				margin-bottom: 0.8em;
+				color: var(--text-main);
+				font-size: 1.4em;
 			}
-			p {
-				line-height: 1.6;
+			p, li {
+				line-height: 1.7;
+				margin-bottom: 1.2em;
+				color: var(--text-muted);
+			}
+			ul {
 				margin-bottom: 1.5em;
+				padding-left: 1.5rem;
 			}
 		</style>
 	</head>
@@ -36,11 +43,25 @@ import { SITE_TITLE } from '../consts';
 		<Header />
 		<main>
 			<h1>Política de Privacidade</h1>
-			<p>[PLACEHOLDER] A sua privacidade é importante para nós. É política do Nikezin Indica respeitar a sua privacidade em relação a qualquer informação sua que possamos coletar no site.</p>
-			<h2>Uso de Cookies e Analytics</h2>
-			<p>[PLACEHOLDER] Nós utilizamos cookies e serviços analíticos (como o Google Analytics) para entender como você interage com nosso conteúdo e melhorar sua experiência.</p>
-			<h2>Links de Afiliados</h2>
-			<p>[PLACEHOLDER] Podemos receber comissões através de links rastreáveis de afiliados, que identificam que a compra foi feita através de nossa recomendação, mas não coletam dados pessoais diretamente de você para nós.</p>
+			<p>A sua privacidade é de extrema importância para o <strong>{SITE_TITLE}</strong>. Esta Política de Privacidade descreve como coletamos, usamos e protegemos as suas informações ao navegar pelo nosso site e ao interagir com nossos guias de compra e análises técnicas.</p>
+			
+			<h2>1. Coleta de Informações e Dados de Navegação</h2>
+			<p>O {SITE_TITLE} não exige cadastro pessoal ou login de conta para a leitura pública dos artigos. No entanto, para fins de análise estatística, segurança e aprimoramento contínuo da experiência do usuário, coletamos dados de navegação anonimizados por meio de logs de servidor e ferramentas analíticas (como Google Analytics).</p>
+			<p>Esses dados incluem endereço IP anonimizado, tipo de navegador, sistema operacional, páginas visitadas e tempo de permanência no site, sem identificar você diretamente.</p>
+
+			<h2>2. Uso de Cookies e Arquivos de Rastreamento</h2>
+			<p>Utilizamos cookies estritamente necessários e cookies de desempenho para otimizar o carregamento das páginas e entender as preferências de navegação da nossa audiência.</p>
+			<p>Você tem total liberdade para desativar ou gerenciar a aceitação de cookies nas configurações do seu navegador de internet a qualquer momento, sem prejudicar o acesso ao conteúdo do site.</p>
+
+			<h2>3. Links de Afiliados e Programas de Parceria</h2>
+			<p>O {SITE_TITLE} participa de programas de afiliados de e-commerces reconhecidos no Brasil (como Amazon, Mercado Livre e Magazine Luiza). Ao clicar nos botões ou links de ofertas presentes nos artigos, um cookie de rastreamento de afiliado de curta duração pode ser armazenado no seu navegador pela loja parceira.</p>
+			<p>Esse mecanismo serve exclusivamente para identificar que a indicação do produto partiu do nosso site, permitindo a contabilização de comissão caso uma compra seja efetuada. Nenhum dado pessoal do comprador é compartilhado pela loja parceira com o {SITE_TITLE}.</p>
+
+			<h2>4. Isenção de Responsabilidade sobre Sites de Terceiros</h2>
+			<p>Nossos artigos contêm hiperlinks para e-commerces e plataformas de terceiros. Não possuímos controle ou responsabilidade direta sobre a política de privacidade, termos de atendimento ou processamento de pagamentos dessas empresas externas. Recomendamos a leitura da política de cada e-commerce antes de concluir uma transação.</p>
+
+			<h2>5. Contato e Esclarecimentos</h2>
+			<p>Se você tiver qualquer dúvida sobre esta Política de Privacidade ou sobre o tratamento de dados do site, entre em contato através do e-mail oficial: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
 		</main>
 		<Footer />
 	</body>

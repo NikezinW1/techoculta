@@ -2,33 +2,36 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { SITE_TITLE } from '../consts';
+import { SITE_TITLE, CONTACT_EMAIL } from '../consts';
 ---
 
 <!doctype html>
 <html lang="pt-BR">
 	<head>
-		<BaseHead title={`Termos de Uso - ${SITE_TITLE}`} description="Termos de uso do site Nikezin Indica." />
+		<BaseHead title={`Termos de Uso - ${SITE_TITLE}`} description="Termos de uso e condições gerais de navegação do site Nikezin Indica." />
 		<style>
 			main {
 				width: 100%;
 				max-width: 800px;
 				margin: 0 auto;
-				padding: 2rem 1rem;
+				padding: 2.5rem 1rem;
 				box-sizing: border-box;
 				color: var(--text-main);
 			}
 			h1 {
-				margin-bottom: 1em;
+				margin-bottom: 0.5em;
 				color: var(--accent);
 			}
 			h2 {
 				margin-top: 2em;
-				margin-bottom: 0.5em;
+				margin-bottom: 0.8em;
+				color: var(--text-main);
+				font-size: 1.4em;
 			}
 			p {
-				line-height: 1.6;
-				margin-bottom: 1.5em;
+				line-height: 1.7;
+				margin-bottom: 1.2em;
+				color: var(--text-muted);
 			}
 		</style>
 	</head>
@@ -36,9 +39,23 @@ import { SITE_TITLE } from '../consts';
 		<Header />
 		<main>
 			<h1>Termos de Uso</h1>
-			<p>[PLACEHOLDER] Ao acessar ao site Nikezin Indica, você concorda em cumprir estes termos de serviço, todas as leis e regulamentos aplicáveis e concorda que é responsável pelo cumprimento de todas as leis locais aplicáveis.</p>
-			<h2>Isenção de Responsabilidade</h2>
-			<p>[PLACEHOLDER] Os conteúdos do Nikezin Indica são fornecidos "como estão". Não oferecemos garantias, expressas ou implícitas, sobre produtos de terceiros recomendados no site.</p>
+			<p>Ao acessar e navegar no portal <strong>{SITE_TITLE}</strong>, você concorda expressamente em cumprir estes Termos de Uso, todas as leis e regulamentos aplicáveis no Brasil e reconhece que é responsável pelo cumprimento das legislações locais aplicáveis.</p>
+			
+			<h2>1. Conteúdo Informativo e Uso da Plataforma</h2>
+			<p>Todo o conteúdo publicado no {SITE_TITLE} — incluindo análises de produtos, guias de compra, tutoriais de hardware e comparações técnicas — é disponibilizado exclusivamente para fins informativos e de curadoria de consumo. Buscamos manter as informações sempre atualizadas, porém não nos responsabilizamos por alterações técnicas feitas pelos fabricantes sem aviso prévio.</p>
+
+			<h2>2. Preços, Ofertas e Links de Afiliados</h2>
+			<p>As menções a valores, estoque, condições de frete e promoções são baseadas na apuração no momento da escrita ou atualização dos artigos. Os preços no e-commerce são dinâmicos e podem sofrer alterações a qualquer instante por decisão exclusiva das lojas vendedoras (como Amazon, Mercado Livre e Magalu).</p>
+			<p>O {SITE_TITLE} não vende produtos diretamente, não processa pagamentos e não realiza entregas. Quaisquer compras são efetuadas diretamente nos sites oficiais dos e-commerces parceiros.</p>
+
+			<h2>3. Isenção de Responsabilidade sobre Garantias e Suporte</h2>
+			<p>A responsabilidade sobre a garantia de fábrica, envio, troca, devolução ou suporte técnico de qualquer item adquirido pertence integralmente à loja vendedora e à fabricante do produto. Recomendamos a conferência das condições comerciais diretamente na loja parceira no momento da compra.</p>
+
+			<h2>4. Direitos de Propriedade Intelectual</h2>
+			<p>Os textos originais, compilações técnicas, estrutura de dados e identidade do {SITE_TITLE} são protegidos por direitos autorais. A reprodução parcial ou integral do conteúdo sem citação explícita de autoria e link direto para a fonte é proibida.</p>
+
+			<h2>5. Dúvidas e Atendimento</h2>
+			<p>Para esclarecimentos adicionais referentes aos nossos Termos de Uso, entre em contato pelo e-mail: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
 		</main>
 		<Footer />
 	</body>

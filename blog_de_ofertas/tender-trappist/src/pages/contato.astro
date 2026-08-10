@@ -2,39 +2,72 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { SITE_TITLE } from '../consts';
+import { SITE_TITLE, CONTACT_EMAIL, AUTHOR_NAME } from '../consts';
 ---
 
 <!doctype html>
 <html lang="pt-BR">
 	<head>
-		<BaseHead title={`Contato - ${SITE_TITLE}`} description="Fale conosco para parcerias ou dúvidas." />
+		<BaseHead title={`Contato - ${SITE_TITLE}`} description="Fale com a equipe do Nikezin Indica para dúvidas, sugestões de pauta ou parcerias comerciais." />
 		<style>
 			main {
 				width: 100%;
 				max-width: 800px;
 				margin: 0 auto;
-				padding: 2rem 1rem;
+				padding: 2.5rem 1rem;
 				box-sizing: border-box;
 				color: var(--text-main);
 			}
 			h1 {
-				margin-bottom: 1em;
+				margin-bottom: 0.5em;
 				color: var(--accent);
 			}
+			.contact-box {
+				background-color: var(--bg-card);
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				border-radius: 12px;
+				padding: 2rem;
+				margin-top: 1.5rem;
+			}
 			p {
-				line-height: 1.6;
-				margin-bottom: 1.5em;
+				line-height: 1.7;
+				margin-bottom: 1.2em;
+			}
+			.email-badge {
+				display: inline-block;
+				background-color: rgba(0, 229, 255, 0.1);
+				border: 1px solid var(--accent);
+				color: var(--accent);
+				padding: 0.8rem 1.2rem;
+				border-radius: 8px;
+				font-size: 1.1em;
+				font-weight: bold;
+				margin: 1rem 0;
+			}
+			.email-badge a {
+				color: var(--accent);
+				text-decoration: none;
+			}
+			.email-badge a:hover {
+				text-decoration: underline;
 			}
 		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>Contato</h1>
-			<p>[PLACEHOLDER] Tem alguma dúvida, sugestão de pauta ou quer conversar sobre parcerias? Entre em contato conosco.</p>
-			<p>[PLACEHOLDER] E-mail: contato@exemplo.com.br</p>
-			<p>[PLACEHOLDER] Siga-nos nas redes sociais para mais novidades.</p>
+			<h1>Fale Conosco</h1>
+			<p>Tem alguma dúvida técnica sobre hardware, sugestão de análise de produto, correção de conteúdo ou interesse em parcerias comerciais e publieditoriais?</p>
+			
+			<div class="contact-box">
+				<p>Você pode entrar em contato diretamente com o editor executivo <strong>{AUTHOR_NAME}</strong> pelo e-mail oficial abaixo:</p>
+				
+				<div class="email-badge">
+					✉️ E-mail oficial: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+				</div>
+				
+				<p>Respondemos a todas as mensagens relevantes com agilidade, geralmente em até 24 a 48 horas úteis.</p>
+			</div>
 		</main>
 		<Footer />
 	</body>

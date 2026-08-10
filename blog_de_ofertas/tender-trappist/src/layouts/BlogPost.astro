@@ -63,8 +63,8 @@ const articleSchema = {
 	"dateModified": updatedDate ? updatedDate.toISOString() : pubDate.toISOString(),
 	"author": [{
 		"@type": "Person",
-		"name": author,
-		"url": Astro.site?.toString()
+		"name": author || "Nicolas Caires",
+		"url": new URL("/sobre/", Astro.site).toString()
 	}]
 };
 

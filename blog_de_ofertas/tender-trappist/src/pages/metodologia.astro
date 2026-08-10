@@ -2,34 +2,36 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { SITE_TITLE } from '../consts';
+import { SITE_TITLE, AUTHOR_NAME } from '../consts';
 ---
 
 <!doctype html>
 <html lang="pt-BR">
 	<head>
-		<BaseHead title={`Nossa Metodologia - ${SITE_TITLE}`} description="Descubra como o Nikezin Indica analisa e recomenda produtos de tecnologia." />
+		<BaseHead title={`Nossa Metodologia - ${SITE_TITLE}`} description="Descubra a metodologia de curadoria técnica e análises imparciais de Nicolas Caires no Nikezin Indica." />
 		<style>
 			main {
 				width: 100%;
 				max-width: 800px;
 				margin: 0 auto;
-				padding: 2rem 1rem;
+				padding: 2.5rem 1rem;
 				box-sizing: border-box;
 				color: var(--text-main);
 			}
 			h1 {
-				margin-bottom: 1em;
+				margin-bottom: 0.5em;
 				color: var(--accent);
 			}
 			h2 {
 				margin-top: 2em;
-				margin-bottom: 0.5em;
+				margin-bottom: 0.8em;
 				color: var(--text-main);
+				font-size: 1.4em;
 			}
-			p {
-				line-height: 1.6;
-				margin-bottom: 1.5em;
+			p, li {
+				line-height: 1.7;
+				margin-bottom: 1.2em;
+				color: var(--text-muted);
 			}
 			ul {
 				margin-bottom: 2em;
@@ -44,28 +46,28 @@ import { SITE_TITLE } from '../consts';
 		<Header />
 		<main>
 			<h1>Nossa Metodologia de Avaliação</h1>
-			<p>A transparência é o pilar fundamental do <strong>Nikezin Indica</strong>. Queremos que você saiba exatamente como chegamos às conclusões apresentadas em nossos artigos, reviews e guias de compra.</p>
+			<p>A transparência técnica é o pilar fundamental do <strong>{SITE_TITLE}</strong>. Esta página descreve detalhadamente o método de curadoria e pesquisa conduzido pelo editor <strong>{AUTHOR_NAME}</strong> para garantir análises sinceras e recomendações de alto valor real.</p>
 			
 			<h2>Como avaliamos os produtos</h2>
-			<p>Não afirmamos testar fisicamente em laboratório todos os produtos mencionados. Nossas análises e recomendações são baseadas em um rigoroso processo de pesquisa que envolve:</p>
+			<p>Nossas análises e recomendações são embasadas em um rigoroso processo de pesquisa técnica de 4 etapas:</p>
 			<ul>
-				<li><strong>Análise de Especificações:</strong> Cruzamento de dados técnicos (frequências, capacidades, arquitetura) com o que o produto promete entregar.</li>
-				<li><strong>Comparação com Concorrentes:</strong> Avaliamos o produto sempre considerando as alternativas da mesma faixa de preço no mercado brasileiro.</li>
-				<li><strong>Contexto de Preço (Custo-Benefício):</strong> Um produto excelente pode receber uma nota baixa se o preço for irreal, e um produto mediano pode ser a melhor recomendação se estiver muito barato.</li>
-				<li><strong>Informações Públicas e Consenso da Comunidade:</strong> Agregamos informações de fóruns, benchmarks confiáveis e feedbacks de usuários de longo prazo.</li>
+				<li><strong>1. Análise de Especificações e Arquitetura:</strong> Cruzamento de dados técnicos de fabricante (frequências de memória, latências CL, sensores ópticos, barramentos PCIe e eficiência energética) com as exigências reais dos softwares e jogos de 2026.</li>
+				<li><strong>2. Comparação com Concorrentes Diretos:</strong> Avaliamos todo produto em relação às suas alternativas diretas da mesma faixa de preço no varejo brasileiro.</li>
+				<li><strong>3. Análise de Custo-Benefício Real:</strong> Um produto de altíssimo desempenho recebe nota reduzida se estiver precificado de forma abusiva, enquanto um produto intermediário bem precificado é recomendado como melhor escolha para o consumidor consciente.</li>
+				<li><strong>4. Consenso Técnico e Dados de Longo Prazo:</strong> Monitoramos feedbacks de usuários em comunidades especializadas, histórico de atualizações de firmware e taxas de suporte pós-venda.</li>
 			</ul>
 
-			<h2>Nossos Critérios de Nota</h2>
-			<p>Quando aplicamos nosso sistema de avaliação a um produto (com notas de 0 a 10), utilizamos os seguintes pesos:</p>
+			<h2>Nossos Critérios de Nota (0 a 10)</h2>
+			<p>Nos reviews e guias que possuem veredito com pontuação, aplicamos critérios objetivos:</p>
 			<ul>
-				<li><strong>Custo-Benefício:</strong> O quanto o produto entrega pelo valor cobrado no varejo brasileiro no momento da publicação.</li>
-				<li><strong>Desempenho:</strong> A performance real entregue em jogos, uso profissional ou no dia a dia.</li>
-				<li><strong>Construção:</strong> Qualidade dos materiais, durabilidade e design térmico.</li>
-				<li><strong>Recursos:</strong> Funcionalidades extras (softwares, conexões, tecnologias exclusivas).</li>
+				<li><strong>Custo-Benefício:</strong> A relação entre a performance entregue e o preço praticado nas principais lojas brasileiras.</li>
+				<li><strong>Desempenho:</strong> A performance real entregue em jogos, produtividade ou tarefas cotidianas.</li>
+				<li><strong>Construção / Qualidade:</strong> Qualidade dos materiais, eficiência do sistema de arrefecimento e durabilidade.</li>
+				<li><strong>Recursos / Funcionalidades:</strong> Recursos adicionais (softwares, conectividade moderna, tecnologias de IA e facilidade de uso).</li>
 			</ul>
 
-			<h2>Independência</h2>
-			<p>Nenhuma marca paga para ter um review positivo no Nikezin Indica. Podemos utilizar links de afiliados que nos geram comissão caso você compre algo através deles, mas essa comissão <strong>não influencia nossa opinião editorial</strong>.</p>
+			<h2>Independência Editorial</h2>
+			<p>Nenhuma marca ou e-commerce paga para figurar em nossos guias de compra. A inclusão de links de afiliados ajuda a custear o projeto, mas <strong>não possui qualquer influência na opinião técnica ou na classificação dos produtos</strong>.</p>
 		</main>
 		<Footer />
 	</body>

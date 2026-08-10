@@ -16,7 +16,7 @@ const blog = defineCollection({
 			heroImage: z.optional(image()),
 			category: z.string().optional(),
 			tags: z.array(z.string()).optional(),
-			author: z.string().default('Nikezin Indica'),
+			author: z.string().default('Nicolas Caires'),
 			featured: z.boolean().default(false),
 			pros: z.array(z.string()).optional(),
 			cons: z.array(z.string()).optional(),

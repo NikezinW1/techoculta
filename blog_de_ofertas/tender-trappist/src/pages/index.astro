@@ -210,10 +210,11 @@ const buyerGuides = allPosts
 				justify-content: space-between;
 				gap: 1.5rem;
 			}
-			.offers-banner-content h3 {
+			.offers-banner-content h2 {
 				font-size: 1.4rem;
 				color: var(--text-main);
 				margin-bottom: 0.4rem;
+
 			}
 			.offers-banner-content p {
 				color: var(--text-muted);
@@ -249,7 +250,7 @@ const buyerGuides = allPosts
 				border: 1px solid rgba(255, 255, 255, 0.05);
 				margin-bottom: 4rem;
 			}
-			.blog-cta-box h3 {
+			.blog-cta-box h2 {
 				font-size: 1.5rem;
 				color: var(--text-main);
 				margin-bottom: 0.5rem;
@@ -308,7 +309,7 @@ const buyerGuides = allPosts
 			{/* 1. HERO */}
 			<section class="hero">
 				<h1>Nikezin Indica</h1>
-				<p>Curadoria de tecnologia, guias de compra e análises para ajudar você a escolher melhor seus próximos upgrades.</p>
+				<p>Curadoria de tecnologia, guias de compra e análises técnicas por Nicolas Caires.</p>
 			</section>
 
 			{/* 2. ARTIGO EM DESTAQUE */}
@@ -348,7 +349,7 @@ const buyerGuides = allPosts
 										)}
 										<div class="card-content">
 											{post.data.category && <span class="category-tag">{post.data.category}</span>}
-											<h4 class="title">{post.data.title}</h4>
+											<h3 class="title">{post.data.title}</h3>
 											<p class="date">
 												<FormattedDate date={post.data.pubDate} />
 											</p>
@@ -374,7 +375,7 @@ const buyerGuides = allPosts
 										<Image width={400} height={200} src={post.data.heroImage} alt={post.data.title} />
 									)}
 									<div class="card-content">
-										<h4 class="title">{post.data.title}</h4>
+										<h3 class="title">{post.data.title}</h3>
 										<p class="date">
 											<FormattedDate date={post.data.pubDate} />
 										</p>
@@ -400,7 +401,7 @@ const buyerGuides = allPosts
 									)}
 									<div class="card-content">
 										{post.data.category && <span class="category-tag">{post.data.category}</span>}
-										<h4 class="title">{post.data.title}</h4>
+										<h3 class="title">{post.data.title}</h3>
 										<p class="date">
 											<FormattedDate date={post.data.pubDate} />
 										</p>
@@ -416,7 +417,7 @@ const buyerGuides = allPosts
 			{/* 6. CHAMADA DE OFERTAS */}
 			<section class="offers-banner">
 				<div class="offers-banner-content">
-					<h3>Encontrou um produto que quer comprar?</h3>
+					<h2>Encontrou um produto que quer comprar?</h2>
 					<p>Confira nossas ofertas e oportunidades selecionadas pelo Nikezin Indica.</p>
 				</div>
 				<a href="/ofertas/" class="btn-offers">Ver ofertas →</a>
@@ -424,7 +425,7 @@ const buyerGuides = allPosts
 
 			{/* 7. FINAL DA HOME */}
 			<section class="blog-cta-box">
-				<h3>Quer explorar todo o conteúdo?</h3>
+				<h2>Quer explorar todo o conteúdo?</h2>
 				<p>Acesse nossa biblioteca completa com reviews, comparativos e guias técnicos.</p>
 				<a href="/blog/" class="btn-cta">Ver todos os artigos →</a>
 			</section>
