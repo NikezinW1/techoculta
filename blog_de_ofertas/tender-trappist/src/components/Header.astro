@@ -154,14 +154,13 @@ import HeaderLink from './HeaderLink.astro';
 		align-items: center;
 	}
 	.site-logo {
-		height: 70px;
+		height: 60px;
 		width: auto;
-		transform: scale(1.6);
-		transform-origin: center;
+		object-fit: contain;
 		transition: transform 0.2s ease;
 	}
 	.site-logo:hover {
-		transform: scale(1.7);
+		transform: scale(1.05);
 	}
 	
 	/* Desktop Menu */
@@ -308,12 +307,12 @@ import HeaderLink from './HeaderLink.astro';
 			display: flex;
 		}
 		.site-logo {
-			transform: scale(1.4);
+			height: 50px;
 		}
 	}
 	@media (max-width: 480px) {
 		.site-logo {
-			transform: scale(1.2);
+			height: 45px;
 		}
 	}
 </style>

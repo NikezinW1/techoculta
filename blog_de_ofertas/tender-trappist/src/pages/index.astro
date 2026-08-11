@@ -61,10 +61,10 @@ const categories = [
 	{ name: '📱 Celulares', slug: 'celulares' },
 	{ name: '💻 Computadores', slug: 'hardware' },
 	{ name: '🎮 Games', slug: 'games' },
-	{ name: '🏠 Casa', slug: 'casa' },
-	{ name: '📺 TV & Imagem', slug: 'tv' },
+	{ name: '🏠 Casa', slug: 'eletrodomesticos' },
+	{ name: '📺 TV & Imagem', slug: 'tv-e-imagem' },
 	{ name: '🎧 Áudio', slug: 'audio' },
-	{ name: '📡 Redes & Wi-Fi', slug: 'redes' },
+	{ name: '📡 Redes & Wi-Fi', slug: 'redes-e-wi-fi' },
 	{ name: '🔌 Acessórios', slug: 'acessorios' },
 ];
 ---
@@ -162,8 +162,9 @@ const categories = [
 
 			/* Categorias */
 			.categories-grid {
-				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
 				gap: 1rem;
 				margin-bottom: 4rem;
 			}
