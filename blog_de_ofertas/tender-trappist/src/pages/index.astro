@@ -5,39 +5,68 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
+import CategoryCard from '../components/CategoryCard.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
-// Ordena todos os posts do blog por pubDate (do mais recente para o mais antigo)
 const allPosts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-// 1. Destaque Único: o artigo mais recente por pubDate
-const featuredPost = allPosts[0];
+const displayedPosts = new Set<string>();
 
-// 2. Artigos Recentes: os 4 artigos mais recentes (excluindo o destaque)
-const recentPosts = allPosts
-	.filter((post) => post.id !== featuredPost?.id)
-	.slice(0, 4);
+function getPosts(count: number, filterFn: (post: any) => boolean) {
+	const posts = [];
+	for (const post of allPosts) {
+		if (posts.length >= count) break;
+		if (!displayedPosts.has(post.id) && filterFn(post)) {
+			posts.push(post);
+			displayedPosts.add(post.id);
+		}
+	}
+	return posts;
+}
 
-// 3. Seções por Categoria (Garante que todo Cluster tenha sua seção própria exibida na Home)
-const categoriesList = ["Hardware", "Celulares", "Eletrodomésticos", "Games", "Áudio e Headsets", "TV e Imagem", "Redes e Wi-Fi", "Acessórios"];
+// 1. Destaque (Prioriza featured === true, senão pega o mais recente)
+let featuredPost = getPosts(1, (p) => p.data.featured === true)[0];
+if (!featuredPost) {
+	featuredPost = getPosts(1, () => true)[0]; // Fallback para o mais recente
+}
 
-const categorySections = categoriesList.map((category) => {
-	const posts = allPosts
-		.filter((p) => p.data.category === category && p.id !== featuredPost?.id)
-		.slice(0, 4);
+// 2. Aprenda Antes de Comprar (Informacional)
+const informationalPosts = getPosts(3, (p) => {
+	if (p.data.articleType === 'informational') return true;
+	// Inferência temporária
+	const titleLower = p.data.title.toLowerCase();
+	return titleLower.includes('o que é') || titleLower.includes('como ') || titleLower.includes('vale a pena');
+});
 
-	return {
-		category,
-		posts,
-	};
-}).filter((section) => section.posts.length > 0);
+// 3. Comparativos
+const comparisonPosts = getPosts(3, (p) => {
+	if (p.data.articleType === 'comparison') return true;
+	// Inferência temporária
+	return p.data.title.toLowerCase().includes(' vs ');
+});
 
-// 4. Guias de Compra: conteúdos comerciais com tag 'oferta' (excluindo o destaque)
-const buyerGuides = allPosts
-	.filter((post) => post.data.tags && post.data.tags.includes('oferta') && post.id !== featuredPost?.id)
-	.slice(0, 4);
+// 4. Guias de Compra
+const guidePosts = getPosts(3, (p) => {
+	if (p.data.articleType === 'guide') return true;
+	// Inferência temporária
+	return p.data.title.toLowerCase().includes('melhores') || (p.data.tags && p.data.tags.includes('oferta'));
+});
+
+// 5. Recentes (Qualquer post que sobrou)
+const recentPosts = getPosts(6, () => true);
+
+const categories = [
+	{ name: '📱 Celulares', slug: 'celulares' },
+	{ name: '💻 Computadores', slug: 'hardware' },
+	{ name: '🎮 Games', slug: 'games' },
+	{ name: '🏠 Casa', slug: 'casa' },
+	{ name: '📺 TV & Imagem', slug: 'tv' },
+	{ name: '🎧 Áudio', slug: 'audio' },
+	{ name: '📡 Redes & Wi-Fi', slug: 'redes' },
+	{ name: '🔌 Acessórios', slug: 'acessorios' },
+];
 ---
 
 <!doctype html>
@@ -52,10 +81,11 @@ const buyerGuides = allPosts
 				padding: 0 1rem;
 				box-sizing: border-box;
 			}
+			/* Hero */
 			.hero {
 				text-align: center;
-				padding: 3.5em 0 2.5em 0;
-				margin-bottom: 2.5em;
+				padding: 4.5em 0 3.5em 0;
+				margin-bottom: 2em;
 				border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 			}
 			.hero h1 {
@@ -64,14 +94,97 @@ const buyerGuides = allPosts
 				background: linear-gradient(to right, #F8FAFC, var(--accent));
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
+				line-height: 1.1;
 			}
 			.hero p {
-				font-size: 1.15em;
+				font-size: 1.25em;
 				color: var(--text-muted);
-				max-width: 650px;
-				margin: 0 auto;
+				max-width: 700px;
+				margin: 0 auto 2rem auto;
 				line-height: 1.6;
 			}
+			.hero-ctas {
+				display: flex;
+				gap: 1rem;
+				justify-content: center;
+				flex-wrap: wrap;
+			}
+			.btn-primary {
+				background-color: var(--accent);
+				color: var(--bg-dark);
+				padding: 0.8rem 1.8rem;
+				border-radius: 8px;
+				font-weight: 800;
+				text-decoration: none;
+				text-transform: uppercase;
+				letter-spacing: 0.5px;
+				transition: all 0.2s ease;
+			}
+			.btn-primary:hover {
+				background-color: var(--accent-dark);
+				transform: translateY(-2px);
+			}
+			.btn-secondary {
+				background-color: transparent;
+				color: var(--accent);
+				border: 1px solid var(--accent);
+				padding: 0.8rem 1.8rem;
+				border-radius: 8px;
+				font-weight: 800;
+				text-decoration: none;
+				text-transform: uppercase;
+				letter-spacing: 0.5px;
+				transition: all 0.2s ease;
+			}
+			.btn-secondary:hover {
+				background-color: rgba(0, 229, 255, 0.1);
+				transform: translateY(-2px);
+			}
+
+			/* Diferenciais */
+			.diferenciais {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+				gap: 2rem;
+				margin-bottom: 4rem;
+				text-align: center;
+			}
+			.diferencial-item h3 {
+				color: var(--text-main);
+				font-size: 1.3rem;
+				margin-bottom: 0.5rem;
+			}
+			.diferencial-item p {
+				color: var(--text-muted);
+				font-size: 0.95rem;
+				margin: 0;
+			}
+
+			/* Categorias */
+			.categories-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+				gap: 1rem;
+				margin-bottom: 4rem;
+			}
+			.category-pill {
+				background-color: var(--bg-card);
+				border: 1px solid rgba(255, 255, 255, 0.05);
+				padding: 1rem;
+				border-radius: 12px;
+				text-align: center;
+				text-decoration: none;
+				color: var(--text-main);
+				font-weight: 600;
+				transition: all 0.2s;
+			}
+			.category-pill:hover {
+				border-color: var(--accent);
+				transform: translateY(-3px);
+				box-shadow: 0 4px 15px rgba(0, 229, 255, 0.1);
+			}
+
+			/* Utilidades de Seção */
 			.section-title {
 				margin-bottom: 1.5em;
 				font-size: 1.6em;
@@ -79,7 +192,10 @@ const buyerGuides = allPosts
 				border-left: 4px solid var(--accent);
 				padding-left: 15px;
 			}
-			
+			section {
+				margin-bottom: 4rem;
+			}
+
 			/* Featured Article */
 			.featured-article {
 				display: grid;
@@ -89,11 +205,10 @@ const buyerGuides = allPosts
 				border-radius: 12px;
 				overflow: hidden;
 				border: 1px solid var(--accent);
-				margin-bottom: 4rem;
 				transition: all 0.3s ease;
 			}
 			.featured-article:hover {
-				box-shadow: var(--box-shadow);
+				box-shadow: 0 4px 20px rgba(0, 229, 255, 0.15);
 				transform: translateY(-3px);
 			}
 			.featured-article img {
@@ -124,13 +239,13 @@ const buyerGuides = allPosts
 				font-size: 0.95rem;
 			}
 
-			/* Grid de Posts */
+			/* Grid de Posts Genérico */
 			ul.posts-grid {
 				display: grid;
 				grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 				gap: 1.5rem;
 				list-style-type: none;
-				margin: 0 0 3rem 0;
+				margin: 0;
 				padding: 0;
 			}
 			ul.posts-grid li {
@@ -145,7 +260,7 @@ const buyerGuides = allPosts
 			ul.posts-grid li:hover {
 				transform: translateY(-5px);
 				border-color: var(--accent);
-				box-shadow: var(--box-shadow);
+				box-shadow: 0 4px 15px rgba(0, 229, 255, 0.1);
 			}
 			ul.posts-grid li a.card-link {
 				display: flex;
@@ -198,88 +313,23 @@ const buyerGuides = allPosts
 				gap: 4px;
 			}
 
-			/* Banner Chamada de Ofertas */
-			.offers-banner {
-				background: linear-gradient(135deg, rgba(0, 229, 255, 0.1) 0%, rgba(15, 23, 42, 0.8) 100%);
+			/* Banner de Ofertas e Newsletter */
+			.banner-box {
+				background: linear-gradient(135deg, rgba(0, 229, 255, 0.05) 0%, rgba(15, 23, 42, 0.8) 100%);
 				border: 1px solid var(--accent);
 				border-radius: 12px;
-				padding: 2.5rem 2rem;
-				margin-bottom: 4rem;
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-				gap: 1.5rem;
-			}
-			.offers-banner-content h2 {
-				font-size: 1.4rem;
-				color: var(--text-main);
-				margin-bottom: 0.4rem;
-
-			}
-			.offers-banner-content p {
-				color: var(--text-muted);
-				margin: 0;
-				font-size: 0.95rem;
-			}
-			.btn-offers {
-				display: inline-block;
-				background-color: var(--accent);
-				color: var(--bg-dark);
-				padding: 0.75rem 1.5rem;
-				border-radius: 8px;
-				font-weight: 800;
-				text-decoration: none;
-				text-transform: uppercase;
-				letter-spacing: 0.5px;
-				white-space: nowrap;
-				transition: all 0.2s ease;
-				box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
-			}
-			.btn-offers:hover {
-				background-color: var(--accent-dark);
-				transform: translateY(-2px);
-				box-shadow: 0 0 25px rgba(0, 229, 255, 0.6);
-			}
-
-			/* CTA Seção Blog */
-			.blog-cta-box {
+				padding: 3rem 2rem;
 				text-align: center;
-				background-color: var(--bg-card);
-				border-radius: 12px;
-				padding: 3rem 1.5rem;
-				border: 1px solid rgba(255, 255, 255, 0.05);
 				margin-bottom: 4rem;
 			}
-			.blog-cta-box h2 {
+			.banner-box h2 {
 				font-size: 1.5rem;
 				color: var(--text-main);
 				margin-bottom: 0.5rem;
 			}
-			.blog-cta-box p {
+			.banner-box p {
 				color: var(--text-muted);
 				margin-bottom: 1.5rem;
-			}
-			.btn-cta {
-				display: inline-block;
-				background-color: transparent;
-				color: var(--accent);
-				border: 1px solid var(--accent);
-				padding: 0.8rem 1.8rem;
-				border-radius: 8px;
-				font-weight: 800;
-				text-decoration: none;
-				text-transform: uppercase;
-				letter-spacing: 0.5px;
-				transition: all 0.2s ease;
-			}
-			.btn-cta:hover {
-				background-color: rgba(0, 229, 255, 0.1);
-				transform: translateY(-2px);
-				box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
-			}
-			
-			section {
-				margin-bottom: 3.5rem;
 			}
 
 			@media (max-width: 768px) {
@@ -296,10 +346,6 @@ const buyerGuides = allPosts
 				.hero h1 {
 					font-size: 2.5em;
 				}
-				.offers-banner {
-					flex-direction: column;
-					text-align: center;
-				}
 			}
 		</style>
 	</head>
@@ -308,14 +354,44 @@ const buyerGuides = allPosts
 		<main>
 			{/* 1. HERO */}
 			<section class="hero">
-				<h1>Nikezin Indica</h1>
-				<p>Curadoria de tecnologia, guias de compra e análises técnicas por Nicolas Caires.</p>
+				<h1>Descubra. Compare. Escolha melhor.</h1>
+				<p>Conteúdo, análises, comparativos e guias para ajudar você a encontrar produtos que realmente valem a pena.</p>
+				<div class="hero-ctas">
+					<a href="/guias-de-compra" class="btn-primary">Explorar Guias de Compra</a>
+					<a href="/comparativos" class="btn-secondary">Ver Comparativos</a>
+				</div>
 			</section>
 
-			{/* 2. ARTIGO EM DESTAQUE */}
+			{/* 2. DIFERENCIAIS */}
+			<section class="diferenciais">
+				<div class="diferencial-item">
+					<h3>🔎 INFORMAÇÃO</h3>
+					<p>Entenda antes de comprar.</p>
+				</div>
+				<div class="diferencial-item">
+					<h3>⚔️ COMPARAÇÃO</h3>
+					<p>Veja as diferenças que realmente importam.</p>
+				</div>
+				<div class="diferencial-item">
+					<h3>⭐ RECOMENDAÇÃO</h3>
+					<p>Descubra o que faz sentido para você.</p>
+				</div>
+			</section>
+
+			{/* 3. CATEGORIAS */}
+			<section>
+				<h2 class="section-title">O que você está procurando?</h2>
+				<div class="categories-grid">
+					{categories.map((cat) => (
+						<CategoryCard name={cat.name} slug={cat.slug} />
+					))}
+				</div>
+			</section>
+
+			{/* 4. DESTAQUE */}
 			{featuredPost && (
 				<section>
-					<h2 class="section-title">Em Destaque</h2>
+					<h2 class="section-title">🔥 Em destaque</h2>
 					<article class="featured-article">
 						<a href={`/blog/${featuredPost.id}/`}>
 							{featuredPost.data.heroImage && (
@@ -328,72 +404,19 @@ const buyerGuides = allPosts
 								<h3 class="title">{featuredPost.data.title}</h3>
 								<p class="date"><FormattedDate date={featuredPost.data.pubDate} /></p>
 								<p class="description">{featuredPost.data.description}</p>
-								<span class="read-more-link">Ler artigo →</span>
+								<span class="read-more-link">Ler análise →</span>
 							</a>
 						</div>
 					</article>
 				</section>
 			)}
 
-			{/* 3. ARTIGOS RECENTES */}
-			{recentPosts.length > 0 && (
+			{/* 5. APRENDA ANTES DE COMPRAR */}
+			{informationalPosts.length > 0 && (
 				<section>
-					<h2 class="section-title">Artigos Recentes</h2>
+					<h2 class="section-title">📚 Aprenda antes de comprar</h2>
 					<ul class="posts-grid">
-						{
-							recentPosts.map((post) => (
-								<li>
-									<a href={`/blog/${post.id}/`} class="card-link">
-										{post.data.heroImage && (
-											<Image width={400} height={200} src={post.data.heroImage} alt={post.data.title} />
-										)}
-										<div class="card-content">
-											{post.data.category && <span class="category-tag">{post.data.category}</span>}
-											<h3 class="title">{post.data.title}</h3>
-											<p class="date">
-												<FormattedDate date={post.data.pubDate} />
-											</p>
-											<span class="read-more-link">Ler artigo →</span>
-										</div>
-									</a>
-								</li>
-							))
-						}
-					</ul>
-				</section>
-			)}
-
-			{/* 4. SEÇÕES POR CATEGORIA (Exibe obrigatoriamente a seção de cada Cluster na Home) */}
-			{categorySections.map((section) => (
-				<section>
-					<h2 class="section-title">{section.category}</h2>
-					<ul class="posts-grid">
-						{section.posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`} class="card-link">
-									{post.data.heroImage && (
-										<Image width={400} height={200} src={post.data.heroImage} alt={post.data.title} />
-									)}
-									<div class="card-content">
-										<h3 class="title">{post.data.title}</h3>
-										<p class="date">
-											<FormattedDate date={post.data.pubDate} />
-										</p>
-										<span class="read-more-link">Ler artigo →</span>
-									</div>
-								</a>
-							</li>
-						))}
-					</ul>
-				</section>
-			))}
-
-			{/* 5. GUIAS DE COMPRA */}
-			{buyerGuides.length > 0 && (
-				<section>
-					<h2 class="section-title">Guias de Compra</h2>
-					<ul class="posts-grid">
-						{buyerGuides.map((post) => (
+						{informationalPosts.map((post) => (
 							<li>
 								<a href={`/blog/${post.id}/`} class="card-link">
 									{post.data.heroImage && (
@@ -402,9 +425,7 @@ const buyerGuides = allPosts
 									<div class="card-content">
 										{post.data.category && <span class="category-tag">{post.data.category}</span>}
 										<h3 class="title">{post.data.title}</h3>
-										<p class="date">
-											<FormattedDate date={post.data.pubDate} />
-										</p>
+										<p class="date"><FormattedDate date={post.data.pubDate} /></p>
 										<span class="read-more-link">Ler artigo →</span>
 									</div>
 								</a>
@@ -414,20 +435,93 @@ const buyerGuides = allPosts
 				</section>
 			)}
 
-			{/* 6. CHAMADA DE OFERTAS */}
-			<section class="offers-banner">
-				<div class="offers-banner-content">
-					<h2>Encontrou um produto que quer comprar?</h2>
-					<p>Confira nossas ofertas e oportunidades selecionadas pelo Nikezin Indica.</p>
-				</div>
-				<a href="/ofertas/" class="btn-offers">Ver ofertas →</a>
+			{/* 6. COMPARATIVOS */}
+			{comparisonPosts.length > 0 && (
+				<section>
+					<h2 class="section-title">⚔️ Comparativos</h2>
+					<ul class="posts-grid">
+						{comparisonPosts.map((post) => (
+							<li>
+								<a href={`/blog/${post.id}/`} class="card-link">
+									{post.data.heroImage && (
+										<Image width={400} height={200} src={post.data.heroImage} alt={post.data.title} />
+									)}
+									<div class="card-content">
+										{post.data.category && <span class="category-tag">{post.data.category}</span>}
+										<h3 class="title">{post.data.title}</h3>
+										<p class="date"><FormattedDate date={post.data.pubDate} /></p>
+										<span class="read-more-link">Ver comparativo →</span>
+									</div>
+								</a>
+							</li>
+						))}
+					</ul>
+				</section>
+			)}
+
+			{/* 7. GUIAS DE COMPRA */}
+			{guidePosts.length > 0 && (
+				<section>
+					<h2 class="section-title">🛒 Guias de Compra</h2>
+					<ul class="posts-grid">
+						{guidePosts.map((post) => (
+							<li>
+								<a href={`/blog/${post.id}/`} class="card-link">
+									{post.data.heroImage && (
+										<Image width={400} height={200} src={post.data.heroImage} alt={post.data.title} />
+									)}
+									<div class="card-content">
+										{post.data.category && <span class="category-tag">{post.data.category}</span>}
+										<h3 class="title">{post.data.title}</h3>
+										<p class="date"><FormattedDate date={post.data.pubDate} /></p>
+										<span class="read-more-link">Ver guia →</span>
+									</div>
+								</a>
+							</li>
+						))}
+					</ul>
+				</section>
+			)}
+
+			{/* 8. CONTEÚDOS RECENTES */}
+			{recentPosts.length > 0 && (
+				<section>
+					<h2 class="section-title">Últimas atualizações</h2>
+					<ul class="posts-grid">
+						{recentPosts.map((post) => (
+							<li>
+								<a href={`/blog/${post.id}/`} class="card-link">
+									{post.data.heroImage && (
+										<Image width={400} height={200} src={post.data.heroImage} alt={post.data.title} />
+									)}
+									<div class="card-content">
+										{post.data.category && <span class="category-tag">{post.data.category}</span>}
+										<h3 class="title">{post.data.title}</h3>
+										<p class="date"><FormattedDate date={post.data.pubDate} /></p>
+										<span class="read-more-link">Ler artigo →</span>
+									</div>
+								</a>
+							</li>
+						))}
+					</ul>
+				</section>
+			)}
+
+			{/* 9. OFERTAS */}
+			<section class="banner-box">
+				<h2>Encontrou o que procurava?</h2>
+				<p>Confira nossa seleção de ofertas verificadas de produtos que recomendamos.</p>
+				<a href="/ofertas/" class="btn-primary">Ver Ofertas Atuais</a>
 			</section>
 
-			{/* 7. FINAL DA HOME */}
-			<section class="blog-cta-box">
-				<h2>Quer explorar todo o conteúdo?</h2>
-				<p>Acesse nossa biblioteca completa com reviews, comparativos e guias técnicos.</p>
-				<a href="/blog/" class="btn-cta">Ver todos os artigos →</a>
+			{/* 10. NEWSLETTER */}
+			<section class="banner-box" style="margin-bottom: 2rem; background: var(--bg-card);">
+				<h2>Quer descobrir boas oportunidades?</h2>
+				<p>Receba novos guias, comparativos e descobertas do Nikezin Indica.</p>
+				<form class="newsletter-form" style="display: flex; gap: 1rem; justify-content: center; max-width: 500px; margin: 0 auto; flex-wrap: wrap;">
+					<input type="email" placeholder="Seu melhor e-mail" aria-label="E-mail para newsletter" style="flex: 1; min-width: 200px; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: var(--bg-dark); color: white;" />
+					<button type="button" class="btn-secondary" style="cursor: pointer;">Inscrever-se</button>
+				</form>
 			</section>
 		</main>
 		<Footer />

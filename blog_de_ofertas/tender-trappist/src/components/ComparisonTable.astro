@@ -1,0 +1,116 @@
+---
+interface Feature {
+	label: string;
+	productA: string | boolean;
+	productB: string | boolean;
+}
+
+interface Props {
+	titleA: string;
+	titleB: string;
+	imageA?: string;
+	imageB?: string;
+	features: Feature[];
+	winnerA?: boolean;
+	winnerB?: boolean;
+}
+
+const { titleA, titleB, imageA, imageB, features, winnerA, winnerB } = Astro.props;
+---
+
+<div class="comparison-wrapper">
+	<div class="comparison-table-container">
+		<table class="comparison-table">
+			<thead>
+				<tr>
+					<th class="feature-col">Característica</th>
+					<th class={`product-col ${winnerA ? 'winner' : ''}`}>
+						{imageA && <img src={imageA} alt={titleA} class="product-img" />}
+						<span class="product-title">{titleA} {winnerA && '🏆'}</span>
+					</th>
+					<th class={`product-col ${winnerB ? 'winner' : ''}`}>
+						{imageB && <img src={imageB} alt={titleB} class="product-img" />}
+						<span class="product-title">{titleB} {winnerB && '🏆'}</span>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{features.map((feat) => (
+					<tr>
+						<td class="feature-name">{feat.label}</td>
+						<td>
+							{typeof feat.productA === 'boolean' 
+								? (feat.productA ? '✅ Sim' : '❌ Não') 
+								: feat.productA}
+						</td>
+						<td>
+							{typeof feat.productB === 'boolean' 
+								? (feat.productB ? '✅ Sim' : '❌ Não') 
+								: feat.productB}
+						</td>
+					</tr>
+				))}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<style>
+	.comparison-wrapper {
+		margin: 2.5rem 0;
+		width: 100%;
+		overflow-x: auto; /* Para mobile */
+	}
+	.comparison-table-container {
+		min-width: 600px;
+	}
+	.comparison-table {
+		width: 100%;
+		border-collapse: collapse;
+		background: var(--bg-card);
+		border-radius: 12px;
+		overflow: hidden;
+		box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+		text-align: center;
+	}
+	.comparison-table th, .comparison-table td {
+		padding: 1rem;
+		border: 1px solid rgba(255, 255, 255, 0.05);
+	}
+	.comparison-table th {
+		background: rgba(0, 0, 0, 0.3);
+		color: var(--text-main);
+	}
+	.feature-col {
+		width: 30%;
+		text-align: left;
+		font-weight: bold;
+		color: var(--accent) !important;
+	}
+	.product-col {
+		width: 35%;
+	}
+	.product-img {
+		max-width: 100px;
+		height: auto;
+		display: block;
+		margin: 0 auto 0.5rem auto;
+		border-radius: 8px;
+	}
+	.product-title {
+		font-size: 1.1rem;
+		font-weight: bold;
+	}
+	.winner {
+		background: rgba(0, 255, 163, 0.05) !important;
+		border-bottom: 2px solid var(--accent) !important;
+	}
+	.comparison-table tbody tr:nth-child(even) {
+		background: rgba(255, 255, 255, 0.02);
+	}
+	.feature-name {
+		text-align: left;
+		font-weight: 600;
+		color: var(--text-muted);
+	}
+</style>

@@ -1,82 +1,319 @@
 ---
-import { SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
 ---
 
-<header>
-	<nav>
-		<h2>
-			<a href="/">
-				<img src="/logo.png" alt="Nikezin Indica" class="site-logo" />
-				<!-- Caso a imagem falhe, o alt text vai aparecer -->
+<header class="site-header" data-pagefind-ignore>
+	<nav class="nav-container">
+		<div class="logo-container">
+			<a href="/" aria-label="Página Inicial do Nikezin Indica">
+				<img src="/logo.png" alt="Nikezin Indica" class="site-logo" width="140" height="70" />
 			</a>
-		</h2>
-		<div class="internal-links">
+		</div>
+
+		<!-- Menu Desktop -->
+		<div class="desktop-menu">
 			<HeaderLink href="/">Início</HeaderLink>
+			<!-- Adicionar submenu ou dropdown para categorias futuramente, se necessário -->
+			<HeaderLink href="/categoria/celulares/">Categorias</HeaderLink>
+			<HeaderLink href="/comparativos/">Comparativos</HeaderLink>
+			<HeaderLink href="/guias-de-compra/">Guias de Compra</HeaderLink>
 			<HeaderLink href="/ofertas/">Ofertas</HeaderLink>
 			<HeaderLink href="/sobre/">Sobre</HeaderLink>
 		</div>
+
+		<!-- Busca Desktop -->
+		<div class="desktop-search">
+			<form action="/busca" method="get" class="search-form" role="search">
+				<input type="search" name="q" placeholder="Pesquisar..." aria-label="Pesquisar no site" required />
+				<button type="submit" aria-label="Buscar">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<circle cx="11" cy="11" r="8"></circle>
+						<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+					</svg>
+				</button>
+			</form>
+		</div>
+
+		<!-- Controles Mobile -->
+		<div class="mobile-controls">
+			<button class="mobile-search-toggle" aria-label="Abrir pesquisa" aria-expanded="false" aria-controls="mobile-search-container">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="11" cy="11" r="8"></circle>
+					<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+				</svg>
+			</button>
+			<button class="mobile-menu-toggle" aria-label="Abrir menu principal" aria-expanded="false" aria-controls="mobile-menu">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-menu">
+					<line x1="3" y1="12" x2="21" y2="12"></line>
+					<line x1="3" y1="6" x2="21" y2="6"></line>
+					<line x1="3" y1="18" x2="21" y2="18"></line>
+				</svg>
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-close" style="display: none;">
+					<line x1="18" y1="6" x2="6" y2="18"></line>
+					<line x1="6" y1="6" x2="18" y2="18"></line>
+				</svg>
+			</button>
+		</div>
 	</nav>
+
+	<!-- Container de Busca Mobile (Escondido por padrão) -->
+	<div id="mobile-search-container" class="mobile-search-container" hidden>
+		<form action="/busca" method="get" class="mobile-search-form" role="search">
+			<input type="search" name="q" placeholder="Pesquisar no Nikezin Indica..." aria-label="Pesquisar no site" required id="mobile-search-input" />
+			<button type="submit" aria-label="Buscar">
+				<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="11" cy="11" r="8"></circle>
+					<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+				</svg>
+			</button>
+		</form>
+	</div>
+
+	<!-- Menu Mobile (Escondido por padrão) -->
+	<div id="mobile-menu" class="mobile-menu" hidden>
+		<div class="mobile-menu-inner">
+			<a href="/">Início</a>
+			<a href="/categoria/celulares/">Categorias</a>
+			<a href="/comparativos/">Comparativos</a>
+			<a href="/guias-de-compra/">Guias de Compra</a>
+			<a href="/ofertas/">Ofertas</a>
+			<a href="/sobre/">Sobre</a>
+		</div>
+	</div>
 </header>
+
+<script is:inline>
+	document.addEventListener('DOMContentLoaded', () => {
+		const menuToggle = document.querySelector('.mobile-menu-toggle');
+		const searchToggle = document.querySelector('.mobile-search-toggle');
+		const mobileMenu = document.getElementById('mobile-menu');
+		const mobileSearch = document.getElementById('mobile-search-container');
+		const mobileSearchInput = document.getElementById('mobile-search-input');
+		const iconMenu = document.querySelector('.icon-menu');
+		const iconClose = document.querySelector('.icon-close');
+
+		if(menuToggle && mobileMenu) {
+			menuToggle.addEventListener('click', () => {
+				const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+				menuToggle.setAttribute('aria-expanded', String(!isExpanded));
+				mobileMenu.hidden = isExpanded;
+				
+				if(isExpanded) {
+					iconMenu.style.display = 'block';
+					iconClose.style.display = 'none';
+				} else {
+					iconMenu.style.display = 'none';
+					iconClose.style.display = 'block';
+					// Se o menu abriu, fechar a busca
+					mobileSearch.hidden = true;
+					searchToggle.setAttribute('aria-expanded', 'false');
+				}
+			});
+		}
+
+		if(searchToggle && mobileSearch) {
+			searchToggle.addEventListener('click', () => {
+				const isExpanded = searchToggle.getAttribute('aria-expanded') === 'true';
+				searchToggle.setAttribute('aria-expanded', String(!isExpanded));
+				mobileSearch.hidden = isExpanded;
+
+				if(!isExpanded) {
+					// Focar o input ao abrir
+					setTimeout(() => mobileSearchInput.focus(), 100);
+					// Se a busca abriu, fechar o menu
+					mobileMenu.hidden = true;
+					menuToggle.setAttribute('aria-expanded', 'false');
+					iconMenu.style.display = 'block';
+					iconClose.style.display = 'none';
+				}
+			});
+		}
+	});
+</script>
+
 <style>
-	header {
+	.site-header {
 		margin: 0;
-		padding: 0 1em;
-		background: #000000; /* Fundo totalmente preto para esconder a borda preta da logo */
+		background: #000000;
 		border-bottom: 1px solid rgba(0, 229, 255, 0.15);
 		position: sticky;
 		top: 0;
 		z-index: 100;
 	}
-	h2 {
-		margin: 0;
+	.nav-container {
 		display: flex;
 		align-items: center;
+		justify-content: space-between;
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 1em;
+		height: 75px;
 	}
-	h2 a {
+	.logo-container {
 		display: flex;
 		align-items: center;
-		text-decoration: none;
-		color: var(--text-main);
 	}
 	.site-logo {
 		height: 70px;
 		width: auto;
-		transform: scale(1.8);
+		transform: scale(1.6);
 		transform-origin: center;
 		transition: transform 0.2s ease;
 	}
 	.site-logo:hover {
-		transform: scale(1.9);
+		transform: scale(1.7);
 	}
-	nav {
+	
+	/* Desktop Menu */
+	.desktop-menu {
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
-		max-width: 960px;
-		margin: 0 auto;
+		gap: 0.5rem;
 	}
-	nav a {
+	.desktop-menu a {
 		padding: 1.2em 0.8em;
 		color: var(--text-muted);
 		border-bottom: 4px solid transparent;
 		text-decoration: none;
 		font-weight: 600;
+		font-size: 0.95rem;
 		transition: all 0.3s ease;
 	}
-	nav a:hover, nav a.active {
+	.desktop-menu a:hover, .desktop-menu a.active {
 		color: var(--accent);
 		border-bottom-color: var(--accent);
 		text-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
 	}
-	@media (max-width: 720px) {
-		.site-logo {
-			height: 50px;
-			transform: scale(1.6);
+
+	/* Search Form */
+	.search-form {
+		display: flex;
+		align-items: center;
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 20px;
+		padding: 0.3rem 0.8rem;
+		transition: all 0.2s;
+	}
+	.search-form:focus-within {
+		border-color: var(--accent);
+		background: rgba(0, 229, 255, 0.05);
+	}
+	.search-form input {
+		background: transparent;
+		border: none;
+		color: var(--text-main);
+		padding: 0.3rem;
+		font-size: 0.9rem;
+		width: 150px;
+		outline: none;
+		transition: width 0.3s ease;
+	}
+	.search-form input:focus {
+		width: 200px;
+	}
+	.search-form input::placeholder {
+		color: var(--text-muted);
+	}
+	.search-form button {
+		background: transparent;
+		border: none;
+		color: var(--text-muted);
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		padding: 0.2rem;
+		transition: color 0.2s;
+	}
+	.search-form button:hover {
+		color: var(--accent);
+	}
+
+	/* Controles Mobile */
+	.mobile-controls {
+		display: none;
+		align-items: center;
+		gap: 1rem;
+	}
+	.mobile-controls button {
+		background: transparent;
+		border: none;
+		color: var(--text-main);
+		cursor: pointer;
+		padding: 0.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	
+	/* Containers Mobile */
+	.mobile-search-container {
+		background: var(--bg-dark);
+		padding: 1rem;
+		border-bottom: 1px solid rgba(0, 229, 255, 0.15);
+	}
+	.mobile-search-form {
+		display: flex;
+		align-items: center;
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid var(--accent);
+		border-radius: 8px;
+		padding: 0.5rem 1rem;
+	}
+	.mobile-search-form input {
+		flex: 1;
+		background: transparent;
+		border: none;
+		color: var(--text-main);
+		padding: 0.5rem;
+		font-size: 1rem;
+		outline: none;
+	}
+	.mobile-search-form button {
+		background: transparent;
+		border: none;
+		color: var(--accent);
+		cursor: pointer;
+		padding: 0.5rem;
+	}
+
+	.mobile-menu {
+		background: var(--bg-dark);
+		border-bottom: 1px solid rgba(0, 229, 255, 0.15);
+		max-height: calc(100vh - 75px);
+		overflow-y: auto;
+	}
+	.mobile-menu-inner {
+		display: flex;
+		flex-direction: column;
+		padding: 1rem 0;
+	}
+	.mobile-menu-inner a {
+		padding: 1rem 1.5rem;
+		color: var(--text-main);
+		text-decoration: none;
+		font-size: 1.1rem;
+		font-weight: 600;
+		border-bottom: 1px solid rgba(255,255,255,0.05);
+	}
+	.mobile-menu-inner a:active {
+		background-color: rgba(0, 229, 255, 0.1);
+	}
+
+	@media (max-width: 992px) {
+		.desktop-menu, .desktop-search {
+			display: none;
 		}
-		nav a {
-			padding: 0.8em 0.5em;
-			font-size: 0.9em;
+		.mobile-controls {
+			display: flex;
+		}
+		.site-logo {
+			transform: scale(1.4);
+		}
+	}
+	@media (max-width: 480px) {
+		.site-logo {
+			transform: scale(1.2);
 		}
 	}
 </style>

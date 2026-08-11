@@ -1,0 +1,179 @@
+1. Cancelamento de Ruído Ativo (ANC) vs Passivo: Como Funciona e Vale a Pena?
+   Slug: cancelamento-de-ruido-anc-vs-pnc-como-funciona
+   Category: Áudio
+   Type: informational
+
+2. Quanto de Armazenamento Você Precisa em 2026? 500GB, 1TB ou 2TB?
+   Slug: capacidade-ssd-500gb-1tb-2tb-2026
+   Category: Hardware
+   Type: informational
+
+3. Carregamento Rápido PD (Power Delivery) vs Quick Charge: Entenda as Diferenças em 2026
+   Slug: carregamento-rapido-power-delivery-vs-quick-charge-2026
+   Category: Acessórios
+   Type: informational
+
+4. Celulares com Melhor Bateria em 2026: 5 Modelos que Duram Mais de 1 Dia
+   Slug: celulares-com-melhor-bateria-2026
+   Category: Celulares
+   Type: informational
+
+5. Como Escolher um SSD NVMe: 7 Coisas Para Ver Antes de Comprar
+   Slug: como-escolher-ssd-nvme-7-coisas
+   Category: Hardware
+   Type: informational
+
+6. Crise de RAM e SSD em 2026: Por Que Comprar Agora Pode Te Poupar Centenas de Reais
+   Slug: crise-de-ram-e-ssd-em-2026-por-que-comprar-agora-pode-te-poupar-centenas-de-reais
+   Category: Hardware
+   Type: informational
+
+7. DDR4 vs DDR5: Qual a Diferença e Vale a Pena Mudar de Plataforma em 2026?
+   Slug: ddr4-vs-ddr5-qual-a-diferenca-e-vale-a-pena-mudar-2026
+   Category: Hardware
+   Type: informational
+
+8. Headset Gamer Custo-Benefício: Qual Vale a Pena Comprar em 2026?
+   Slug: headset-gamer-custo-benefcio-qual-vale-a-pena-comprar-em-2026
+   Category: Áudio
+   Type: informational
+
+9. Melhores Air Fryers em 2026: 5 Fritadeiras Sem Óleo para Qualquer Família
+   Slug: melhores-air-fryers-2026
+   Category: Eletrodomésticos
+   Type: informational
+
+10. Melhores Caixas de Som Bluetooth em 2026: 4 Modelos Potentes para Festas e Casa
+   Slug: melhores-caixas-de-som-bluetooth-2026
+   Category: Áudio
+   Type: informational
+
+11. Melhores Carregadores Portáteis (Power Bank) em 2026: 2 Opções de 10.000mAh e 20.000mAh
+   Slug: melhores-carregadores-portateis-power-bank-2026
+   Category: Acessórios
+   Type: informational
+
+12. Melhores Celulares Custo-Benefício em 2026: 5 Opções de Entrada e Intermediários
+   Slug: melhores-celulares-custo-beneficio-2026
+   Category: Celulares
+   Type: informational
+
+13. Melhores Celulares para Fotos e Vídeos em 2026: 4 Modelos com Câmeras Incríveis
+   Slug: melhores-celulares-para-fotos-e-videos-2026
+   Category: Celulares
+   Type: informational
+
+14. Melhores Consoles e PCs Handheld em 2026: Steam Deck, ROG Ally, Switch e PS5
+   Slug: melhores-consoles-e-pcs-handheld-2026
+   Category: Games
+   Type: informational
+
+15. Melhores Controles para PC e Console em 2026: 4 Opções com Hall Effect e Zero Drift
+   Slug: melhores-controles-para-pc-e-console-2026
+   Category: Games
+   Type: informational
+
+16. Melhores Fones Bluetooth TWS em 2026: 4 Opções com Cancelamento de Ruído ([ANC](/blog/cancelamento-de-ruido-anc-vs-pnc-como-funciona/))
+   Slug: melhores-fones-bluetooth-tws-2026
+   Category: Áudio
+   Type: informational
+
+17. Melhores Hubs USB-C e Docks para Notebook em 2026: 4 Opções com HDMI 4K e Pass-Through
+   Slug: melhores-hubs-usb-c-e-docks-2026
+   Category: Acessórios
+   Type: informational
+
+18. Melhores Lava e Seca em 2026: 4 Opções Econômicas e Com Inverter
+   Slug: melhores-lava-e-seca-2026
+   Category: Eletrodomésticos
+   Type: informational
+
+19. Melhores Memórias RAM em 2026: 5 Opções [DDR4](/blog/ddr4-vs-ddr5-qual-a-diferenca-e-vale-a-pena-mudar-2026/) e DDR5 que Valem a Pena
+   Slug: melhores-memorias-ram-2026
+   Category: Hardware
+   Type: informational
+
+20. Melhores Memórias RAM e SSDs para Gigabyte B450M Gaming em 2026
+   Slug: melhores-memrias-ram-e-ssds-para-gigabyte-b450m-gaming-vale-a-pena-em-2026
+   Category: Hardware
+   Type: informational
+
+21. Melhores Projetores Portáteis e Smart em 2026: 3 Opções para Cinema em Casa
+   Slug: melhores-projetores-portateis-2026
+   Category: TV e Imagem
+   Type: informational
+
+22. Melhores Repetidores e Extensores Wi-Fi em 2026: 3 Opções para Eliminar Pontos Cegos
+   Slug: melhores-repetidores-e-extensores-wi-fi-2026
+   Category: Redes e Wi-Fi
+   Type: informational
+
+23. Melhores Robôs Aspiradores em 2026: 4 Opções que Valem a Pena para Casa e Pets
+   Slug: melhores-robos-aspiradores-2026
+   Category: Eletrodomésticos
+   Type: informational
+
+24. Melhores Roteadores [Wi-Fi 6](/blog/wi-fi-5-vs-wi-fi-6-vs-wi-fi-7-diferencas-2026/) e Sistemas Mesh em 2026: 4 Opções para Casa Toda
+   Slug: melhores-roteadores-wi-fi-6-e-mesh-2026
+   Category: Redes e Wi-Fi
+   Type: informational
+
+25. Melhores SSDs NVMe de 1TB em 2026: 5 Opções Rápidas de [PCIe 3.0](/blog/pcie-3-vs-pcie-4-2026/), 4.0 e [Gen 5](/blog/ssd-nvme-gen-4-ou-gen-5-2026/)
+   Slug: melhores-ssd-nvme-1tb-2026
+   Category: Hardware
+   Type: informational
+
+26. Melhores SSDs para PC Gamer em 2026: 4 Opções para Acabar com os Carregamentos
+   Slug: melhores-ssd-para-pc-gamer-2026
+   Category: Hardware
+   Type: informational
+
+27. Melhores TVs 4K Custo-Benefício em 2026: 4 Opções QLED, OLED e Nanocell
+   Slug: melhores-tvs-4k-custo-beneficio-2026
+   Category: TV e Imagem
+   Type: informational
+
+28. OLED vs QLED vs Mini LED: Qual a Melhor Tecnologia de Tela em 2026?
+   Slug: oled-vs-qled-vs-mini-led-diferencas-2026
+   Category: TV e Imagem
+   Type: informational
+
+29. [PC Portátil](/blog/melhores-consoles-e-pcs-handheld-2026/) vs Console de Mesa: Qual a Melhor Escolha em 2026?
+   Slug: pc-portatil-vs-console-mesa-qual-escolher-em-2026
+   Category: Games
+   Type: informational
+
+30. PCIe 3.0 vs PCIe 4.0: Vale a Pena Comprar um SSD Mais Rápido em 2026?
+   Slug: pcie-3-vs-pcie-4-2026
+   Category: Hardware
+   Type: informational
+
+31. Quanto de Memória RAM Você Precisa em 2026? 8GB, 16GB, 32GB ou 64GB?
+   Slug: quanto-de-memoria-ram-voce-precisa-em-2026
+   Category: Hardware
+   Type: informational
+
+32. SSD NVMe Esquentando: É Normal? Como Evitar Perda de Desempenho
+   Slug: ssd-nvme-esquentando-e-normal-como-evitar-perda-desempenho
+   Category: Hardware
+   Type: informational
+
+33. SSD NVMe Gen 4 ou Gen 5: Qual Você Deve Comprar em 2026?
+   Slug: ssd-nvme-gen-4-ou-gen-5-2026
+   Category: Hardware
+   Type: informational
+
+34. SSD SATA vs NVMe em 2026: Qual a Diferença e Qual Vale Mais a Pena?
+   Slug: ssd-sata-vs-nvme-2026
+   Category: Hardware
+   Type: informational
+
+35. Wi-Fi 5 vs Wi-Fi 6 vs Wi-Fi 7: Qual a Diferença e Vale a Pena o Upgrade em 2026?
+   Slug: wi-fi-5-vs-wi-fi-6-vs-wi-fi-7-diferencas-2026
+   Category: Redes e Wi-Fi
+   Type: informational
+
+36. Xiaomi vs iPhone em 2026: Qual o Melhor Investimento para o Seu Perfil?
+   Slug: xiaomi-vs-iphone-qual-o-melhor-investimento-em-2026-para-o-seu-perfil
+   Category: Celulares
+   Type: informational

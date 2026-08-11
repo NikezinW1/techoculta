@@ -7,7 +7,13 @@ import { defineConfig, fontProviders } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://nikezinindica.vercel.app',
-	integrations: [mdx(), sitemap()],
+	trailingSlash: 'always',
+	integrations: [
+		mdx(), 
+		sitemap({
+			filter: (page) => !page.includes('/busca/') && !page.includes('/google')
+		})
+	],
 	fonts: [
 		{
 			provider: fontProviders.local(),

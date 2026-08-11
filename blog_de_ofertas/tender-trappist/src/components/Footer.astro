@@ -2,28 +2,138 @@
 const today = new Date();
 ---
 
-<footer>
-	&copy; {today.getFullYear()} Nikezin Indica. Todos os direitos reservados.
-	<div class="amazon-disclaimer">
-		O Nikezin Indica participa de programas de afiliados da Amazon, Mercado Livre e Magazine Luiza. Podemos receber comissões por compras qualificadas efetuadas através dos links deste site, sem custo adicional para você.
+<footer class="site-footer" data-pagefind-ignore>
+	<div class="footer-container">
+		<!-- Coluna 1: Logo/Nome -->
+		<div class="footer-col">
+			<h3>NIKEZIN INDICA</h3>
+			<p>Descubra. Compare. Escolha melhor.</p>
+		</div>
+
+		<!-- Coluna 2: Navegação -->
+		<div class="footer-col">
+			<h4>NAVEGAÇÃO</h4>
+			<ul>
+				<li><a href="/">Início</a></li>
+				<li><a href="/categoria/celulares/">Categorias</a></li>
+				<li><a href="/comparativos/">Comparativos</a></li>
+				<li><a href="/guias-de-compra/">Guias de Compra</a></li>
+				<li><a href="/ofertas/">Ofertas</a></li>
+			</ul>
+		</div>
+
+		<!-- Coluna 3: Categorias -->
+		<div class="footer-col">
+			<h4>CATEGORIAS</h4>
+			<ul>
+				<li><a href="/categoria/celulares/">Celulares</a></li>
+				<li><a href="/categoria/hardware/">Hardware</a></li>
+				<li><a href="/categoria/games/">Games</a></li>
+				<li><a href="/categoria/casa/">Casa</a></li>
+				<li><a href="/categoria/tv/">TV & Imagem</a></li>
+				<li><a href="/categoria/audio/">Áudio</a></li>
+				<li><a href="/categoria/redes/">Redes</a></li>
+				<li><a href="/categoria/acessorios/">Acessórios</a></li>
+			</ul>
+		</div>
+
+		<!-- Coluna 4: Institucional -->
+		<div class="footer-col">
+			<h4>INFORMAÇÕES</h4>
+			<ul>
+				<li><a href="/sobre/">Sobre</a></li>
+				<li><a href="/contato/">Contato</a></li>
+				<li><a href="/privacidade/">Privacidade</a></li>
+				<li><a href="/termos/">Termos</a></li>
+				<li><a href="/privacidade#cookies">Cookies</a></li>
+				<li><a href="/divulgacao-de-afiliados/">Afiliados</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="footer-bottom">
+		<p>&copy; {today.getFullYear()} Nikezin Indica. Todos os direitos reservados.</p>
+		<p class="amazon-disclaimer">
+			O Nikezin Indica participa de programas de afiliados da Amazon, Mercado Livre e Magazine Luiza. Podemos receber comissões por compras qualificadas efetuadas através dos links deste site, sem custo adicional para você.
+		</p>
 	</div>
 </footer>
+
 <style>
-	footer {
-		padding: 3em 1em 4em 1em;
-		background: var(--bg-card);
+	.site-footer {
+		background: #000000;
 		color: var(--text-muted);
+		border-top: 1px solid rgba(0, 229, 255, 0.15);
+		padding: 4rem 1rem 2rem 1rem;
+		margin-top: 4rem;
+	}
+	.footer-container {
+		max-width: 1200px;
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: 3rem;
+		margin-bottom: 3rem;
+	}
+	.footer-col h3 {
+		color: var(--text-main);
+		font-size: 1.2rem;
+		margin-bottom: 1rem;
+	}
+	.footer-col h4 {
+		color: var(--text-main);
+		font-size: 0.95rem;
+		margin-bottom: 1.2rem;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+	}
+	.footer-col p {
+		font-size: 0.95rem;
+		line-height: 1.6;
+	}
+	.footer-col ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+	.footer-col ul li {
+		margin-bottom: 0.8rem;
+	}
+	.footer-col ul li a {
+		color: var(--text-muted);
+		text-decoration: none;
+		font-size: 0.95rem;
+		transition: color 0.2s;
+	}
+	.footer-col ul li a:hover {
+		color: var(--accent);
+	}
+	
+	.footer-bottom {
+		max-width: 1200px;
+		margin: 0 auto;
 		text-align: center;
+		padding-top: 2rem;
 		border-top: 1px solid rgba(255, 255, 255, 0.05);
-		font-size: 0.9em;
 	}
 	.amazon-disclaimer {
 		font-size: 0.8rem;
-		margin-top: 1.5rem;
+		margin-top: 1rem;
 		opacity: 0.7;
-		max-width: 600px;
+		max-width: 700px;
 		margin-left: auto;
 		margin-right: auto;
 		line-height: 1.5;
+	}
+
+	@media (max-width: 768px) {
+		.footer-container {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+	@media (max-width: 480px) {
+		.footer-container {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>
