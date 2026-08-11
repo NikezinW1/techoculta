@@ -1,0 +1,70 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import CategoryCard from '../components/CategoryCard.astro';
+import { SITE_TITLE } from '../consts';
+
+const categories = [
+	{ name: '📱 Celulares', slug: 'celulares' },
+	{ name: '💻 Computadores', slug: 'hardware' },
+	{ name: '🎮 Games', slug: 'games' },
+	{ name: '🏠 Casa', slug: 'eletrodomesticos' },
+	{ name: '📺 TV & Imagem', slug: 'tv-e-imagem' },
+	{ name: '🎧 Áudio', slug: 'audio' },
+	{ name: '📡 Redes & Wi-Fi', slug: 'redes-e-wi-fi' },
+	{ name: '🔌 Acessórios', slug: 'acessorios' },
+];
+---
+
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<BaseHead 
+			title={`Todas as Categorias - ${SITE_TITLE}`} 
+			description="Explore nossas categorias e encontre análises, guias e comparativos detalhados dos melhores produtos do mercado." 
+		/>
+		<style>
+			main {
+				width: 100%;
+				max-width: 1080px;
+				margin: 0 auto;
+				padding: 0 1rem;
+				box-sizing: border-box;
+				min-height: 60vh;
+			}
+			.page-title {
+				text-align: center;
+				margin-bottom: 0.3em;
+				color: var(--text-main);
+			}
+			.page-subtitle {
+				text-align: center;
+				color: var(--text-muted);
+				margin-bottom: 3em;
+				font-size: 1.1em;
+			}
+			.categories-grid {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				gap: 1rem;
+				margin-bottom: 4rem;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1 class="page-title">Explorar Categorias</h1>
+			<p class="page-subtitle">Encontre o conteúdo ideal filtrando pelo que você mais precisa.</p>
+			
+			<div class="categories-grid">
+				{categories.map((cat) => (
+					<CategoryCard name={cat.name} slug={cat.slug} />
+				))}
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
