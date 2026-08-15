@@ -38,8 +38,8 @@ const publisherId = import.meta.env.PUBLIC_ADSENSE_ID;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		background: rgba(255, 255, 255, 0.02);
-		border-radius: 8px;
+		background: var(--bg-tint);
+		border-radius: var(--radius-m);
 	}
 	.ad-placeholder {
 		margin: 2rem 0;
@@ -50,13 +50,13 @@ const publisherId = import.meta.env.PUBLIC_ADSENSE_ID;
 		align-items: center;
 		background: repeating-linear-gradient(
 			45deg,
-			rgba(255, 255, 255, 0.02),
-			rgba(255, 255, 255, 0.02) 10px,
-			rgba(255, 255, 255, 0.05) 10px,
-			rgba(255, 255, 255, 0.05) 20px
+			var(--bg-tint),
+			var(--bg-tint) 10px,
+			rgba(255, 255, 255, 0.04) 10px,
+			rgba(255, 255, 255, 0.04) 20px
 		);
-		border: 1px dashed rgba(255, 255, 255, 0.1);
-		border-radius: 8px;
+		border: 1px dashed var(--line-subtle);
+		border-radius: var(--radius-m);
 	}
 	.placeholder-text {
 		color: var(--text-muted);

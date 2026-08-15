@@ -134,8 +134,8 @@ import HeaderLink from './HeaderLink.astro';
 <style>
 	.site-header {
 		margin: 0;
-		background: #000000;
-		border-bottom: 1px solid rgba(0, 229, 255, 0.15);
+		background: var(--bg-deep);
+		border-bottom: 1px solid var(--line-subtle);
 		position: sticky;
 		top: 0;
 		z-index: 100;
@@ -172,31 +172,30 @@ import HeaderLink from './HeaderLink.astro';
 	.desktop-menu a {
 		padding: 1.2em 0.8em;
 		color: var(--text-muted);
-		border-bottom: 4px solid transparent;
+		border-bottom: 3px solid transparent;
 		text-decoration: none;
 		font-weight: 600;
 		font-size: 0.95rem;
-		transition: all 0.3s ease;
+		transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
 	}
 	.desktop-menu a:hover, .desktop-menu a.active {
 		color: var(--accent);
 		border-bottom-color: var(--accent);
-		text-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
 	}
 
 	/* Search Form */
 	.search-form {
 		display: flex;
 		align-items: center;
-		background: rgba(255, 255, 255, 0.05);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		border-radius: 20px;
-		padding: 0.3rem 0.8rem;
-		transition: all 0.2s;
+		background: var(--bg-tint);
+		border: 1px solid var(--line-subtle);
+		border-radius: var(--radius-pill);
+		padding: 0.35rem 0.8rem;
+		transition: border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
 	}
 	.search-form:focus-within {
 		border-color: var(--accent);
-		background: rgba(0, 229, 255, 0.05);
+		background: rgba(34, 211, 238, 0.06);
 	}
 	.search-form input {
 		background: transparent;
@@ -247,16 +246,16 @@ import HeaderLink from './HeaderLink.astro';
 	
 	/* Containers Mobile */
 	.mobile-search-container {
-		background: var(--bg-dark);
+		background: var(--bg-deep);
 		padding: 1rem;
-		border-bottom: 1px solid rgba(0, 229, 255, 0.15);
+		border-bottom: 1px solid var(--line-subtle);
 	}
 	.mobile-search-form {
 		display: flex;
 		align-items: center;
-		background: rgba(255, 255, 255, 0.05);
+		background: var(--bg-tint);
 		border: 1px solid var(--accent);
-		border-radius: 8px;
+		border-radius: var(--radius-m);
 		padding: 0.5rem 1rem;
 	}
 	.mobile-search-form input {
@@ -277,8 +276,8 @@ import HeaderLink from './HeaderLink.astro';
 	}
 
 	.mobile-menu {
-		background: var(--bg-dark);
-		border-bottom: 1px solid rgba(0, 229, 255, 0.15);
+		background: var(--bg-deep);
+		border-bottom: 1px solid var(--line-subtle);
 		max-height: calc(100vh - 75px);
 		overflow-y: auto;
 	}
@@ -293,10 +292,10 @@ import HeaderLink from './HeaderLink.astro';
 		text-decoration: none;
 		font-size: 1.1rem;
 		font-weight: 600;
-		border-bottom: 1px solid rgba(255,255,255,0.05);
+		border-bottom: 1px solid var(--line-subtle);
 	}
 	.mobile-menu-inner a:active {
-		background-color: rgba(0, 229, 255, 0.1);
+		background-color: var(--accent-soft);
 	}
 
 	@media (max-width: 992px) {

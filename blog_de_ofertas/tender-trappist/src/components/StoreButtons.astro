@@ -1,4 +1,6 @@
 ---
+import Icon from './Icon.astro';
+
 interface Props {
   productName: string;
   amazonUrl?: string;
@@ -10,7 +12,7 @@ const { productName, amazonUrl, mercadoLivreUrl, magaluUrl, kabumUrl } = Astro.p
 ---
 
 <div class="store-buttons">
-  <p class="store-buttons-label">🛒 Ver preço atualizado do {productName}:</p>
+  <p class="store-buttons-label"><Icon name="cart" size={16} /> Ver preço atualizado do {productName}:</p>
   <div class="store-buttons-row">
     {amazonUrl && (
       amazonUrl === "unavailable" ? (
@@ -49,8 +51,8 @@ const { productName, amazonUrl, mercadoLivreUrl, magaluUrl, kabumUrl } = Astro.p
     margin: 2em 0;
     padding: 1.5em;
     background-color: var(--bg-card);
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-m);
+    border: 1px solid var(--line-subtle);
   }
   .store-buttons-disclaimer {
     font-size: 0.8em;
@@ -59,9 +61,16 @@ const { productName, amazonUrl, mercadoLivreUrl, magaluUrl, kabumUrl } = Astro.p
     margin-bottom: 0;
   }
   .store-buttons-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     font-weight: 600;
     margin-bottom: 1em;
     color: var(--text-main);
+  }
+  .store-buttons-label svg {
+    color: var(--accent);
+    flex-shrink: 0;
   }
   .store-buttons-row {
     display: flex;
@@ -70,24 +79,24 @@ const { productName, amazonUrl, mercadoLivreUrl, magaluUrl, kabumUrl } = Astro.p
   }
   .store-btn {
     background-color: var(--accent);
-    color: var(--bg-dark) !important;
+    color: var(--text-on-accent);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
     text-align: center;
     vertical-align: middle;
-    border-radius: 8px;
+    border-radius: var(--radius-s);
     padding: 0.6em 1.2em;
-    font-weight: 800;
+    font-weight: 700;
     line-height: 1.4;
     display: inline-block;
     text-decoration: none !important;
-    box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
-    transition: all 0.2s;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
   }
   .store-btn:hover {
-    background-color: var(--accent-dark);
+    background-color: var(--accent-strong);
     transform: translateY(-2px);
-    box-shadow: 0 0 25px rgba(0, 229, 255, 0.7);
+    box-shadow: var(--shadow-md);
   }
   
   .store-btn-unavailable {
@@ -105,39 +114,32 @@ const { productName, amazonUrl, mercadoLivreUrl, magaluUrl, kabumUrl } = Astro.p
   /* Cores específicas por loja */
   .store-btn-amazon {
     background-color: #ff9900;
-    box-shadow: 0 0 15px rgba(255, 153, 0, 0.4);
   }
   .store-btn-amazon:hover {
     background-color: #e68a00;
-    box-shadow: 0 0 25px rgba(255, 153, 0, 0.7);
   }
   
   .store-btn-ml {
     background-color: #ffe600;
-    box-shadow: 0 0 15px rgba(255, 230, 0, 0.4);
+    color: #1e293b;
   }
   .store-btn-ml:hover {
     background-color: #e6cf00;
-    box-shadow: 0 0 25px rgba(255, 230, 0, 0.7);
   }
   
   .store-btn-magalu {
     background-color: #0086ff;
-    box-shadow: 0 0 15px rgba(0, 134, 255, 0.4);
     color: white !important;
   }
   .store-btn-magalu:hover {
     background-color: #0073e6;
-    box-shadow: 0 0 25px rgba(0, 134, 255, 0.7);
   }
   
   .store-btn-kabum {
     background-color: #ff6500;
-    box-shadow: 0 0 15px rgba(255, 101, 0, 0.4);
     color: white !important;
   }
   .store-btn-kabum:hover {
     background-color: #e65c00;
-    box-shadow: 0 0 25px rgba(255, 101, 0, 0.7);
   }
 </style>

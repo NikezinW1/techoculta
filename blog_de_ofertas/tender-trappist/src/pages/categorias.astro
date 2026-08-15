@@ -6,14 +6,14 @@ import CategoryCard from '../components/CategoryCard.astro';
 import { SITE_TITLE } from '../consts';
 
 const categories = [
-	{ name: '📱 Celulares', slug: 'celulares' },
-	{ name: '💻 Computadores', slug: 'hardware' },
-	{ name: '🎮 Games', slug: 'games' },
-	{ name: '🏠 Casa', slug: 'eletrodomesticos' },
-	{ name: '📺 TV & Imagem', slug: 'tv-e-imagem' },
-	{ name: '🎧 Áudio', slug: 'audio' },
-	{ name: '📡 Redes & Wi-Fi', slug: 'redes-e-wi-fi' },
-	{ name: '🔌 Acessórios', slug: 'acessorios' },
+	{ name: 'Celulares', icon: 'phone', slug: 'celulares' },
+	{ name: 'Computadores', icon: 'computer', slug: 'hardware' },
+	{ name: 'Games', icon: 'gamepad', slug: 'games' },
+	{ name: 'Casa', icon: 'house', slug: 'eletrodomesticos' },
+	{ name: 'TV & Imagem', icon: 'tv', slug: 'tv-e-imagem' },
+	{ name: 'Áudio', icon: 'headphones', slug: 'audio' },
+	{ name: 'Redes & Wi-Fi', icon: 'wifi', slug: 'redes-e-wi-fi' },
+	{ name: 'Acessórios', icon: 'plug', slug: 'acessorios' },
 ];
 ---
 
@@ -61,7 +61,7 @@ const categories = [
 			
 			<div class="categories-grid">
 				{categories.map((cat) => (
-					<CategoryCard name={cat.name} slug={cat.slug} />
+					<CategoryCard name={cat.name} slug={cat.slug} icon={cat.icon} />
 				))}
 			</div>
 		</main>

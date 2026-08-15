@@ -67,7 +67,7 @@ const suggestedPosts = allPosts
 	.editorial-section {
 		margin-top: 3rem;
 		padding-top: 1.5rem;
-		border-top: 1px solid rgba(255, 255, 255, 0.08);
+		border-top: 1px solid var(--line-subtle);
 	}
 	.editorial-section h2 {
 		margin-top: 0;
@@ -85,7 +85,7 @@ const suggestedPosts = allPosts
 	.related-posts {
 		margin-top: 4rem;
 		padding-top: 2rem;
-		border-top: 1px solid rgba(255, 255, 255, 0.1);
+		border-top: 1px solid var(--line-subtle);
 	}
 	.related-posts h3 {
 		margin-bottom: 1.5rem;
@@ -98,16 +98,17 @@ const suggestedPosts = allPosts
 	}
 	.related-card {
 		background-color: var(--bg-card);
-		border-radius: 8px;
+		border-radius: var(--radius-m);
 		overflow: hidden;
 		text-decoration: none;
-		border: 1px solid rgba(255, 255, 255, 0.05);
-		transition: transform 0.2s;
+		border: 1px solid var(--line-subtle);
+		transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
 		display: block;
 	}
 	.related-card:hover {
-		transform: translateY(-5px);
-		border-color: var(--accent);
+		transform: translateY(-4px);
+		border-color: var(--line-strong);
+		box-shadow: var(--shadow-md);
 	}
 	.related-card img {
 		width: 100%;

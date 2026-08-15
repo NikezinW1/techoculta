@@ -2,6 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import Icon from '../components/Icon.astro';
 import { SITE_TITLE, CONTACT_EMAIL, AUTHOR_NAME } from '../consts';
 ---
 
@@ -24,8 +25,8 @@ import { SITE_TITLE, CONTACT_EMAIL, AUTHOR_NAME } from '../consts';
 			}
 			.contact-box {
 				background-color: var(--bg-card);
-				border: 1px solid rgba(255, 255, 255, 0.1);
-				border-radius: 12px;
+				border: 1px solid var(--line-subtle);
+				border-radius: var(--radius-l);
 				padding: 2rem;
 				margin-top: 1.5rem;
 			}
@@ -34,12 +35,14 @@ import { SITE_TITLE, CONTACT_EMAIL, AUTHOR_NAME } from '../consts';
 				margin-bottom: 1.2em;
 			}
 			.email-badge {
-				display: inline-block;
-				background-color: rgba(0, 229, 255, 0.1);
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5rem;
+				background-color: var(--accent-soft);
 				border: 1px solid var(--accent);
 				color: var(--accent);
 				padding: 0.8rem 1.2rem;
-				border-radius: 8px;
+				border-radius: var(--radius-m);
 				font-size: 1.1em;
 				font-weight: bold;
 				margin: 1rem 0;
@@ -63,7 +66,8 @@ import { SITE_TITLE, CONTACT_EMAIL, AUTHOR_NAME } from '../consts';
 				<p>Você pode entrar em contato diretamente com o editor executivo <strong>{AUTHOR_NAME}</strong> pelo e-mail oficial abaixo:</p>
 				
 				<div class="email-badge">
-					✉️ E-mail oficial: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+					<Icon name="mail" size={20} />
+					<span>E-mail oficial: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></span>
 				</div>
 				
 				<p>Respondemos a todas as mensagens relevantes com agilidade, geralmente em até 24 a 48 horas úteis.</p>

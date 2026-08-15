@@ -6,6 +6,7 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import CategoryCard from '../components/CategoryCard.astro';
+import Icon from '../components/Icon.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 const allPosts = (await getCollection('blog')).sort(
@@ -58,14 +59,14 @@ const guidePosts = getPosts(3, (p) => {
 const recentPosts = getPosts(6, () => true);
 
 const categories = [
-	{ name: '📱 Celulares', slug: 'celulares' },
-	{ name: '💻 Computadores', slug: 'hardware' },
-	{ name: '🎮 Games', slug: 'games' },
-	{ name: '🏠 Casa', slug: 'eletrodomesticos' },
-	{ name: '📺 TV & Imagem', slug: 'tv-e-imagem' },
-	{ name: '🎧 Áudio', slug: 'audio' },
-	{ name: '📡 Redes & Wi-Fi', slug: 'redes-e-wi-fi' },
-	{ name: '🔌 Acessórios', slug: 'acessorios' },
+	{ name: 'Celulares', icon: 'phone', slug: 'celulares' },
+	{ name: 'Computadores', icon: 'computer', slug: 'hardware' },
+	{ name: 'Games', icon: 'gamepad', slug: 'games' },
+	{ name: 'Casa', icon: 'house', slug: 'eletrodomesticos' },
+	{ name: 'TV & Imagem', icon: 'tv', slug: 'tv-e-imagem' },
+	{ name: 'Áudio', icon: 'headphones', slug: 'audio' },
+	{ name: 'Redes & Wi-Fi', icon: 'wifi', slug: 'redes-e-wi-fi' },
+	{ name: 'Acessórios', icon: 'plug', slug: 'acessorios' },
 ];
 ---
 
@@ -81,25 +82,31 @@ const categories = [
 				padding: 0 1rem;
 				box-sizing: border-box;
 			}
+			section {
+				margin-bottom: 4.5rem;
+			}
+
 			/* Hero */
 			.hero {
 				text-align: center;
 				padding: 4.5em 0 3.5em 0;
-				margin-bottom: 2em;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+				margin-bottom: 3rem;
+				border-bottom: 1px solid var(--line-subtle);
 			}
 			.hero h1 {
-				font-size: 3.8em;
-				margin-bottom: 0.2em;
-				background: linear-gradient(to right, #F8FAFC, var(--accent));
+				font-family: var(--font-display);
+				font-size: clamp(2.5rem, 6vw, 4rem);
+				letter-spacing: -0.03em;
+				margin-bottom: 0.3em;
+				background: linear-gradient(100deg, #F8FAFC 35%, var(--accent));
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
-				line-height: 1.1;
+				line-height: 1.05;
 			}
 			.hero p {
 				font-size: 1.25em;
 				color: var(--text-muted);
-				max-width: 700px;
+				max-width: 680px;
 				margin: 0 auto 2rem auto;
 				line-height: 1.6;
 			}
@@ -109,49 +116,31 @@ const categories = [
 				justify-content: center;
 				flex-wrap: wrap;
 			}
-			.btn-primary {
-				background-color: var(--accent);
-				color: var(--bg-dark);
-				padding: 0.8rem 1.8rem;
-				border-radius: 8px;
-				font-weight: 800;
-				text-decoration: none;
-				text-transform: uppercase;
-				letter-spacing: 0.5px;
-				transition: all 0.2s ease;
-			}
-			.btn-primary:hover {
-				background-color: var(--accent-dark);
-				transform: translateY(-2px);
-			}
-			.btn-secondary {
-				background-color: transparent;
-				color: var(--accent);
-				border: 1px solid var(--accent);
-				padding: 0.8rem 1.8rem;
-				border-radius: 8px;
-				font-weight: 800;
-				text-decoration: none;
-				text-transform: uppercase;
-				letter-spacing: 0.5px;
-				transition: all 0.2s ease;
-			}
-			.btn-secondary:hover {
-				background-color: rgba(0, 229, 255, 0.1);
-				transform: translateY(-2px);
-			}
 
 			/* Diferenciais */
 			.diferenciais {
 				display: grid;
 				grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 				gap: 2rem;
-				margin-bottom: 4rem;
+				margin-bottom: 4.5rem;
 				text-align: center;
+			}
+			.diferencial-icon {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				width: 52px;
+				height: 52px;
+				border-radius: var(--radius-l);
+				background-color: var(--accent-soft);
+				color: var(--accent);
+				margin-bottom: 1rem;
 			}
 			.diferencial-item h3 {
 				color: var(--text-main);
-				font-size: 1.3rem;
+				font-family: var(--font-display);
+				font-size: 1rem;
+				letter-spacing: 0.1em;
 				margin-bottom: 0.5rem;
 			}
 			.diferencial-item p {
@@ -168,54 +157,53 @@ const categories = [
 				gap: 1rem;
 				margin-bottom: 4rem;
 			}
-			.category-pill {
-				background-color: var(--bg-card);
-				border: 1px solid rgba(255, 255, 255, 0.05);
-				padding: 1rem;
-				border-radius: 12px;
-				text-align: center;
-				text-decoration: none;
-				color: var(--text-main);
-				font-weight: 600;
-				transition: all 0.2s;
-			}
-			.category-pill:hover {
-				border-color: var(--accent);
-				transform: translateY(-3px);
-				box-shadow: 0 4px 15px rgba(0, 229, 255, 0.1);
-			}
 
-			/* Utilidades de Seção */
+			/* Títulos de seção */
 			.section-title {
-				margin-bottom: 1.5em;
-				font-size: 1.6em;
+				display: flex;
+				align-items: center;
+				gap: 0.75rem;
+				margin-bottom: 1.5rem;
+				font-size: 1.4rem;
+				font-weight: 700;
+				letter-spacing: -0.02em;
 				color: var(--text-main);
-				border-left: 4px solid var(--accent);
-				padding-left: 15px;
 			}
-			section {
-				margin-bottom: 4rem;
+			.section-title__icon {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				width: 36px;
+				height: 36px;
+				border-radius: 10px;
+				background-color: var(--accent-soft);
+				color: var(--accent);
+				flex-shrink: 0;
 			}
 
 			/* Featured Article */
 			.featured-article {
 				display: grid;
 				grid-template-columns: 3fr 2fr;
-				gap: 2rem;
 				background-color: var(--bg-card);
-				border-radius: 12px;
+				border-radius: var(--radius-l);
 				overflow: hidden;
-				border: 1px solid var(--accent);
-				transition: all 0.3s ease;
+				border: 1px solid var(--line-subtle);
+				transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
 			}
 			.featured-article:hover {
-				box-shadow: 0 4px 20px rgba(0, 229, 255, 0.15);
+				box-shadow: var(--shadow-md);
 				transform: translateY(-3px);
+				border-color: var(--line-strong);
 			}
-			.featured-article img {
+			.featured-media {
+				display: block;
+				min-height: 300px;
+			}
+			.featured-media img {
 				width: 100%;
 				height: 100%;
-				min-height: 300px;
+				min-height: inherit;
 				object-fit: cover;
 			}
 			.featured-content {
@@ -228,10 +216,12 @@ const categories = [
 				text-decoration: none;
 			}
 			.featured-content .title {
-				font-size: 1.8rem;
+				font-family: var(--font-display);
+				font-size: 1.7rem;
 				margin: 0.5rem 0 1rem 0;
 				color: var(--text-main);
-				line-height: 1.3;
+				line-height: 1.25;
+				letter-spacing: -0.01em;
 			}
 			.featured-content p.description {
 				color: var(--text-muted);
@@ -239,91 +229,46 @@ const categories = [
 				margin-bottom: 1.5rem;
 				font-size: 0.95rem;
 			}
+			.featured-content .date {
+				color: var(--text-faint);
+				font-size: 0.8rem;
+			}
 
-			/* Grid de Posts Genérico */
-			ul.posts-grid {
+			/* Lista horizontal (Aprenda antes de comprar) */
+			.articles-list {
 				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+				grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 				gap: 1.5rem;
-				list-style-type: none;
+				list-style: none;
 				margin: 0;
 				padding: 0;
 			}
-			ul.posts-grid li {
-				background-color: var(--bg-card);
-				border-radius: 12px;
-				overflow: hidden;
-				border: 1px solid rgba(255, 255, 255, 0.05);
-				transition: all 0.3s ease;
-				display: flex;
-				flex-direction: column;
+			.articles-list .article-card {
+				flex-direction: row;
 			}
-			ul.posts-grid li:hover {
-				transform: translateY(-5px);
-				border-color: var(--accent);
-				box-shadow: 0 4px 15px rgba(0, 229, 255, 0.1);
+			.articles-list .article-card__media {
+				flex: 0 0 36%;
 			}
-			ul.posts-grid li a.card-link {
-				display: flex;
-				flex-direction: column;
+			.articles-list .article-card__media img {
 				height: 100%;
-				text-decoration: none;
-			}
-			ul.posts-grid li img {
-				width: 100%;
-				height: 180px;
+				min-height: 150px;
 				object-fit: cover;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 			}
-			.card-content {
-				padding: 1.2rem;
-				flex-grow: 1;
-				display: flex;
-				flex-direction: column;
-			}
-			.category-tag {
-				display: inline-block;
-				font-size: 0.75rem;
-				font-weight: 700;
-				text-transform: uppercase;
-				color: var(--bg-dark);
-				background-color: var(--accent);
-				padding: 0.2em 0.6em;
-				border-radius: 4px;
-				align-self: flex-start;
-				margin-bottom: 0.6em;
-			}
-			.title {
-				margin: 0 0 0.8rem 0;
-				font-size: 1.1rem;
-				line-height: 1.3;
-				color: var(--text-main);
-				flex-grow: 1;
-			}
-			.date {
-				margin: 0 0 1rem 0;
-				color: var(--text-muted);
-				font-size: 0.8em;
-			}
-			.read-more-link {
-				color: var(--accent);
-				font-weight: 700;
-				font-size: 0.85em;
-				display: inline-flex;
-				align-items: center;
-				gap: 4px;
+			.articles-list .article-card__body {
+				justify-content: center;
 			}
 
 			/* Banner de Ofertas e Newsletter */
 			.banner-box {
-				background: linear-gradient(135deg, rgba(0, 229, 255, 0.05) 0%, rgba(15, 23, 42, 0.8) 100%);
-				border: 1px solid var(--accent);
-				border-radius: 12px;
+				background: linear-gradient(180deg, var(--bg-raised) 0%, var(--bg-deep) 100%);
+				border: 1px solid var(--line-subtle);
+				border-radius: var(--radius-l);
 				padding: 3rem 2rem;
 				text-align: center;
-				margin-bottom: 4rem;
+				margin-bottom: 4.5rem;
 			}
 			.banner-box h2 {
+				font-family: var(--font-display);
 				font-size: 1.5rem;
 				color: var(--text-main);
 				margin-bottom: 0.5rem;
@@ -337,15 +282,18 @@ const categories = [
 				.featured-article {
 					grid-template-columns: 1fr;
 				}
+				.featured-media {
+					min-height: 0;
+				}
 				.featured-content {
 					padding: 1.5rem;
 				}
-				.featured-article img {
+				.featured-media img {
 					height: 220px;
 					min-height: auto;
 				}
 				.hero h1 {
-					font-size: 2.5em;
+					font-size: 2.5rem;
 				}
 			}
 		</style>
@@ -358,33 +306,36 @@ const categories = [
 				<h1>Descubra. Compare. Escolha melhor.</h1>
 				<p>Conteúdo, análises, comparativos e guias para ajudar você a encontrar produtos que realmente valem a pena.</p>
 				<div class="hero-ctas">
-					<a href="/guias-de-compra/" class="btn-primary">Explorar Guias de Compra</a>
-					<a href="/comparativos/" class="btn-secondary">Ver Comparativos</a>
+					<a href="/guias-de-compra/" class="btn btn--primary">Explorar Guias de Compra</a>
+					<a href="/comparativos/" class="btn btn--secondary">Ver Comparativos</a>
 				</div>
 			</section>
 
 			{/* 2. DIFERENCIAIS */}
 			<section class="diferenciais">
 				<div class="diferencial-item">
-					<h3>🔎 INFORMAÇÃO</h3>
+					<span class="diferencial-icon"><Icon name="info" size={22} /></span>
+					<h3>INFORMAÇÃO</h3>
 					<p>Entenda antes de comprar.</p>
 				</div>
 				<div class="diferencial-item">
-					<h3>⚔️ COMPARAÇÃO</h3>
+					<span class="diferencial-icon"><Icon name="scale" size={22} /></span>
+					<h3>COMPARAÇÃO</h3>
 					<p>Veja as diferenças que realmente importam.</p>
 				</div>
 				<div class="diferencial-item">
-					<h3>⭐ RECOMENDAÇÃO</h3>
+					<span class="diferencial-icon"><Icon name="star" size={22} /></span>
+					<h3>RECOMENDAÇÃO</h3>
 					<p>Descubra o que faz sentido para você.</p>
 				</div>
 			</section>
 
 			{/* 3. CATEGORIAS */}
 			<section>
-				<h2 class="section-title">O que você está procurando?</h2>
+				<h2 class="section-title"><span class="section-title__icon"><Icon name="grid" size={18} /></span>O que você está procurando?</h2>
 				<div class="categories-grid">
 					{categories.map((cat) => (
-						<CategoryCard name={cat.name} slug={cat.slug} />
+						<CategoryCard name={cat.name} slug={cat.slug} icon={cat.icon} />
 					))}
 				</div>
 			</section>
@@ -392,20 +343,20 @@ const categories = [
 			{/* 4. DESTAQUE */}
 			{featuredPost && (
 				<section>
-					<h2 class="section-title">🔥 Em destaque</h2>
+					<h2 class="section-title"><span class="section-title__icon"><Icon name="flame" size={18} /></span>Em destaque</h2>
 					<article class="featured-article">
-						<a href={`/blog/${featuredPost.id}/`}>
+						<a href={`/blog/${featuredPost.id}/`} class="article-card__media featured-media">
 							{featuredPost.data.heroImage && (
 								<Image width={800} height={400} src={featuredPost.data.heroImage} alt={featuredPost.data.title} />
 							)}
 						</a>
 						<div class="featured-content">
 							<a href={`/blog/${featuredPost.id}/`}>
-								{featuredPost.data.category && <span class="category-tag">{featuredPost.data.category}</span>}
+								{featuredPost.data.category && <span class="tag">{featuredPost.data.category}</span>}
 								<h3 class="title">{featuredPost.data.title}</h3>
 								<p class="date"><FormattedDate date={featuredPost.data.pubDate} /></p>
 								<p class="description">{featuredPost.data.description}</p>
-								<span class="read-more-link">Ler análise →</span>
+								<span class="card-cta">Ler análise <Icon name="arrowRight" size={14} /></span>
 							</a>
 						</div>
 					</article>
@@ -415,21 +366,21 @@ const categories = [
 			{/* 5. APRENDA ANTES DE COMPRAR */}
 			{informationalPosts.length > 0 && (
 				<section>
-					<h2 class="section-title">📚 Aprenda antes de comprar</h2>
-					<ul class="posts-grid">
+					<h2 class="section-title"><span class="section-title__icon"><Icon name="book" size={18} /></span>Aprenda antes de comprar</h2>
+					<ul class="articles-list">
 						{informationalPosts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`} class="card-link">
+							<li class="article-card">
+								<a href={`/blog/${post.id}/`} class="article-card__media">
 									{post.data.heroImage && (
 										<Image width={400} height={200} src={post.data.heroImage} alt={post.data.title} />
 									)}
-									<div class="card-content">
-										{post.data.category && <span class="category-tag">{post.data.category}</span>}
-										<h3 class="title">{post.data.title}</h3>
-										<p class="date"><FormattedDate date={post.data.pubDate} /></p>
-										<span class="read-more-link">Ler artigo →</span>
-									</div>
 								</a>
+								<div class="article-card__body">
+									{post.data.category && <span class="tag">{post.data.category}</span>}
+									<h3 class="article-card__title">{post.data.title}</h3>
+									<p class="article-card__date"><FormattedDate date={post.data.pubDate} /></p>
+									<span class="card-cta">Ler artigo <Icon name="arrowRight" size={14} /></span>
+								</div>
 							</li>
 						))}
 					</ul>
@@ -439,19 +390,21 @@ const categories = [
 			{/* 6. COMPARATIVOS */}
 			{comparisonPosts.length > 0 && (
 				<section>
-					<h2 class="section-title">⚔️ Comparativos</h2>
-					<ul class="posts-grid">
+					<h2 class="section-title"><span class="section-title__icon"><Icon name="compare" size={18} /></span>Comparativos</h2>
+					<ul class="articles-grid">
 						{comparisonPosts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`} class="card-link">
-									{post.data.heroImage && (
-										<Image width={400} height={200} src={post.data.heroImage} alt={post.data.title} />
-									)}
-									<div class="card-content">
-										{post.data.category && <span class="category-tag">{post.data.category}</span>}
-										<h3 class="title">{post.data.title}</h3>
-										<p class="date"><FormattedDate date={post.data.pubDate} /></p>
-										<span class="read-more-link">Ver comparativo →</span>
+							<li class="article-card">
+								<a href={`/blog/${post.id}/`}>
+									<div class="article-card__media">
+										{post.data.heroImage && (
+											<Image width={400} height={200} src={post.data.heroImage} alt={post.data.title} />
+										)}
+									</div>
+									<div class="article-card__body">
+										{post.data.category && <span class="tag">{post.data.category}</span>}
+										<h3 class="article-card__title">{post.data.title}</h3>
+										<p class="article-card__date"><FormattedDate date={post.data.pubDate} /></p>
+										<span class="card-cta">Ver comparativo <Icon name="arrowRight" size={14} /></span>
 									</div>
 								</a>
 							</li>
@@ -463,19 +416,21 @@ const categories = [
 			{/* 7. GUIAS DE COMPRA */}
 			{guidePosts.length > 0 && (
 				<section>
-					<h2 class="section-title">🛒 Guias de Compra</h2>
-					<ul class="posts-grid">
+					<h2 class="section-title"><span class="section-title__icon"><Icon name="cart" size={18} /></span>Guias de Compra</h2>
+					<ul class="articles-grid">
 						{guidePosts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`} class="card-link">
-									{post.data.heroImage && (
-										<Image width={400} height={200} src={post.data.heroImage} alt={post.data.title} />
-									)}
-									<div class="card-content">
-										{post.data.category && <span class="category-tag">{post.data.category}</span>}
-										<h3 class="title">{post.data.title}</h3>
-										<p class="date"><FormattedDate date={post.data.pubDate} /></p>
-										<span class="read-more-link">Ver guia →</span>
+							<li class="article-card">
+								<a href={`/blog/${post.id}/`}>
+									<div class="article-card__media">
+										{post.data.heroImage && (
+											<Image width={400} height={200} src={post.data.heroImage} alt={post.data.title} />
+										)}
+									</div>
+									<div class="article-card__body">
+										{post.data.category && <span class="tag">{post.data.category}</span>}
+										<h3 class="article-card__title">{post.data.title}</h3>
+										<p class="article-card__date"><FormattedDate date={post.data.pubDate} /></p>
+										<span class="card-cta">Ver guia <Icon name="arrowRight" size={14} /></span>
 									</div>
 								</a>
 							</li>
@@ -487,19 +442,21 @@ const categories = [
 			{/* 8. CONTEÚDOS RECENTES */}
 			{recentPosts.length > 0 && (
 				<section>
-					<h2 class="section-title">Últimas atualizações</h2>
-					<ul class="posts-grid">
+					<h2 class="section-title"><span class="section-title__icon"><Icon name="clock" size={18} /></span>Últimas atualizações</h2>
+					<ul class="articles-grid">
 						{recentPosts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`} class="card-link">
-									{post.data.heroImage && (
-										<Image width={400} height={200} src={post.data.heroImage} alt={post.data.title} />
-									)}
-									<div class="card-content">
-										{post.data.category && <span class="category-tag">{post.data.category}</span>}
-										<h3 class="title">{post.data.title}</h3>
-										<p class="date"><FormattedDate date={post.data.pubDate} /></p>
-										<span class="read-more-link">Ler artigo →</span>
+							<li class="article-card">
+								<a href={`/blog/${post.id}/`}>
+									<div class="article-card__media">
+										{post.data.heroImage && (
+											<Image width={400} height={200} src={post.data.heroImage} alt={post.data.title} />
+										)}
+									</div>
+									<div class="article-card__body">
+										{post.data.category && <span class="tag">{post.data.category}</span>}
+										<h3 class="article-card__title">{post.data.title}</h3>
+										<p class="article-card__date"><FormattedDate date={post.data.pubDate} /></p>
+										<span class="card-cta">Ler artigo <Icon name="arrowRight" size={14} /></span>
 									</div>
 								</a>
 							</li>
@@ -512,16 +469,16 @@ const categories = [
 			<section class="banner-box">
 				<h2>Encontrou o que procurava?</h2>
 				<p>Confira nossa seleção de ofertas verificadas de produtos que recomendamos.</p>
-				<a href="/ofertas/" class="btn-primary">Ver Ofertas Atuais</a>
+				<a href="/ofertas/" class="btn btn--primary">Ver Ofertas Atuais</a>
 			</section>
 
 			{/* 10. NEWSLETTER */}
-			<section class="banner-box" style="margin-bottom: 2rem; background: var(--bg-card);">
+			<section class="banner-box" style="margin-bottom: 2rem;">
 				<h2>Quer descobrir boas oportunidades?</h2>
 				<p>Receba novos guias, comparativos e descobertas do Nikezin Indica.</p>
 				<form class="newsletter-form" style="display: flex; gap: 1rem; justify-content: center; max-width: 500px; margin: 0 auto; flex-wrap: wrap;">
-					<input type="email" placeholder="Seu melhor e-mail" aria-label="E-mail para newsletter" style="flex: 1; min-width: 200px; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: var(--bg-dark); color: white;" />
-					<button type="button" class="btn-secondary" style="cursor: pointer;">Inscrever-se</button>
+					<input type="email" placeholder="Seu melhor e-mail" aria-label="E-mail para newsletter" style="flex: 1; min-width: 200px; padding: 0.8rem 1rem; border-radius: var(--radius-s); border: 1px solid var(--line-subtle); background: var(--bg-deep); color: var(--text-main);" />
+					<button type="button" class="btn btn--secondary" style="cursor: pointer;">Inscrever-se</button>
 				</form>
 			</section>
 		</main>

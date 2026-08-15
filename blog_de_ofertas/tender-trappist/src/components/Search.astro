@@ -1,16 +1,17 @@
 ---
 // src/components/Search.astro
+import Icon from './Icon.astro';
 ---
 
 <div id="pagefind-search"></div>
-<div id="search-suggestions" style="display: none; text-align: center; margin-top: 2rem; padding: 2rem; background: var(--bg-card); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+<div id="search-suggestions" style="display: none; text-align: center; margin-top: 2rem; padding: 2rem; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--line-subtle);">
 	<h3 style="color: var(--text-main); margin-bottom: 0.5rem;">Não encontrou o que procurava?</h3>
 	<p style="color: var(--text-muted); margin-bottom: 1.5rem;">Explore nossas categorias mais acessadas:</p>
 	<div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-		<a href="/categoria/celulares/" style="padding: 0.6rem 1.2rem; border-radius: 8px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; font-weight: 600;">📱 Celulares</a>
-		<a href="/categoria/hardware/" style="padding: 0.6rem 1.2rem; border-radius: 8px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; font-weight: 600;">💻 Computadores</a>
-		<a href="/categoria/eletrodomesticos/" style="padding: 0.6rem 1.2rem; border-radius: 8px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; font-weight: 600;">🏠 Casa</a>
-		<a href="/categoria/redes-e-wi-fi/" style="padding: 0.6rem 1.2rem; border-radius: 8px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; font-weight: 600;">📡 Redes</a>
+		<a href="/categoria/celulares/" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 8px; border: 1px solid var(--line-strong); color: var(--accent); text-decoration: none; font-weight: 600;"><Icon name="phone" size={16} /> Celulares</a>
+		<a href="/categoria/hardware/" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 8px; border: 1px solid var(--line-strong); color: var(--accent); text-decoration: none; font-weight: 600;"><Icon name="computer" size={16} /> Computadores</a>
+		<a href="/categoria/eletrodomesticos/" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 8px; border: 1px solid var(--line-strong); color: var(--accent); text-decoration: none; font-weight: 600;"><Icon name="house" size={16} /> Casa</a>
+		<a href="/categoria/redes-e-wi-fi/" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 8px; border: 1px solid var(--line-strong); color: var(--accent); text-decoration: none; font-weight: 600;"><Icon name="wifi" size={16} /> Redes</a>
 	</div>
 </div>
 
@@ -74,11 +75,11 @@
 		--pagefind-ui-primary: var(--accent);
 		--pagefind-ui-text: var(--text-main);
 		--pagefind-ui-background: var(--bg-card);
-		--pagefind-ui-border: rgba(255, 255, 255, 0.1);
-		--pagefind-ui-tag: rgba(0, 229, 255, 0.1);
+		--pagefind-ui-border: var(--line-subtle);
+		--pagefind-ui-tag: var(--accent-soft);
 		--pagefind-ui-border-width: 1px;
 		--pagefind-ui-border-radius: 8px;
-		--pagefind-ui-font: var(--font-atkinson), sans-serif;
+		--pagefind-ui-font: var(--font-body), sans-serif;
 	}
 	.pagefind-ui__result-excerpt {
 		color: var(--text-muted) !important;

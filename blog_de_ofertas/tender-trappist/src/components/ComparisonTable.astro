@@ -1,4 +1,6 @@
 ---
+import Icon from './Icon.astro';
+
 interface Feature {
 	label: string;
 	productA: string | boolean;
@@ -26,11 +28,11 @@ const { titleA, titleB, imageA, imageB, features, winnerA, winnerB } = Astro.pro
 					<th class="feature-col">Característica</th>
 					<th class={`product-col ${winnerA ? 'winner' : ''}`}>
 						{imageA && <img src={imageA} alt={titleA} class="product-img" />}
-						<span class="product-title">{titleA} {winnerA && '🏆'}</span>
+						<span class="product-title">{titleA} {winnerA && <Icon name="trophy" size={18} />}</span>
 					</th>
 					<th class={`product-col ${winnerB ? 'winner' : ''}`}>
 						{imageB && <img src={imageB} alt={titleB} class="product-img" />}
-						<span class="product-title">{titleB} {winnerB && '🏆'}</span>
+						<span class="product-title">{titleB} {winnerB && <Icon name="trophy" size={18} />}</span>
 					</th>
 				</tr>
 			</thead>
@@ -39,13 +41,17 @@ const { titleA, titleB, imageA, imageB, features, winnerA, winnerB } = Astro.pro
 					<tr>
 						<td class="feature-name">{feat.label}</td>
 						<td>
-							{typeof feat.productA === 'boolean' 
-								? (feat.productA ? '✅ Sim' : '❌ Não') 
+							{typeof feat.productA === 'boolean'
+								? (feat.productA
+									? <span class="bool-val bool-val--yes"><Icon name="check" size={16} /> Sim</span>
+									: <span class="bool-val bool-val--no"><Icon name="x" size={16} /> Não</span>)
 								: feat.productA}
 						</td>
 						<td>
-							{typeof feat.productB === 'boolean' 
-								? (feat.productB ? '✅ Sim' : '❌ Não') 
+							{typeof feat.productB === 'boolean'
+								? (feat.productB
+									? <span class="bool-val bool-val--yes"><Icon name="check" size={16} /> Sim</span>
+									: <span class="bool-val bool-val--no"><Icon name="x" size={16} /> Não</span>)
 								: feat.productB}
 						</td>
 					</tr>
@@ -68,14 +74,14 @@ const { titleA, titleB, imageA, imageB, features, winnerA, winnerB } = Astro.pro
 		width: 100%;
 		border-collapse: collapse;
 		background: var(--bg-card);
-		border-radius: 12px;
+		border-radius: var(--radius-m);
 		overflow: hidden;
-		box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+		box-shadow: var(--shadow-sm);
 		text-align: center;
 	}
 	.comparison-table th, .comparison-table td {
 		padding: 1rem;
-		border: 1px solid rgba(255, 255, 255, 0.05);
+		border: 1px solid var(--line-subtle);
 	}
 	.comparison-table th {
 		background: rgba(0, 0, 0, 0.3);
@@ -95,15 +101,34 @@ const { titleA, titleB, imageA, imageB, features, winnerA, winnerB } = Astro.pro
 		height: auto;
 		display: block;
 		margin: 0 auto 0.5rem auto;
-		border-radius: 8px;
+		border-radius: var(--radius-s);
 	}
 	.product-title {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
 		font-size: 1.1rem;
 		font-weight: bold;
 	}
+	.product-title svg {
+		color: var(--warning);
+	}
 	.winner {
-		background: rgba(0, 255, 163, 0.05) !important;
-		border-bottom: 2px solid var(--accent) !important;
+		background: rgba(52, 211, 153, 0.06) !important;
+		border-bottom: 2px solid var(--success) !important;
+	}
+	.bool-val {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+	}
+	.bool-val--yes {
+		color: var(--success);
+		font-weight: 600;
+	}
+	.bool-val--no {
+		color: var(--danger);
+		font-weight: 600;
 	}
 	.comparison-table tbody tr:nth-child(even) {
 		background: rgba(255, 255, 255, 0.02);

@@ -5,6 +5,7 @@ import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
+import Icon from '../../components/Icon.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
 // Pega todos os posts do blog ordenados por data
@@ -36,79 +37,6 @@ const posts = (await getCollection('blog')).sort(
 				margin-bottom: 3em;
 				font-size: 1.1em;
 			}
-			ul {
-				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-				gap: 1.5rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				background-color: var(--bg-card);
-				border-radius: 12px;
-				overflow: hidden;
-				border: 1px solid rgba(255, 255, 255, 0.05);
-				transition: all 0.3s ease;
-				display: flex;
-				flex-direction: column;
-			}
-			ul li:hover {
-				transform: translateY(-5px);
-				border-color: var(--accent);
-				box-shadow: var(--box-shadow);
-			}
-			ul li a.card-link {
-				display: flex;
-				flex-direction: column;
-				height: 100%;
-				text-decoration: none;
-			}
-			ul li img {
-				width: 100%;
-				height: 180px;
-				object-fit: cover;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-			}
-			.card-content {
-				padding: 1.2rem;
-				flex-grow: 1;
-				display: flex;
-				flex-direction: column;
-			}
-			.title {
-				margin: 0 0 1rem 0;
-				font-size: 1.1rem;
-				line-height: 1.3;
-				color: var(--text-main);
-				flex-grow: 1;
-			}
-			.date {
-				margin: 0 0 0.5rem 0;
-				color: var(--text-muted);
-				font-size: 0.8em;
-			}
-			.cta-badge {
-				display: block;
-				text-align: center;
-				background-color: rgba(0, 229, 255, 0.1);
-				color: var(--accent);
-				padding: 0.5rem;
-				border-radius: 6px;
-				font-weight: 800;
-				text-transform: uppercase;
-				font-size: 0.85em;
-				transition: background-color 0.2s ease;
-			}
-			ul li:hover .cta-badge {
-				background-color: var(--accent);
-				color: var(--bg-dark);
-			}
-			@media (max-width: 720px) {
-				ul {
-					grid-template-columns: 1fr;
-				}
-			}
 		</style>
 	</head>
 	<body>
@@ -118,20 +46,22 @@ const posts = (await getCollection('blog')).sort(
 			<p class="page-subtitle">Guia completo de hardware, periféricos, celulares e recomendações do Nikezin Indica.</p>
 			
 			<section>
-				<ul>
+				<ul class="articles-grid">
 					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`} class="card-link">
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<div class="card-content">
-										<p class="date">
+						posts.map((post, index) => (
+							<li class={`article-card${index === 0 ? ' article-card--lead' : ''}`}>
+								<a href={`/blog/${post.id}/`}>
+									<div class="article-card__media">
+										{post.data.heroImage && (
+											<Image width={720} height={360} src={post.data.heroImage} alt={post.data.title} />
+										)}
+									</div>
+									<div class="article-card__body">
+										<p class="article-card__date">
 											<FormattedDate date={post.data.pubDate} />
 										</p>
-										<h2 class="title">{post.data.title}</h2>
-										<span class="cta-badge">Ler Artigo 📖</span>
+										<h2 class="article-card__title">{post.data.title}</h2>
+										<span class="card-cta">Ler Artigo <Icon name="arrowRight" size={14} /></span>
 									</div>
 								</a>
 							</li>

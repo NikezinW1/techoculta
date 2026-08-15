@@ -1,4 +1,6 @@
 ---
+import Icon from './Icon.astro';
+
 interface Props {
 	name: string;
 	slug: string;
@@ -9,16 +11,20 @@ const { name, slug, icon } = Astro.props;
 ---
 
 <a href={`/categoria/${slug}/`} class="category-card">
-	{icon && <span class="category-icon">{icon}</span>}
+	{icon && (
+		<span class="category-icon">
+			<Icon name={icon} size={24} />
+		</span>
+	)}
 	<span class="category-name">{name}</span>
 </a>
 
 <style>
 	.category-card {
 		background-color: var(--bg-card);
-		border: 1px solid rgba(255, 255, 255, 0.05);
-		padding: 1.2rem;
-		border-radius: 12px;
+		border: 1px solid var(--line-subtle);
+		padding: 1.25rem;
+		border-radius: var(--radius-l);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -27,21 +33,32 @@ const { name, slug, icon } = Astro.props;
 		text-decoration: none;
 		color: var(--text-main);
 		font-weight: 600;
-		transition: all 0.3s ease;
-		gap: 0.5rem;
 		height: 100%;
-		width: 150px; /* Fixed width for uniform flex wrapping */
+		width: 150px;
+		gap: 0.6rem;
+		transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
 	}
 	.category-card:hover {
-		border-color: var(--accent);
+		border-color: var(--line-strong);
 		transform: translateY(-4px);
-		box-shadow: 0 4px 20px rgba(0, 229, 255, 0.15);
+		box-shadow: var(--shadow-md);
 	}
 	.category-icon {
-		font-size: 1.8rem;
-		margin-bottom: 0.2rem;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 48px;
+		height: 48px;
+		border-radius: var(--radius-m);
+		background-color: var(--accent-soft);
+		color: var(--accent);
+		transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+	}
+	.category-card:hover .category-icon {
+		background-color: var(--accent);
+		color: var(--text-on-accent);
 	}
 	.category-name {
-		font-size: 1rem;
+		font-size: 0.95rem;
 	}
 </style>

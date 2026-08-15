@@ -1,20 +1,82 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@500;600;700&display=swap');
 
+/* ============================================================
+   DESIGN TOKENS — Nikezin Indica
+   Base: navy profundo + ciano. Um acento secundário (violeta)
+   usado com parcimônia. Sombra neutra em vez de glow neon.
+   ============================================================ */
 :root {
-	--accent: #00E5FF; /* Ciano Elétrico */
-	--accent-dark: #00B3CC;
-	--bg-dark: #0F172A; /* Slate 900 */
-	--bg-card: #1E293B; /* Slate 800 */
-	--text-main: #F8FAFC; /* Slate 50 */
-	--text-muted: #94A3B8; /* Slate 400 */
+	/* Marca */
+	--accent: #22D3EE;            /* Ciano primário (AA sobre navy) */
+	--accent-strong: #0EA5C9;     /* Hover / estados ativos */
+	--accent-soft: rgba(34, 211, 238, 0.12);
+	--accent-2: #A78BFA;          /* Acento secundário (violeta) */
+	--accent-2-soft: rgba(167, 139, 250, 0.12);
+
+	/* Superfícies (fundo navy + tons elevados) */
+	--bg-dark: #0F172A;
+	--bg-deep: #0A101E;
+	--bg-card: #1E293B;
+	--bg-raised: #26344E;
+	--bg-tint: rgba(148, 163, 184, 0.07);
+
+	/* Texto */
+	--text-main: #F8FAFC;
+	--text-soft: #CBD5E1;
+	--text-muted: #94A3B8;
+	--text-faint: #64748B;
+	--text-on-accent: #06202A;
+
+	/* Linhas */
+	--line-subtle: rgba(148, 163, 184, 0.16);
+	--line-strong: rgba(148, 163, 184, 0.32);
+
+	/* Estados semânticos */
+	--success: #34D399;
+	--danger: #F87171;
+	--warning: #FBBF24;
+
+	/* Sombras (neutras, em camadas) */
+	--shadow-sm: 0 1px 2px rgba(2, 6, 23, 0.4), 0 1px 3px rgba(2, 6, 23, 0.35);
+	--shadow-md: 0 4px 8px -2px rgba(2, 6, 23, 0.5), 0 12px 28px -10px rgba(2, 6, 23, 0.55);
+	--shadow-lg: 0 8px 16px -4px rgba(2, 6, 23, 0.55), 0 24px 48px -12px rgba(2, 6, 23, 0.6);
+	--box-shadow: 0 4px 8px -2px rgba(2, 6, 23, 0.5), 0 12px 28px -10px rgba(2, 6, 23, 0.55);
+
+	/* Esquinas */
+	--radius-s: 8px;
+	--radius-m: 12px;
+	--radius-l: 16px;
+	--radius-pill: 999px;
+
+	/* Movimento */
+	--ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+	--dur-fast: 200ms;
+	--dur: 300ms;
+
+	/* Foco acessível */
+	--ring: 0 0 0 3px rgba(34, 211, 238, 0.38);
+
+	/* Tipografia */
+	--font-body: 'Inter', sans-serif;
+	--font-display: 'Space Grotesk', 'Inter', sans-serif;
+	--font-atkinson: 'Inter', sans-serif;
+
+	/* Escala tipográfica */
+	--text-xs: 0.75rem;
+	--text-sm: 0.875rem;
+	--text-base: 1rem;
+	--text-lg: 1.125rem;
+	--text-xl: 1.25rem;
+	--text-2xl: 1.5rem;
+	--text-3xl: 2rem;
+
+	/* Aliases legado */
 	--black: 15, 23, 42;
 	--gray: 148, 163, 184;
-	--box-shadow: 0 8px 30px rgba(0, 229, 255, 0.15);
-	--font-atkinson: 'Inter', sans-serif;
 }
 
 body {
-	font-family: var(--font-atkinson);
+	font-family: var(--font-body);
 	margin: 0;
 	padding: 0;
 	text-align: left;
@@ -22,6 +84,8 @@ body {
 	color: var(--text-main);
 	font-size: 18px;
 	line-height: 1.7;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
 }
 
 main {
@@ -31,72 +95,306 @@ main {
 	padding: 3em 1em;
 }
 
-h1, h2, h3, h4, h5, h6 {
-	margin: 0 0 0.5rem 0;
+::selection {
+	background: rgba(34, 211, 238, 0.28);
 	color: var(--text-main);
-	line-height: 1.2;
-	font-weight: 800;
 }
 
-h1 { font-size: 3.052em; }
-h2 { font-size: 2.441em; }
-h3 { font-size: 1.953em; }
-h4 { font-size: 1.563em; }
-h5 { font-size: 1.25em; }
+/* ============================================================
+   Tipografia — display (Space Grotesk) em títulos, corpo em Inter
+   ============================================================ */
+h1, h2, h3, h4, h5, h6 {
+	font-family: var(--font-display);
+	margin: 0 0 0.5rem 0;
+	color: var(--text-main);
+	line-height: 1.15;
+	font-weight: 700;
+	letter-spacing: -0.02em;
+}
 
-strong, b { font-weight: 800; color: var(--accent); }
+h1 { font-size: 2.75rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.375rem; }
+h4 { font-size: 1.125rem; }
+h5 { font-size: 1rem; }
+
+strong, b { font-weight: 700; color: inherit; }
 
 a {
 	color: var(--accent);
 	text-decoration: none;
-	transition: all 0.2s ease;
+	transition: color var(--dur-fast) var(--ease);
 }
 
 a:hover {
-	color: var(--accent-dark);
+	color: var(--accent-strong);
 }
 
 p { margin-bottom: 1em; }
 
+/* Foco acessível em elementos interativos */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+}
+
+/* ============================================================
+   Botões — hierarquia (primário / secundário / terciário)
+   ============================================================ */
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	padding: 0.75rem 1.5rem;
+	border-radius: var(--radius-m);
+	font-family: var(--font-body);
+	font-size: 0.95rem;
+	font-weight: 700;
+	line-height: 1.2;
+	text-decoration: none;
+	text-align: center;
+	cursor: pointer;
+	border: 1px solid transparent;
+	transition: transform var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+}
+
+.btn--primary {
+	background-color: var(--accent);
+	color: var(--text-on-accent);
+	border-color: var(--accent);
+}
+
+.btn--primary:hover {
+	background-color: var(--accent-strong);
+	border-color: var(--accent-strong);
+	color: var(--text-on-accent);
+	transform: translateY(-2px);
+}
+
+.btn--secondary {
+	background-color: transparent;
+	color: var(--accent);
+	border-color: var(--line-strong);
+}
+
+.btn--secondary:hover {
+	background-color: var(--accent-soft);
+	border-color: var(--accent);
+	color: var(--accent);
+	transform: translateY(-2px);
+}
+
+.btn--tertiary {
+	background-color: transparent;
+	color: var(--accent);
+	padding-left: 0.25rem;
+	padding-right: 0.25rem;
+	border-radius: var(--radius-s);
+}
+
+.btn--tertiary:hover {
+	color: var(--accent-strong);
+}
+
+/* ============================================================
+   Cards e grids de conteúdo (compartilhados entre páginas)
+   ============================================================ */
+.articles-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 1.5rem;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+@media (max-width: 720px) {
+	.articles-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+.article-card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	background-color: var(--bg-card);
+	border: 1px solid var(--line-subtle);
+	border-radius: var(--radius-l);
+	overflow: hidden;
+	transform: translateZ(0);
+	transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+.article-card:hover {
+	transform: translateY(-4px);
+	border-color: var(--line-strong);
+	box-shadow: var(--shadow-md);
+}
+
+.article-card > a {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	text-decoration: none;
+	color: inherit;
+}
+
+.article-card__media {
+	position: relative;
+	overflow: hidden;
+	background: var(--bg-deep);
+}
+
+.article-card__media img {
+	display: block;
+	width: 100%;
+	height: 180px;
+	object-fit: cover;
+	transition: transform 0.5s var(--ease);
+}
+
+.article-card:hover .article-card__media img {
+	transform: scale(1.04);
+}
+
+.article-card__media::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(10, 16, 30, 0) 55%, rgba(10, 16, 30, 0.55) 100%);
+	pointer-events: none;
+}
+
+.article-card__body {
+	padding: 1.25rem;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	gap: 0.75rem;
+}
+
+.article-card__body > .tag,
+.article-card__body > h3,
+.article-card__body > .title,
+.article-card__body > .date,
+.article-card__body > .card-cta {
+	margin: 0;
+}
+
+.article-card__title {
+	font-size: 1.05rem;
+	line-height: 1.35;
+	color: var(--text-main);
+	flex-grow: 1;
+}
+
+.article-card__date {
+	color: var(--text-faint);
+	font-size: 0.8rem;
+	font-weight: 500;
+}
+
+/* Card destaque (primeiro item de listagens) */
+@media (min-width: 720px) {
+	.article-card--lead {
+		grid-column: span 2;
+	}
+	.article-card--lead .article-card__media img {
+		height: 300px;
+	}
+	.article-card--lead .article-card__title {
+		font-size: 1.35rem;
+		line-height: 1.3;
+	}
+}
+
+/* Etiqueta de categoria */
+.tag {
+	align-self: flex-start;
+	display: inline-block;
+	font-size: 0.72rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: var(--accent);
+	background-color: var(--accent-soft);
+	padding: 0.3em 0.7em;
+	border-radius: var(--radius-pill);
+}
+
+.tag--alt {
+	color: var(--accent-2);
+	background-color: var(--accent-2-soft);
+}
+
+/* CTA de card */
+.card-cta {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	font-size: 0.85rem;
+	font-weight: 700;
+	color: var(--accent);
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	transition: color var(--dur-fast) var(--ease);
+}
+
+.card-cta svg {
+	transition: transform var(--dur-fast) var(--ease);
+}
+
+.article-card:hover .card-cta svg {
+	transform: translateX(3px);
+}
+
+/* Conteúdo editorial (.prose) */
 .prose p { margin-bottom: 2em; }
 
-/* Destaque brutal para links de Afiliados dentro dos posts */
+/* CTA de afiliados dentro dos posts (pill, sem glow neon) */
 .prose strong a {
 	background-color: var(--accent);
-	color: var(--bg-dark);
-	padding: 0.6em 1.2em;
-	border-radius: 8px;
-	font-weight: 800;
+	color: var(--text-on-accent);
+	padding: 0.6em 1.3em;
+	border-radius: 10px;
+	font-weight: 700;
 	display: inline-block;
-	box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+	box-shadow: var(--shadow-sm);
 	text-transform: uppercase;
-	letter-spacing: 0.5px;
+	letter-spacing: 0.04em;
 	line-height: 1.4;
 	text-align: center;
 	margin: 0.25em 0;
 	vertical-align: middle;
+	transition: transform var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
 }
+
 .prose strong a:hover {
-	background-color: var(--accent-dark);
-	box-shadow: 0 0 25px rgba(0, 229, 255, 0.7);
+	background-color: var(--accent-strong);
+	color: var(--text-on-accent);
 	transform: translateY(-2px);
 }
 
 /* Bloco de Critérios Técnicos e Referências */
 .tech-criteria-box {
-	background: linear-gradient(135deg, rgba(0, 229, 255, 0.08) 0%, rgba(30, 41, 59, 0.9) 100%);
-	border: 1px solid var(--accent);
-	border-left: 5px solid var(--accent);
-	border-radius: 12px;
+	background: linear-gradient(135deg, rgba(34, 211, 238, 0.06) 0%, rgba(30, 41, 59, 0.85) 100%);
+	border: 1px solid var(--line-subtle);
+	border-left: 4px solid var(--accent);
+	border-radius: var(--radius-m);
 	padding: 1.5rem 1.8rem;
 	margin: 2rem 0;
 }
+
 .tech-criteria-box h3 {
 	margin-top: 0;
 	color: var(--accent);
-	font-size: 1.3em;
+	font-size: 1.25em;
 	margin-bottom: 0.8rem;
 }
+
 .tech-criteria-box p {
 	color: var(--text-main);
 	margin-bottom: 0;
@@ -104,22 +402,22 @@ p { margin-bottom: 1em; }
 	line-height: 1.6;
 }
 
-/* Estilo de Tabelas em Markdown */
+/* Tabelas em Markdown */
 .prose table {
 	width: 100%;
 	border-collapse: collapse;
 	margin: 2rem 0;
 	font-size: 0.95em;
 	background-color: var(--bg-card);
-	border-radius: 10px;
+	border-radius: var(--radius-m);
 	overflow: hidden;
-	border: 1px solid rgba(255, 255, 255, 0.1);
+	border: 1px solid var(--line-subtle);
 }
 
 .prose th {
-	background-color: rgba(0, 229, 255, 0.15);
+	background-color: rgba(34, 211, 238, 0.1);
 	color: var(--accent);
-	font-weight: 800;
+	font-weight: 700;
 	text-align: left;
 	padding: 12px 16px;
 	border-bottom: 2px solid var(--accent);
@@ -127,7 +425,7 @@ p { margin-bottom: 1em; }
 
 .prose td {
 	padding: 12px 16px;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+	border-bottom: 1px solid var(--line-subtle);
 	color: var(--text-main);
 }
 
@@ -145,20 +443,20 @@ p { margin-bottom: 1em; }
 
 .product-pros, .product-cons {
 	background-color: var(--bg-card);
-	border-radius: 8px;
+	border-radius: var(--radius-m);
 	padding: 1rem 1.2rem;
-	border: 1px solid rgba(255, 255, 255, 0.05);
+	border: 1px solid var(--line-subtle);
 }
 
 .product-pros h4 {
-	color: #10B981;
+	color: var(--success);
 	font-size: 1em;
 	margin-top: 0;
 	margin-bottom: 0.5rem;
 }
 
 .product-cons h4 {
-	color: #EF4444;
+	color: var(--danger);
 	font-size: 1em;
 	margin-top: 0;
 	margin-bottom: 0.5rem;
@@ -185,7 +483,7 @@ p { margin-bottom: 1em; }
 img {
 	max-width: 100%;
 	height: auto;
-	border-radius: 12px;
+	border-radius: var(--radius-m);
 }
 
 code {
@@ -198,9 +496,9 @@ code {
 
 pre {
 	padding: 1.5em;
-	border-radius: 12px;
+	border-radius: var(--radius-m);
 	background-color: #0B1120 !important;
-	border: 1px solid rgba(255,255,255,0.1);
+	border: 1px solid var(--line-subtle);
 }
 
 blockquote {
@@ -214,6 +512,6 @@ blockquote {
 
 hr {
 	border: none;
-	border-top: 1px solid rgba(255, 255, 255, 0.1);
+	border-top: 1px solid var(--line-subtle);
 	margin: 2em 0;
 }

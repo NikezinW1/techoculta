@@ -81,9 +81,11 @@ const breadcrumbSchema = {
 				text-decoration: underline;
 			}
 			.page-title {
-				font-size: 3em;
+				font-family: var(--font-display);
+				font-size: clamp(2.25rem, 4.5vw, 3rem);
+				letter-spacing: -0.02em;
 				margin-bottom: 0.2em;
-				background: linear-gradient(to right, #F8FAFC, var(--accent));
+				background: linear-gradient(100deg, #F8FAFC 55%, var(--accent));
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
 			}
@@ -91,57 +93,6 @@ const breadcrumbSchema = {
 				color: var(--text-muted);
 				font-size: 1.2em;
 				margin-bottom: 3rem;
-			}
-			ul {
-				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				background-color: var(--bg-card);
-				border-radius: 12px;
-				overflow: hidden;
-				border: 1px solid rgba(255, 255, 255, 0.05);
-				transition: all 0.3s ease;
-			}
-			ul li:hover {
-				transform: translateY(-5px);
-				border-color: var(--accent);
-				box-shadow: var(--box-shadow);
-			}
-			ul li * {
-				text-decoration: none;
-			}
-			ul li img {
-				width: 100%;
-				height: 200px;
-				object-fit: cover;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-			}
-			.card-content {
-				padding: 1.5rem;
-			}
-			.title {
-				margin: 0 0 0.5rem 0;
-				font-size: 1.2rem;
-				line-height: 1.3;
-				color: var(--text-main);
-			}
-			.date {
-				margin: 0;
-				color: var(--text-muted);
-				font-size: 0.85em;
-			}
-			@media (max-width: 720px) {
-				ul {
-					grid-template-columns: 1fr;
-				}
-				.page-title {
-					font-size: 2.5em;
-				}
 			}
 		</style>
 	</head>
@@ -156,17 +107,19 @@ const breadcrumbSchema = {
 			<p class="page-subtitle">Explorando as melhores opções em {categoryName}. Análises honestas e comparativos detalhados.</p>
 			
 			<section>
-				<ul>
+				<ul class="articles-grid">
 					{
-						posts.map((post) => (
-							<li>
+						posts.map((post, index) => (
+							<li class={`article-card${index === 0 ? ' article-card--lead' : ''}`}>
 								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={400} height={200} src={post.data.heroImage} alt="" />
-									)}
-									<div class="card-content">
-										<h2 class="title">{post.data.title}</h2>
-										<p class="date">
+									<div class="article-card__media">
+										{post.data.heroImage && (
+											<Image width={400} height={200} src={post.data.heroImage} alt="" />
+										)}
+									</div>
+									<div class="article-card__body">
+										<h2 class="article-card__title">{post.data.title}</h2>
+										<p class="article-card__date">
 											<FormattedDate date={post.data.pubDate} />
 										</p>
 									</div>
