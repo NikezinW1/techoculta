@@ -258,6 +258,22 @@ const categories = [
 				justify-content: center;
 			}
 
+			/* Lista compacta (Últimas atualizações): thumbnail à esquerda */
+			.recentes-grid {
+				display: grid;
+				grid-template-columns: repeat(2, 1fr);
+				gap: 1rem;
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+
+			/* Diferencial com acento secundário (violeta) */
+			.diferencial-icon--alt {
+				background-color: var(--accent-2-soft);
+				color: var(--accent-2);
+			}
+
 			/* Banner de Ofertas e Newsletter */
 			.banner-box {
 				background: linear-gradient(180deg, var(--bg-raised) 0%, var(--bg-deep) 100%);
@@ -295,6 +311,9 @@ const categories = [
 				.hero h1 {
 					font-size: 2.5rem;
 				}
+				.recentes-grid {
+					grid-template-columns: 1fr;
+				}
 			}
 		</style>
 	</head>
@@ -324,7 +343,7 @@ const categories = [
 					<p>Veja as diferenças que realmente importam.</p>
 				</div>
 				<div class="diferencial-item">
-					<span class="diferencial-icon"><Icon name="star" size={22} /></span>
+					<span class="diferencial-icon diferencial-icon--alt"><Icon name="star" size={22} /></span>
 					<h3>RECOMENDAÇÃO</h3>
 					<p>Descubra o que faz sentido para você.</p>
 				</div>
@@ -401,7 +420,7 @@ const categories = [
 										)}
 									</div>
 									<div class="article-card__body">
-										{post.data.category && <span class="tag">{post.data.category}</span>}
+										{post.data.category && <span class="tag tag--alt">{post.data.category}</span>}
 										<h3 class="article-card__title">{post.data.title}</h3>
 										<p class="article-card__date"><FormattedDate date={post.data.pubDate} /></p>
 										<span class="card-cta">Ver comparativo <Icon name="arrowRight" size={14} /></span>
@@ -443,22 +462,19 @@ const categories = [
 			{recentPosts.length > 0 && (
 				<section>
 					<h2 class="section-title"><span class="section-title__icon"><Icon name="clock" size={18} /></span>Últimas atualizações</h2>
-					<ul class="articles-grid">
+					<ul class="recentes-grid">
 						{recentPosts.map((post) => (
-							<li class="article-card">
-								<a href={`/blog/${post.id}/`}>
-									<div class="article-card__media">
-										{post.data.heroImage && (
-											<Image width={400} height={200} src={post.data.heroImage} alt={post.data.title} />
-										)}
-									</div>
-									<div class="article-card__body">
-										{post.data.category && <span class="tag">{post.data.category}</span>}
-										<h3 class="article-card__title">{post.data.title}</h3>
-										<p class="article-card__date"><FormattedDate date={post.data.pubDate} /></p>
-										<span class="card-cta">Ler artigo <Icon name="arrowRight" size={14} /></span>
-									</div>
+							<li class="article-card article-card--compact">
+								<a href={`/blog/${post.id}/`} class="article-card__media">
+									{post.data.heroImage && (
+										<Image width={220} height={220} src={post.data.heroImage} alt={post.data.title} />
+									)}
 								</a>
+								<div class="article-card__body">
+									{post.data.category && <span class="tag tag--alt">{post.data.category}</span>}
+									<h3 class="article-card__title">{post.data.title}</h3>
+									<p class="article-card__date"><FormattedDate date={post.data.pubDate} /></p>
+								</div>
 							</li>
 						))}
 					</ul>
