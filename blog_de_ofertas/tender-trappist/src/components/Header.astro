@@ -152,6 +152,7 @@ import HeaderLink from './HeaderLink.astro';
 	.logo-container {
 		display: flex;
 		align-items: center;
+		flex-shrink: 0;
 	}
 	.site-logo {
 		height: 60px;
@@ -168,6 +169,7 @@ import HeaderLink from './HeaderLink.astro';
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
+		flex-shrink: 0;
 	}
 	.desktop-menu a {
 		padding: 1.2em 0.8em;
@@ -184,6 +186,12 @@ import HeaderLink from './HeaderLink.astro';
 	}
 
 	/* Search Form */
+	.desktop-search {
+		flex-shrink: 1;
+		min-width: 0;
+		display: flex;
+		justify-content: flex-end;
+	}
 	.search-form {
 		display: flex;
 		align-items: center;
@@ -191,6 +199,7 @@ import HeaderLink from './HeaderLink.astro';
 		border: 1px solid var(--line-subtle);
 		border-radius: var(--radius-pill);
 		padding: 0.35rem 0.8rem;
+		min-width: 0;
 		transition: border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
 	}
 	.search-form:focus-within {
@@ -204,11 +213,12 @@ import HeaderLink from './HeaderLink.astro';
 		padding: 0.3rem;
 		font-size: 0.9rem;
 		width: 150px;
+		min-width: 80px;
 		outline: none;
 		transition: width 0.3s ease;
 	}
 	.search-form input:focus {
-		width: 200px;
+		width: 190px;
 	}
 	.search-form input::placeholder {
 		color: var(--text-muted);
