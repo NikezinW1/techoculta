@@ -146,13 +146,22 @@ def salvar_pesquisa(
 def _is_rate_limit_error(exc: Exception) -> bool:
     msg = str(exc).lower()
     status = getattr(exc, "status_code", None) or getattr(exc, "status", None)
-    if status == 429:
+    if status in (429, 503, 500, 502, 504):
         return True
-    return "429" in msg or "rate limit" in msg or "quota" in msg or "resource exhausted" in msg
+    return (
+        "429" in msg
+        or "503" in msg
+        or "500" in msg
+        or "rate limit" in msg
+        or "quota" in msg
+        or "resource exhausted" in msg
+        or "unavailable" in msg
+        or "high demand" in msg
+    )
 
 
 def call_with_backoff(func, *args, **kwargs):
-    """Retry com backoff exponencial 1s,2s,4s,8s em 429/quota."""
+    """Retry com backoff exponencial 1s,2s,4s,8s em 429/quota/503."""
     delays = [1, 2, 4, 8]
     last_exc: Exception | None = None
     for attempt in range(len(delays) + 1):
@@ -302,8 +311,8 @@ def coletar_material(topico: str) -> tuple[str, list[dict[str, Any]]]:
             url = r.get("url", "")
             title = r.get("title", "")
             content = r.get("content", "") or r.get("raw_content", "") or ""
-            # Limita tamanho por resultado para não estourar contexto do Gemini
-            content_snip = content[:4000]
+            # Limita tamanho por resultado para não estourar contexto/output do Gemini
+            content_snip = content[:2200]
             blocos.append(f"Fonte: {url}\nTítulo: {title}\nConteúdo: {content_snip}\n---\n")
 
         # Aviso de quota: Tavily não retorna remaining no free tier via API,
@@ -330,20 +339,23 @@ def chamar_gemini(material: str, topico: str, palavra_chave: str) -> dict:
         raise RuntimeError("GEMINI_API_KEY não configurada. Defina no .env ou env vars.")
 
     # Suporte a ambos os SDKs: novo `google.genai` e legado `google.generativeai`
-    # O novo SDK é preferido (o legado exibe FutureWarning desde 2025).
+    # Preferimos o legado para gemini-2.5-flash no momento (v1beta do novo SDK
+    # tem apresentado truncamento com response_mime_type JSON).
     genai_client = None
     use_new_sdk = False
+    # Tenta legado primeiro (mais estável para 2.5-flash free tier)
     try:
-        from google import genai as new_genai  # type: ignore
+        import google.generativeai as legacy_genai  # type: ignore
 
-        genai_client = new_genai.Client(api_key=api_key)
-        use_new_sdk = True
+        legacy_genai.configure(api_key=api_key)
+        genai_client = legacy_genai
+        use_new_sdk = False
     except ImportError:
         try:
-            import google.generativeai as legacy_genai  # type: ignore
+            from google import genai as new_genai  # type: ignore
 
-            legacy_genai.configure(api_key=api_key)
-            genai_client = legacy_genai
+            genai_client = new_genai.Client(api_key=api_key)
+            use_new_sdk = True
         except ImportError as exc:
             raise RuntimeError(
                 "Dependência ausente: google-generativeai ou google-genai. "
@@ -382,7 +394,10 @@ vier do material acima.
                 config={
                     "system_instruction": SYSTEM_PROMPT,
                     "temperature": 0.1,
-                    "max_output_tokens": 8192,
+                    "max_output_tokens": 16384,
+                    "thinking_config": {"thinking_budget": 0},
+                    "response_mime_type": "application/json",
+                    "automatic_function_calling": {"disable": True},
                 },
             )
 
@@ -398,7 +413,7 @@ vier do material acima.
             model = genai_client.GenerativeModel(model_name, system_instruction=SYSTEM_PROMPT)  # type: ignore[union-attr]
             return model.generate_content(
                 user_prompt,
-                generation_config={"temperature": 0.1, "max_output_tokens": 8192},
+                generation_config={"temperature": 0.1, "max_output_tokens": 16384},
             )
 
         resp = call_with_backoff(_generate_legacy)
