@@ -2,3 +2,8 @@ Flask==3.0.0
 requests==2.31.0
 gunicorn==21.2.0
 feedparser==6.0.10
+# Agente de Pesquisa (Nikezin Indica) — Tavily + Gemini + SQLite
+tavily-python>=0.5
+google-generativeai>=0.8
+google-genai>=0.3
+python-dotenv>=1.0

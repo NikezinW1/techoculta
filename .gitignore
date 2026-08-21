@@ -24,6 +24,12 @@ dist/
 npm-debug.log*
 
 # ========================
+# Agente de Pesquisa — dados coletados
+# ========================
+research_data.db
+research_data.db-journal
+
+# ========================
 # Segurança & Credenciais (CRÍTICO)
 # ========================
 .env
